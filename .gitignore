@@ -1,0 +1,28 @@
+# Xcode
+DerivedData/
+*.xcworkspace
+*.xcuserstate
+*.xcodeproj/project.xcworkspace/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+
+# SwiftPM
+.swiftpm/
+.build/
+
+# CocoaPods (if any in future)
+Pods/
+
+# Carthage (if any)
+Carthage/
+
+# Fastlane
+fastlane/report.xml
+fastlane/screenshots
+
+# Bundler
+.bundle/
+
+# Other
+.DS_Store
+.env
