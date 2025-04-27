@@ -21,9 +21,9 @@ struct Earthquake {
 
   static let sampleEarthquake = Earthquake(
     id: "0",
-    title: "M 4.3 - 19 km S of Kumburgaz, Turkey",
+    title: "M 4.3 - 19 km S of Mock, Place",
     magnitude: 4.3,
-    place: "35 km S of Kumburgaz, Turkey",
+    place: "35 km S of Mock, Place",
     time: Date(),
     latitude: 28.4496,
     longitude: 40.8476,
