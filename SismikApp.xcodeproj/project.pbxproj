@@ -40,6 +40,7 @@
 		7022EAD82DBD6AFA0099C8D1 /* EarthquakeFeatureDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7022EAD72DBD6AFA0099C8D1 /* EarthquakeFeatureDTO+Mapping.swift */; };
 		7022EADA2DBD6B410099C8D1 /* MockEarthquakeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7022EAD92DBD6B410099C8D1 /* MockEarthquakeRepository.swift */; };
 		7022EADE2DBD6D2E0099C8D1 /* DefaultFetchNearbyEarthquakesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7022EADD2DBD6D2E0099C8D1 /* DefaultFetchNearbyEarthquakesUseCase.swift */; };
+		70BF513E2DBEE7BD009F1E8D /* Double+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF513D2DBEE7BD009F1E8D /* Double+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		7022EAD72DBD6AFA0099C8D1 /* EarthquakeFeatureDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EarthquakeFeatureDTO+Mapping.swift"; sourceTree = "<group>"; };
 		7022EAD92DBD6B410099C8D1 /* MockEarthquakeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEarthquakeRepository.swift; sourceTree = "<group>"; };
 		7022EADD2DBD6D2E0099C8D1 /* DefaultFetchNearbyEarthquakesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchNearbyEarthquakesUseCase.swift; sourceTree = "<group>"; };
+		70BF513D2DBEE7BD009F1E8D /* Double+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				7022EA912DBD522F0099C8D1 /* Date+Ext.swift */,
+				70BF513D2DBEE7BD009F1E8D /* Double+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -505,6 +508,7 @@
 				7022EA7A2DBD44800099C8D1 /* Endpoint.swift in Sources */,
 				7022EA5E2DBD27CD0099C8D1 /* Earthquake.swift in Sources */,
 				7022EA902DBD512A0099C8D1 /* EarthquakeDetailView.swift in Sources */,
+				70BF513E2DBEE7BD009F1E8D /* Double+Ext.swift in Sources */,
 				7022EA822DBD4A5D0099C8D1 /* EarthquakeListCoordinator.swift in Sources */,
 				700CA47E2DBBF97400C8759D /* EarthquakeFeatureDTO.swift in Sources */,
 				7022EACC2DBD67820099C8D1 /* LocationAccessView.swift in Sources */,

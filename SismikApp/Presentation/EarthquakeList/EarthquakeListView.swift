@@ -33,17 +33,23 @@ struct EarthquakeListView: View {
         .padding()
       } else {
         List(viewModel.earthquakes, id: \.id) { earthquake in
-          VStack(alignment: .leading) {
+          VStack(alignment: .leading, spacing: 8) {
             Text(earthquake.title)
               .font(.headline)
 
-            Text("Mag: \(earthquake.magnitude)")
+            Text("Mag: \(String(format: "%.1f", earthquake.magnitude))")
               .font(.subheadline)
-              .foregroundStyle(Color.secondary)
+              .foregroundStyle(earthquake.magnitude.magnitudeColor())
+
+            Text(earthquake.time.formatEarthquakeDate())
+              .font(.caption)
+              .foregroundColor(.gray)
+
           }
           .onTapGesture {
             viewModel.showEarthquakeDetails?(earthquake)
           }
+          .padding(.vertical, 8)
         }
         .refreshable {
           viewModel.requestUserLocation()
