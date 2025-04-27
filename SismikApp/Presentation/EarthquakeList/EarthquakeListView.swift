@@ -13,53 +13,31 @@ struct EarthquakeListView: View {
 
   var body: some View {
     ZStack {
-      if viewModel.isLoading {
-        ProgressView("Loading...")
-          .progressViewStyle(.circular)
-      } else if let errorMessage = viewModel.errorMessage {
-        VStack {
-          Text(errorMessage)
-            .font(.headline)
-            .foregroundStyle(Color.secondary)
-            .multilineTextAlignment(.center)
-
-          Button {
-            viewModel.requestUserLocation()
-          } label: {
-            Text("Retry")
-              .padding()
-          }
-        }
-        .padding()
-      } else {
-        List(viewModel.earthquakes, id: \.id) { earthquake in
-          VStack(alignment: .leading, spacing: 8) {
-            Text(earthquake.title)
-              .font(.headline)
-
-            Text("Mag: \(String(format: "%.1f", earthquake.magnitude))")
-              .font(.subheadline)
-              .foregroundStyle(earthquake.magnitude.magnitudeColor())
-
-            Text(earthquake.time.formatEarthquakeDate())
-              .font(.caption)
-              .foregroundColor(.gray)
-
-          }
-          .onTapGesture {
-            viewModel.showEarthquakeDetails?(earthquake)
-          }
-          .padding(.vertical, 8)
-        }
-        .refreshable {
-          viewModel.requestUserLocation()
-        }
-        .listStyle(.insetGrouped)
-      }
+      content
     }
     .navigationTitle("Recent Earthquakes")
     .onAppear {
       viewModel.requestUserLocation()
+    }
+  }
+
+  @ViewBuilder
+  private var content: some View {
+    if viewModel.isLoading {
+      LoadingView()
+    } else if let errorMessage = viewModel.errorMessage {
+      ErrorView(message: errorMessage) {
+        viewModel.requestUserLocation()
+      }
+    } else if viewModel.earthquakes.isEmpty {
+      EmptyStateView()
+    } else {
+      EarthquakeList(earthquakes: viewModel.earthquakes) { earthquake in
+        viewModel.showEarthquakeDetails?(earthquake)
+      } onRefresh: {
+        viewModel.requestUserLocation()
+      }
+
     }
   }
 }
