@@ -45,6 +45,9 @@ struct EarthquakeListView: View {
             viewModel.showEarthquakeDetails?(earthquake)
           }
         }
+        .refreshable {
+          viewModel.requestUserLocation()
+        }
         .listStyle(.insetGrouped)
       }
     }
