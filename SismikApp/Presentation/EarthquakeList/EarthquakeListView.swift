@@ -16,6 +16,15 @@ struct EarthquakeListView: View {
       content
     }
     .navigationTitle("Recent Earthquakes")
+    .toolbar {
+      ToolbarItem(placement: .topBarTrailing) {
+        Button {
+          viewModel.showEarthquakeMap?(viewModel.earthquakes)
+        } label: {
+          Image(systemName: "map")
+        }
+      }
+    }
     .onAppear {
       viewModel.requestUserLocation()
     }
