@@ -11,6 +11,7 @@ import MapKit
 final class EarthquakeMapViewModel: ObservableObject {
 
   @Published var earthquakes: [Earthquake]
+  @Published var selectedEarthquake: Earthquake?
   @Published var region: MKCoordinateRegion
 
   private let mapRegionProvider: MapRegionProviding
