@@ -17,10 +17,17 @@ struct EarthquakeMapView: View {
       Map(coordinateRegion: $viewModel.region, annotationItems: viewModel.earthquakes) { earthquake in
         MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: earthquake.latitude, longitude: earthquake.longitude)) {
           EarthquakePinView(magnitude: earthquake.magnitude)
-            .onTapGesture {
-              viewModel.selectedEarthquake = earthquake
-            }
+            .highPriorityGesture(
+              TapGesture()
+                .onEnded {
+                  viewModel.selectedEarthquake = earthquake
+                }
+            )
         }
+      }
+      .contentShape(Rectangle())
+      .onTapGesture {
+        viewModel.selectedEarthquake = nil
       }
       .ignoresSafeArea()
 
