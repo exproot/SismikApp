@@ -21,7 +21,7 @@ final class EarthquakeListCoordinator {
     let locationManager = DefaultLocationManager()
     let earthquakeRepository = DefaultEarthquakeRepository(service: earthquakeService)
     let fetchNearbyEarthquakesUseCase = DefaultFetchNearbyEarthquakesUseCase(repository: earthquakeRepository)
-    let earthquakeListViewModel = DefaultEarthquakeListViewModel(fetchNearbyEarthquakesUseCase: fetchNearbyEarthquakesUseCase, locationManager: locationManager, showLocationDeniedScreen: showLocationDeniedScreen, showEarthquakeDetails: showEarthquakeDetails)
+    let earthquakeListViewModel = DefaultEarthquakeListViewModel(fetchNearbyEarthquakesUseCase: fetchNearbyEarthquakesUseCase, locationManager: locationManager, showLocationDeniedScreen: showLocationDeniedScreen, showEarthquakeDetails: showEarthquakeDetails, showEarthquakeMap: showEarthquakeMap)
     let view = EarthquakeListView(viewModel: earthquakeListViewModel)
     let hostingVC = UIHostingController(rootView: view)
 
@@ -39,6 +39,13 @@ final class EarthquakeListCoordinator {
     let earthquakeDetailsController = earthquakeDetailsCoordinator.makeViewController()
 
     navigationController?.pushViewController(earthquakeDetailsController, animated: true)
+  }
+
+  private func showEarthquakeMap(_ earthquakes: [Earthquake]) {
+    let earthquakeMapCoordinator = EarthquakeMapCoordinator(navigationController: navigationController)
+    let earthquakeMapController = earthquakeMapCoordinator.makeViewController(earthquakes: earthquakes)
+
+    navigationController?.pushViewController(earthquakeMapController, animated: true)
   }
 
 }

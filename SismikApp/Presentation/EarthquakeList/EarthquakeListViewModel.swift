@@ -33,17 +33,20 @@ final class DefaultEarthquakeListViewModel: EarthquakeListViewModel {
 
   var showLocationDeniedScreen: (() -> Void)?
   var showEarthquakeDetails: ((Earthquake) -> Void)?
+  var showEarthquakeMap: (([Earthquake]) -> Void)?
 
   init(
     fetchNearbyEarthquakesUseCase: FetchNearbyEarthquakesUseCaseProtocol,
     locationManager: LocationManagerProtocol,
     showLocationDeniedScreen: @escaping () -> Void,
-    showEarthquakeDetails: @escaping (Earthquake) -> Void
+    showEarthquakeDetails: @escaping (Earthquake) -> Void,
+    showEarthquakeMap: @escaping ([Earthquake]) -> Void
   ) {
     self.fetchNearbyEarthquakesUseCase = fetchNearbyEarthquakesUseCase
     self.locationManager = locationManager
     self.showLocationDeniedScreen = showLocationDeniedScreen
     self.showEarthquakeDetails = showEarthquakeDetails
+    self.showEarthquakeMap = showEarthquakeMap
   }
 
   func fetchEarthquakes(around coordinate: CLLocationCoordinate2D) {
