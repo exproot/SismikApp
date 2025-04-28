@@ -15,10 +15,9 @@ struct EarthquakeMapView: View {
   var body: some View {
 
     Map(coordinateRegion: $viewModel.region, annotationItems: viewModel.earthquakes) { earthquake in
-      MapMarker(
-        coordinate: CLLocationCoordinate2D(latitude: earthquake.latitude, longitude: earthquake.longitude),
-        tint: .red
-      )
+      MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: earthquake.latitude, longitude: earthquake.longitude)) {
+        EarthquakePinView(magnitude: earthquake.magnitude)
+      }
     }
     .navigationTitle("Earthquake Map")
   }
