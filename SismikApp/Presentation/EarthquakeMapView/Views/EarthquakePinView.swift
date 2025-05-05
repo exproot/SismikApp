@@ -16,13 +16,13 @@ struct EarthquakePinView: View {
   var body: some View {
     Text(String(format: "%.1f", magnitude))
       .font(.caption.bold())
-      .foregroundStyle(Color.white)
+      .foregroundStyle(Color.accentColor)
       .frame(width: 40, height: 40)
       .background(magnitude.magnitudeColor())
       .clipShape(Circle())
       .overlay {
         Circle()
-          .stroke(Color.white, lineWidth: 2)
+          .stroke(Color.accentColor, lineWidth: 2)
       }
       .scaleEffect(animate ? 1.0 : 0.0)
       .opacity(animate ? 1.0 : 0.0)
