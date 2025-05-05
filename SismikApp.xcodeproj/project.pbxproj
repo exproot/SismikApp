@@ -32,8 +32,8 @@
 		7022EADA2DBD6B410099C8D1 /* MockEarthquakeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7022EAD92DBD6B410099C8D1 /* MockEarthquakeRepository.swift */; };
 		7022EADE2DBD6D2E0099C8D1 /* DefaultFetchNearbyEarthquakesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7022EADD2DBD6D2E0099C8D1 /* DefaultFetchNearbyEarthquakesUseCase.swift */; };
 		702A78992DBFBF1500AF88F2 /* EarthquakePinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702A78972DBFBF1500AF88F2 /* EarthquakePinView.swift */; };
-		702A789D2DBFC50500AF88F2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 702A789C2DBFC50500AF88F2 /* LaunchScreen.storyboard */; };
 		702A789F2DBFC5EA00AF88F2 /* EarthquakePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702A789E2DBFC5EA00AF88F2 /* EarthquakePopupView.swift */; };
+		70A38AC02DC92B6D0080106F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70A38ABF2DC92B6D0080106F /* LaunchScreen.storyboard */; };
 		70BF513E2DBEE7BD009F1E8D /* Double+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF513D2DBEE7BD009F1E8D /* Double+Ext.swift */; };
 		70BF515F2DBEED0A009F1E8D /* EarthquakeDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF51532DBEED0A009F1E8D /* EarthquakeDetailsCoordinator.swift */; };
 		70BF51602DBEED0A009F1E8D /* EarthquakeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF51542DBEED0A009F1E8D /* EarthquakeDetailView.swift */; };
@@ -93,8 +93,8 @@
 		7022EAD92DBD6B410099C8D1 /* MockEarthquakeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEarthquakeRepository.swift; sourceTree = "<group>"; };
 		7022EADD2DBD6D2E0099C8D1 /* DefaultFetchNearbyEarthquakesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchNearbyEarthquakesUseCase.swift; sourceTree = "<group>"; };
 		702A78972DBFBF1500AF88F2 /* EarthquakePinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakePinView.swift; sourceTree = "<group>"; };
-		702A789C2DBFC50500AF88F2 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		702A789E2DBFC5EA00AF88F2 /* EarthquakePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakePopupView.swift; sourceTree = "<group>"; };
+		70A38ABF2DC92B6D0080106F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		70BF513D2DBEE7BD009F1E8D /* Double+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Ext.swift"; sourceTree = "<group>"; };
 		70BF51532DBEED0A009F1E8D /* EarthquakeDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakeDetailsCoordinator.swift; sourceTree = "<group>"; };
 		70BF51542DBEED0A009F1E8D /* EarthquakeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakeDetailView.swift; sourceTree = "<group>"; };
@@ -156,7 +156,7 @@
 			children = (
 				700CA4622DBBF6F900C8759D /* Assets.xcassets */,
 				700CA4632DBBF6F900C8759D /* Info.plist */,
-				702A789C2DBFC50500AF88F2 /* LaunchScreen.storyboard */,
+				70A38ABF2DC92B6D0080106F /* LaunchScreen.storyboard */,
 			);
 			path = Supporting;
 			sourceTree = "<group>";
@@ -546,7 +546,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				700CA46B2DBBF6F900C8759D /* Assets.xcassets in Resources */,
-				702A789D2DBFC50500AF88F2 /* LaunchScreen.storyboard in Resources */,
+				70A38AC02DC92B6D0080106F /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -635,7 +635,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8WMXKK3LQU;
+				DEVELOPMENT_TEAM = ZF77D3H4CR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SismikApp/Supporting/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app needs your location to show nearby earthquakes.";
@@ -669,7 +669,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8WMXKK3LQU;
+				DEVELOPMENT_TEAM = ZF77D3H4CR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SismikApp/Supporting/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app needs your location to show nearby earthquakes.";
@@ -821,7 +821,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8WMXKK3LQU;
+				DEVELOPMENT_TEAM = ZF77D3H4CR;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				MARKETING_VERSION = 1.0;
@@ -840,7 +840,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8WMXKK3LQU;
+				DEVELOPMENT_TEAM = ZF77D3H4CR;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				MARKETING_VERSION = 1.0;
