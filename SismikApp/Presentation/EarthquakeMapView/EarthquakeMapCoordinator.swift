@@ -5,7 +5,7 @@
 //  Created by Ertan Yağmur on 28.04.2025.
 //
 
-import SwiftUI
+import UIKit
 
 final class EarthquakeMapCoordinator {
 
@@ -18,10 +18,11 @@ final class EarthquakeMapCoordinator {
   func makeViewController(earthquakes: [Earthquake]) -> UIViewController {
     let mapRegionProvider = MapRegionProvider()
     let viewModel = EarthquakeMapViewModel(earthquakes: earthquakes, mapRegionProvider: mapRegionProvider)
-    let view = EarthquakeMapView(viewModel: viewModel)
-    let hostingVC = UIHostingController(rootView: view)
+//    let view = EarthquakeMapView(viewModel: viewModel)
+//    let hostingVC = UIHostingController(rootView: view)
+    let mapVC = EarthquakeMapViewController(viewModel: viewModel)
 
-    return hostingVC
+    return mapVC
   }
 
 }

@@ -13,6 +13,7 @@ final class EarthquakeMapViewModel: ObservableObject {
   @Published var earthquakes: [Earthquake]
   @Published var selectedEarthquake: Earthquake?
   @Published var region: MKCoordinateRegion
+  @Published var boundingOverlay: MKCircle?
 
   private let mapRegionProvider: MapRegionProviding
 
@@ -20,6 +21,14 @@ final class EarthquakeMapViewModel: ObservableObject {
     self.earthquakes = earthquakes
     self.mapRegionProvider = mapRegionProvider
     self.region = mapRegionProvider.region(for: earthquakes)
+    self.boundingOverlay = MKCircle(center: region.center, radius: 250_000) // +- 2.0 degree latitude ≈ 222 km
+  }
+
+  func earthquake(matching coordinate: CLLocationCoordinate2D) -> Earthquake? {
+    earthquakes.first {
+      abs($0.latitude - coordinate.latitude) < 0.0001 &&
+      abs($0.longitude - coordinate.longitude) < 0.0001
+    }
   }
 
 }

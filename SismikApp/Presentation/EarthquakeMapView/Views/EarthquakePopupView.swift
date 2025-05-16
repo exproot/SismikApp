@@ -5,33 +5,65 @@
 //  Created by Ertan Yağmur on 28.04.2025.
 //
 
-import SwiftUI
+import UIKit
 
-struct EarthquakePopupView: View {
+final class EarthquakePopupView: UIView {
 
-  let earthquake: Earthquake
+  private let titleLabel = UILabel()
+  private let magnitudeLabel = UILabel()
+  private let dateLabel = UILabel()
 
-  var body: some View {
-    VStack(spacing: 8) {
-      Text(earthquake.title)
-        .font(.headline)
-        .multilineTextAlignment(.center)
-
-      Text("Magnitude: \(String(format: "%.1f", earthquake.magnitude))")
-        .font(.subheadline)
-        .foregroundStyle(earthquake.magnitude.magnitudeColor())
-
-      Text(earthquake.time.formatEarthquakeDate())
-        .font(.caption)
-        .foregroundStyle(Color.secondary)
-    }
-    .padding()
-    .background(.thinMaterial)
-    .clipShape(.rect(cornerRadius: 12))
-    .shadow(radius: 5)
+  init(earthquake: Earthquake) {
+    super.init(frame: .zero)
+    setupUI()
+    configure(with: earthquake)
   }
-}
 
-#Preview {
-  EarthquakePopupView(earthquake: Earthquake.sampleEarthquake)
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  private func configure(with quake: Earthquake) {
+    titleLabel.text = quake.title
+    magnitudeLabel.text = "Magnitude: \(String(format: "%1.f", quake.magnitude))"
+    dateLabel.text = quake.time.formatEarthquakeDate()
+
+    if #available(iOS 15.0, *) {
+      magnitudeLabel.textColor = UIColor(quake.magnitude.magnitudeColor())
+    }
+  }
+
+  private func setupUI() {
+    backgroundColor = .systemBackground.withAlphaComponent(0.8)
+    layer.cornerRadius = 12
+    layer.shadowColor = UIColor.black.cgColor
+    layer.shadowOpacity = 0.2
+    layer.shadowOffset = CGSize(width: 0, height: 4)
+    layer.shadowRadius = 5
+
+    titleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+    titleLabel.textAlignment = .center
+    titleLabel.numberOfLines = 0
+
+    magnitudeLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    magnitudeLabel.textAlignment = .center
+
+    dateLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
+    dateLabel.textColor = .secondaryLabel
+    dateLabel.textAlignment = .center
+
+    let stack = UIStackView(arrangedSubviews: [titleLabel, magnitudeLabel, dateLabel])
+    stack.axis = .vertical
+    stack.spacing = 8
+    stack.translatesAutoresizingMaskIntoConstraints = false
+
+    addSubview(stack)
+    NSLayoutConstraint.activate([
+      stack.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+      stack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+      stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+      stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+    ])
+  }
+
 }
