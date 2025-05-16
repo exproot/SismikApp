@@ -18,10 +18,17 @@ final class EarthquakeDetailCoordinator {
   }
 
   func makeViewController() -> UIViewController {
-    let viewModel = EarthquakeDetailViewModel(earthquake: earthquake)
+    let viewModel = EarthquakeDetailViewModel(earthquake: earthquake, showEarthquakeMap: showEarthquakeMap)
     let detailView = EarthquakeDetailView(viewModel: viewModel)
     let hostingVC = UIHostingController(rootView: detailView)
     return hostingVC
+  }
+
+  private func showEarthquakeMap(_ earthquakes: [Earthquake]) {
+    let earthquakeMapCoordinator = EarthquakeMapCoordinator(navigationController: navigationController)
+    let earthquakeMapController = earthquakeMapCoordinator.makeViewController(earthquakes: earthquakes)
+
+    navigationController?.pushViewController(earthquakeMapController, animated: true)
   }
 
 }

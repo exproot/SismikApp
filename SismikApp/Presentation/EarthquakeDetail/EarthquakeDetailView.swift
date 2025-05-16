@@ -5,6 +5,7 @@
 //  Created by Ertan Yağmur on 26.04.2025.
 //
 
+import MapKit
 import SwiftUI
 
 struct EarthquakeDetailView: View {
@@ -13,37 +14,38 @@ struct EarthquakeDetailView: View {
 
   var body: some View {
     ScrollView {
-      VStack(alignment: .leading, spacing: 16) {
-        Text(viewModel.title)
-          .font(.title)
-          .fontWeight(.bold)
-          .padding(.bottom, 8)
+      VStack(alignment: .leading, spacing: 20) {
+        // Title
+        VStack(alignment: .leading, spacing: 4) {
+          Text(viewModel.title)
+            .font(.title2.bold())
 
-        Text(viewModel.magnitudeText)
-          .font(.headline)
-
-        Text(viewModel.timeText)
-          .font(.subheadline)
-          .foregroundColor(.secondary)
+          Label(viewModel.magnitudeText, systemImage: "waveform.path.ecg")
+            .foregroundStyle(viewModel.magnitudeColor)
+        }
 
         Divider()
 
-        Text(viewModel.locationText)
-          .font(.body)
+        // Info Section
+        VStack(alignment: .leading, spacing: 12) {
+          Label(viewModel.locationText, systemImage: "location.fill")
+          Label(viewModel.depthText, systemImage: "arrow.down.to.line")
+          Label(viewModel.timeText, systemImage: "clock")
+        }
+        .font(.body)
 
-        Text(viewModel.depthText)
-          .font(.body)
+        Divider()
 
-        Spacer()
+        MiniMapViewWrapper(earthquake: viewModel.quake)
+          .frame(height: 200)
+          .onTapGesture {
+            viewModel.showEarthquakeMap?([viewModel.quake])
+          }
       }
       .padding()
     }
     .navigationTitle("Details")
   }
-}
-
-#Preview {
-  EarthquakeDetailView(viewModel: EarthquakeDetailViewModel(earthquake: Earthquake.sampleEarthquake))
 }
 
 
