@@ -14,20 +14,22 @@ struct EarthquakeMapView: View {
 
   var body: some View {
     ZStack {
-      Map(coordinateRegion: $viewModel.region, annotationItems: viewModel.earthquakes) { earthquake in
+      Map(coordinateRegion: regionBinding(), annotationItems: viewModel.earthquakes) { earthquake in
         MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: earthquake.latitude, longitude: earthquake.longitude)) {
           EarthquakePinView(magnitude: earthquake.magnitude)
             .highPriorityGesture(
               TapGesture()
                 .onEnded {
-                  viewModel.selectedEarthquake = earthquake
+                    viewModel.selectedEarthquake = earthquake
                 }
             )
         }
       }
       .contentShape(Rectangle())
       .onTapGesture {
-        viewModel.selectedEarthquake = nil
+        DispatchQueue.main.async {
+          viewModel.selectedEarthquake = nil
+        }
       }
       .ignoresSafeArea()
 
@@ -42,6 +44,20 @@ struct EarthquakeMapView: View {
         }
       }
     }
+  }
+
+}
+
+extension EarthquakeMapView {
+  private func regionBinding() -> Binding<MKCoordinateRegion> {
+    Binding(
+      get: { viewModel.region },
+      set: { newValue in
+        DispatchQueue.main.async {
+          viewModel.region = newValue
+        }
+      }
+    )
   }
 }
 
