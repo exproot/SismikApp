@@ -30,9 +30,12 @@ final class EarthquakeMapViewController: UIViewController {
     setupMap()
     bindViewModel()
 
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
-      self?.updateBoundingOverlay()
-    }
+    navigationItem.rightBarButtonItem = UIBarButtonItem(
+      image: UIImage(systemName: "location.fill"),
+      style: .plain,
+      target: self,
+      action: #selector(didTapRecenter)
+    )
   }
 
   private func bindViewModel() {
@@ -166,7 +169,14 @@ extension EarthquakeMapViewController: MKMapViewDelegate {
 
 // MARK: Selectors
 extension EarthquakeMapViewController {
+
+  @objc private func didTapRecenter() {
+    mapView.setRegion(viewModel.region, animated: true)
+    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+  }
+
   @objc private func handleMapTap() {
     viewModel.selectedEarthquake = nil
   }
+
 }
