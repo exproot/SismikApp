@@ -31,8 +31,10 @@
 		7022EAD82DBD6AFA0099C8D1 /* EarthquakeFeatureDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7022EAD72DBD6AFA0099C8D1 /* EarthquakeFeatureDTO+Mapping.swift */; };
 		7022EADA2DBD6B410099C8D1 /* MockEarthquakeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7022EAD92DBD6B410099C8D1 /* MockEarthquakeRepository.swift */; };
 		7022EADE2DBD6D2E0099C8D1 /* DefaultFetchNearbyEarthquakesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7022EADD2DBD6D2E0099C8D1 /* DefaultFetchNearbyEarthquakesUseCase.swift */; };
-		702A78992DBFBF1500AF88F2 /* EarthquakePinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702A78972DBFBF1500AF88F2 /* EarthquakePinView.swift */; };
 		702A789F2DBFC5EA00AF88F2 /* EarthquakePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702A789E2DBFC5EA00AF88F2 /* EarthquakePopupView.swift */; };
+		7042756F2DD79BFA00FB22B8 /* EarthquakeMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7042756E2DD79BFA00FB22B8 /* EarthquakeMapViewController.swift */; };
+		704275712DD7B02600FB22B8 /* EarthquakeAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704275702DD7B02600FB22B8 /* EarthquakeAnnotation.swift */; };
+		704275732DD7B02A00FB22B8 /* EarthquakePinAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704275722DD7B02A00FB22B8 /* EarthquakePinAnnotationView.swift */; };
 		706578BA2DC956C50018A011 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 706578B92DC956C50018A011 /* LaunchScreen.storyboard */; };
 		70BF513E2DBEE7BD009F1E8D /* Double+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF513D2DBEE7BD009F1E8D /* Double+Ext.swift */; };
 		70BF515F2DBEED0A009F1E8D /* EarthquakeDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF51532DBEED0A009F1E8D /* EarthquakeDetailsCoordinator.swift */; };
@@ -47,7 +49,6 @@
 		70BF516F2DBEF24F009F1E8D /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF516E2DBEF24F009F1E8D /* LoadingView.swift */; };
 		70BF51712DBEF257009F1E8D /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF51702DBEF257009F1E8D /* ErrorView.swift */; };
 		70BF51732DBEF25F009F1E8D /* EarthquakeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF51722DBEF25F009F1E8D /* EarthquakeList.swift */; };
-		70BF51792DBEF68C009F1E8D /* EarthquakeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF51772DBEF68C009F1E8D /* EarthquakeMapView.swift */; };
 		70BF517B2DBEF9B3009F1E8D /* EarthquakeMapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF517A2DBEF9B3009F1E8D /* EarthquakeMapCoordinator.swift */; };
 		70BF517D2DBEF9B9009F1E8D /* EarthquakeMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF517C2DBEF9B9009F1E8D /* EarthquakeMapViewModel.swift */; };
 		70BF51862DBEF9D9009F1E8D /* MapRegionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF51832DBEF9D9009F1E8D /* MapRegionProvider.swift */; };
@@ -92,8 +93,10 @@
 		7022EAD72DBD6AFA0099C8D1 /* EarthquakeFeatureDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EarthquakeFeatureDTO+Mapping.swift"; sourceTree = "<group>"; };
 		7022EAD92DBD6B410099C8D1 /* MockEarthquakeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEarthquakeRepository.swift; sourceTree = "<group>"; };
 		7022EADD2DBD6D2E0099C8D1 /* DefaultFetchNearbyEarthquakesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFetchNearbyEarthquakesUseCase.swift; sourceTree = "<group>"; };
-		702A78972DBFBF1500AF88F2 /* EarthquakePinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakePinView.swift; sourceTree = "<group>"; };
 		702A789E2DBFC5EA00AF88F2 /* EarthquakePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakePopupView.swift; sourceTree = "<group>"; };
+		7042756E2DD79BFA00FB22B8 /* EarthquakeMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakeMapViewController.swift; sourceTree = "<group>"; };
+		704275702DD7B02600FB22B8 /* EarthquakeAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakeAnnotation.swift; sourceTree = "<group>"; };
+		704275722DD7B02A00FB22B8 /* EarthquakePinAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakePinAnnotationView.swift; sourceTree = "<group>"; };
 		706578B92DC956C50018A011 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		70BF513D2DBEE7BD009F1E8D /* Double+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Ext.swift"; sourceTree = "<group>"; };
 		70BF51532DBEED0A009F1E8D /* EarthquakeDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakeDetailsCoordinator.swift; sourceTree = "<group>"; };
@@ -108,7 +111,6 @@
 		70BF516E2DBEF24F009F1E8D /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		70BF51702DBEF257009F1E8D /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		70BF51722DBEF25F009F1E8D /* EarthquakeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakeList.swift; sourceTree = "<group>"; };
-		70BF51772DBEF68C009F1E8D /* EarthquakeMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakeMapView.swift; sourceTree = "<group>"; };
 		70BF517A2DBEF9B3009F1E8D /* EarthquakeMapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakeMapCoordinator.swift; sourceTree = "<group>"; };
 		70BF517C2DBEF9B9009F1E8D /* EarthquakeMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakeMapViewModel.swift; sourceTree = "<group>"; };
 		70BF51832DBEF9D9009F1E8D /* MapRegionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRegionProvider.swift; sourceTree = "<group>"; };
@@ -392,7 +394,8 @@
 		702A78982DBFBF1500AF88F2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				702A78972DBFBF1500AF88F2 /* EarthquakePinView.swift */,
+				704275722DD7B02A00FB22B8 /* EarthquakePinAnnotationView.swift */,
+				704275702DD7B02600FB22B8 /* EarthquakeAnnotation.swift */,
 				702A789E2DBFC5EA00AF88F2 /* EarthquakePopupView.swift */,
 			);
 			path = Views;
@@ -443,9 +446,9 @@
 			isa = PBXGroup;
 			children = (
 				702A78982DBFBF1500AF88F2 /* Views */,
-				70BF51772DBEF68C009F1E8D /* EarthquakeMapView.swift */,
 				70BF517C2DBEF9B9009F1E8D /* EarthquakeMapViewModel.swift */,
 				70BF517A2DBEF9B3009F1E8D /* EarthquakeMapCoordinator.swift */,
+				7042756E2DD79BFA00FB22B8 /* EarthquakeMapViewController.swift */,
 			);
 			path = EarthquakeMapView;
 			sourceTree = "<group>";
@@ -565,11 +568,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				7022EACA2DBD673A0099C8D1 /* EarthquakeServiceProtocol.swift in Sources */,
-				702A78992DBFBF1500AF88F2 /* EarthquakePinView.swift in Sources */,
 				7022EAD02DBD69540099C8D1 /* EarthquakeRepositoryProtocol.swift in Sources */,
 				70BF515F2DBEED0A009F1E8D /* EarthquakeDetailsCoordinator.swift in Sources */,
 				70BF51602DBEED0A009F1E8D /* EarthquakeDetailView.swift in Sources */,
-				70BF51792DBEF68C009F1E8D /* EarthquakeMapView.swift in Sources */,
 				70BF51612DBEED0A009F1E8D /* EarthquakeDetailViewModel.swift in Sources */,
 				70BF51622DBEED0A009F1E8D /* EarthquakeListCoordinator.swift in Sources */,
 				70BF51632DBEED0A009F1E8D /* EarthquakeListView.swift in Sources */,
@@ -579,6 +580,7 @@
 				70BF51872DBEF9D9009F1E8D /* MapRegionProviding.swift in Sources */,
 				70BF51642DBEED0A009F1E8D /* EarthquakeListViewModel.swift in Sources */,
 				70BF51652DBEED0A009F1E8D /* LocationAccessCoordinator.swift in Sources */,
+				704275712DD7B02600FB22B8 /* EarthquakeAnnotation.swift in Sources */,
 				70BF51662DBEED0A009F1E8D /* LocationAccessView.swift in Sources */,
 				7022EAD42DBD69B90099C8D1 /* DefaultEarthquakeRepository.swift in Sources */,
 				7022EA842DBD4BE10099C8D1 /* AppNavigationControllerProvider.swift in Sources */,
@@ -600,6 +602,8 @@
 				7022EA782DBD44760099C8D1 /* USGSEarthquakeService.swift in Sources */,
 				7022EAD82DBD6AFA0099C8D1 /* EarthquakeFeatureDTO+Mapping.swift in Sources */,
 				70BF517D2DBEF9B9009F1E8D /* EarthquakeMapViewModel.swift in Sources */,
+				7042756F2DD79BFA00FB22B8 /* EarthquakeMapViewController.swift in Sources */,
+				704275732DD7B02A00FB22B8 /* EarthquakePinAnnotationView.swift in Sources */,
 				7022EA4C2DBD22E40099C8D1 /* EarthquakeResponseDTO.swift in Sources */,
 				7022EA742DBD44700099C8D1 /* DefaultLocationManager.swift in Sources */,
 				7022EADE2DBD6D2E0099C8D1 /* DefaultFetchNearbyEarthquakesUseCase.swift in Sources */,
