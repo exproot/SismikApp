@@ -16,19 +16,9 @@ class USGSEarthquakeService: EarthquakeServiceProtocol {
     self.session = session
   }
 
-  func fetchRecentEarthquakes(
-    minLatitude: Double? = nil,
-    maxLatitude: Double? = nil,
-    minLongitude: Double? = nil,
-    maxLongitude: Double? = nil
-  ) -> AnyPublisher<[EarthquakeFeatureDTO], Error> {
+  func fetchRecentEarthquakes(query: EarthquakeQuery) -> AnyPublisher<[EarthquakeFeatureDTO], Error> {
 
-    guard let url = Endpoint.earthquakes(
-      minLatitude: minLatitude,
-      maxLatitude: maxLatitude,
-      minLongitude: minLongitude,
-      maxLongitude: maxLongitude
-    ).url else {
+    guard let url = Endpoint.earthquakes(query: query).url else {
       return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
     }
 

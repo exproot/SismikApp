@@ -8,10 +8,5 @@
 import Combine
 
 protocol EarthquakeRepositoryProtocol {
-  func fetchRecentEarthquakes(
-    minLatitude: Double?,
-    maxLatitude: Double?,
-    minLongitude: Double?,
-    maxLongitude: Double?
-  ) -> AnyPublisher<[Earthquake], Error>
+  func fetchRecentEarthquakes(query: EarthquakeQuery) -> AnyPublisher<[Earthquake], Error>
 }

@@ -53,12 +53,9 @@ final class DefaultEarthquakeListViewModel: EarthquakeListViewModel {
     isLoading = true
     errorMessage = nil
 
-    let minLat = coordinate.latitude - 2.0
-    let maxLat = coordinate.latitude + 2.0
-    let minLon = coordinate.longitude - 2.0
-    let maxLon = coordinate.longitude + 2.0
+    let query = EarthquakeQuery.defaultAround(coordinate)
 
-    fetchNearbyEarthquakesUseCase.execute(minLatitude: minLat, maxLatitude: maxLat, minLongitude: minLon, maxLongitude: maxLon)
+    fetchNearbyEarthquakesUseCase.execute(query: query)
       .sink { [weak self] completion in
         guard let self = self else { return }
         self.isLoading = false

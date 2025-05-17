@@ -20,22 +20,12 @@ final class DefaultEarthquakeRepository {
 // MARK: EarthquakeRepositoryProtocol
 extension DefaultEarthquakeRepository: EarthquakeRepositoryProtocol {
 
-  func fetchRecentEarthquakes(
-    minLatitude: Double?,
-    maxLatitude: Double?,
-    minLongitude: Double?,
-    maxLongitude: Double?
-  ) -> AnyPublisher<[Earthquake], Error> {
-    return service.fetchRecentEarthquakes(
-      minLatitude: minLatitude,
-      maxLatitude: maxLatitude,
-      minLongitude: minLongitude,
-      maxLongitude: maxLongitude
-    )
-    .compactMap { features in
-      features.compactMap { $0.mapToDomain() }
-    }
-    .eraseToAnyPublisher()
+  func fetchRecentEarthquakes(query: EarthquakeQuery) -> AnyPublisher<[Earthquake], Error> {
+    return service.fetchRecentEarthquakes(query: query)
+      .compactMap { features in
+        features.compactMap { $0.mapToDomain() }
+      }
+      .eraseToAnyPublisher()
   }
 
 }

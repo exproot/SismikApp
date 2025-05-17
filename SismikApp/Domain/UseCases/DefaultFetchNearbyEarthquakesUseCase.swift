@@ -22,18 +22,8 @@ class DefaultFetchNearbyEarthquakesUseCase {
 // MARK: FetchNearbyEarthquakesUseCase
 extension DefaultFetchNearbyEarthquakesUseCase: FetchNearbyEarthquakesUseCaseProtocol {
 
-  func execute(
-    minLatitude: Double?,
-    maxLatitude: Double?,
-    minLongitude: Double?,
-    maxLongitude: Double?
-  ) -> AnyPublisher<[Earthquake], Error> {
-    repository.fetchRecentEarthquakes(
-      minLatitude: minLatitude,
-      maxLatitude: maxLatitude,
-      minLongitude: minLongitude,
-      maxLongitude: maxLongitude
-    )
+  func execute(query: EarthquakeQuery) -> AnyPublisher<[Earthquake], Error> {
+    repository.fetchRecentEarthquakes(query: query)
   }
 
 }

@@ -55,6 +55,8 @@
 		70BF517D2DBEF9B9009F1E8D /* EarthquakeMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF517C2DBEF9B9009F1E8D /* EarthquakeMapViewModel.swift */; };
 		70BF51862DBEF9D9009F1E8D /* MapRegionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF51832DBEF9D9009F1E8D /* MapRegionProvider.swift */; };
 		70BF51872DBEF9D9009F1E8D /* MapRegionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF51842DBEF9D9009F1E8D /* MapRegionProviding.swift */; };
+		70ED271A2DD8D64500B0FC80 /* EarthquakeQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ED27192DD8D64500B0FC80 /* EarthquakeQuery.swift */; };
+		70ED271E2DD8D69700B0FC80 /* EarthquakeQuery+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ED271D2DD8D69700B0FC80 /* EarthquakeQuery+Default.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +121,8 @@
 		70BF517C2DBEF9B9009F1E8D /* EarthquakeMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakeMapViewModel.swift; sourceTree = "<group>"; };
 		70BF51832DBEF9D9009F1E8D /* MapRegionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRegionProvider.swift; sourceTree = "<group>"; };
 		70BF51842DBEF9D9009F1E8D /* MapRegionProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRegionProviding.swift; sourceTree = "<group>"; };
+		70ED27192DD8D64500B0FC80 /* EarthquakeQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakeQuery.swift; sourceTree = "<group>"; };
+		70ED271D2DD8D69700B0FC80 /* EarthquakeQuery+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EarthquakeQuery+Default.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,6 +257,7 @@
 		7022EA592DBD261C0099C8D1 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				70ED271C2DD8D68800B0FC80 /* Queries */,
 				7022EA5D2DBD27CD0099C8D1 /* Entities */,
 				7022EACE2DBD69480099C8D1 /* Repositories */,
 				7022EA602DBD27DF0099C8D1 /* UseCases */,
@@ -476,6 +481,15 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
+		70ED271C2DD8D68800B0FC80 /* Queries */ = {
+			isa = PBXGroup;
+			children = (
+				70ED27192DD8D64500B0FC80 /* EarthquakeQuery.swift */,
+				70ED271D2DD8D69700B0FC80 /* EarthquakeQuery+Default.swift */,
+			);
+			path = Queries;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -590,9 +604,11 @@
 				7042757D2DD7CCF300FB22B8 /* MiniMapViewWrapper.swift in Sources */,
 				70BF51622DBEED0A009F1E8D /* EarthquakeListCoordinator.swift in Sources */,
 				70BF51632DBEED0A009F1E8D /* EarthquakeListView.swift in Sources */,
+				70ED271E2DD8D69700B0FC80 /* EarthquakeQuery+Default.swift in Sources */,
 				70BF517B2DBEF9B3009F1E8D /* EarthquakeMapCoordinator.swift in Sources */,
 				70BF51712DBEF257009F1E8D /* ErrorView.swift in Sources */,
 				70BF51862DBEF9D9009F1E8D /* MapRegionProvider.swift in Sources */,
+				70ED271A2DD8D64500B0FC80 /* EarthquakeQuery.swift in Sources */,
 				70BF51872DBEF9D9009F1E8D /* MapRegionProviding.swift in Sources */,
 				70BF51642DBEED0A009F1E8D /* EarthquakeListViewModel.swift in Sources */,
 				70BF51652DBEED0A009F1E8D /* LocationAccessCoordinator.swift in Sources */,
