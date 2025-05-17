@@ -10,10 +10,5 @@ import Combine
 import Foundation
 
 protocol EarthquakeServiceProtocol {
-  func fetchRecentEarthquakes(
-    minLatitude: Double?,
-    maxLatitude: Double?,
-    minLongitude: Double?,
-    maxLongitude: Double?
-  ) -> AnyPublisher<[EarthquakeFeatureDTO], Error>
+  func fetchRecentEarthquakes(query: EarthquakeQuery) -> AnyPublisher<[EarthquakeFeatureDTO], Error>
 }

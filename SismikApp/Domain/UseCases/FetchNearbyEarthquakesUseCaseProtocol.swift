@@ -9,10 +9,5 @@ import Combine
 import Foundation
 
 protocol FetchNearbyEarthquakesUseCaseProtocol {
-  func execute(
-    minLatitude: Double?,
-    maxLatitude: Double?,
-    minLongitude: Double?,
-    maxLongitude: Double?
-  ) -> AnyPublisher<[Earthquake], Error>
+  func execute(query: EarthquakeQuery) -> AnyPublisher<[Earthquake], Error>
 }

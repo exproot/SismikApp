@@ -11,7 +11,7 @@ enum AppNavigationControllerProvider {
   static func makeNavigationController() -> UINavigationController {
     let navVC = UINavigationController()
 
-    navVC.navigationBar.prefersLargeTitles = true
+    navVC.navigationBar.prefersLargeTitles = false
     return navVC
   }
 }

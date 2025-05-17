@@ -17,11 +17,18 @@ struct EarthquakeListView: View {
     }
     .navigationTitle("Recent Earthquakes")
     .toolbar {
-      ToolbarItem(placement: .topBarTrailing) {
+
+      ToolbarItemGroup(placement: .topBarTrailing) {
         Button {
           viewModel.showEarthquakeMap?(viewModel.earthquakes)
         } label: {
           Image(systemName: "map")
+        }
+
+        Button {
+          viewModel.showFilter()
+        } label: {
+          Image(systemName: "line.3.horizontal.decrease.circle")
         }
       }
     }
@@ -41,12 +48,13 @@ struct EarthquakeListView: View {
     } else if viewModel.earthquakes.isEmpty {
       EmptyStateView()
     } else {
-      EarthquakeList(earthquakes: viewModel.earthquakes) { earthquake in
-        viewModel.showEarthquakeDetails?(earthquake)
-      } onRefresh: {
-        viewModel.requestUserLocation()
+      if let summary = viewModel.filterSummaryText {
+        EarthquakeList(earthquakes: viewModel.earthquakes, summaryText: summary) { earthquake in
+          viewModel.showEarthquakeDetails?(earthquake)
+        } onRefresh: {
+          viewModel.requestUserLocation()
+        }
       }
-
     }
   }
 }
