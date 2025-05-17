@@ -10,7 +10,7 @@ import Combine
 import Foundation
 
 protocol EarthquakeListViewModelInput {
-  func fetchEarthquakes(around coordinate: CLLocationCoordinate2D)
+  func fetchFilteredEarthquakes(with query: EarthquakeQuery)
 }
 
 protocol EarthquakeListViewModelOutput: ObservableObject {
@@ -31,29 +31,58 @@ final class DefaultEarthquakeListViewModel: EarthquakeListViewModel {
   private let fetchNearbyEarthquakesUseCase: FetchNearbyEarthquakesUseCaseProtocol
   private let locationManager: LocationManagerProtocol
 
+  private var lastCoordinate: CLLocationCoordinate2D?
+  private var lastQuery: EarthquakeQuery?
+
   var showLocationDeniedScreen: (() -> Void)?
   var showEarthquakeDetails: ((Earthquake) -> Void)?
   var showEarthquakeMap: (([Earthquake]) -> Void)?
+  var showFilterSheet: ((CLLocationCoordinate2D, EarthquakeQuery) -> Void)?
+
+  var filterSummaryText: String? {
+    guard let query = lastQuery else { return nil }
+
+    let magText = "Magnitude \(String(format: "%.1f", query.minMagnitude ?? 0.0)) – \(String(format: "%.1f", query.maxMagnitude ?? 10.0))"
+
+    let formatter = DateFormatter()
+    formatter.dateStyle = .medium
+
+    if let start = query.startTime, let end = query.endTime {
+      return "\(magText), \(formatter.string(from: start)) – \(formatter.string(from: end))"
+    } else {
+      return "\(magText)"
+    }
+  }
 
   init(
     fetchNearbyEarthquakesUseCase: FetchNearbyEarthquakesUseCaseProtocol,
     locationManager: LocationManagerProtocol,
     showLocationDeniedScreen: @escaping () -> Void,
     showEarthquakeDetails: @escaping (Earthquake) -> Void,
-    showEarthquakeMap: @escaping ([Earthquake]) -> Void
-  ) {
+    showEarthquakeMap: @escaping ([Earthquake]) -> Void,
+    showFilterSheet: @escaping (CLLocationCoordinate2D, EarthquakeQuery) -> Void)
+  {
     self.fetchNearbyEarthquakesUseCase = fetchNearbyEarthquakesUseCase
     self.locationManager = locationManager
     self.showLocationDeniedScreen = showLocationDeniedScreen
     self.showEarthquakeDetails = showEarthquakeDetails
     self.showEarthquakeMap = showEarthquakeMap
+    self.showFilterSheet = showFilterSheet
   }
 
-  func fetchEarthquakes(around coordinate: CLLocationCoordinate2D) {
+  func showFilter() {
+    if let coordinate = lastCoordinate,
+       let query = lastQuery
+    {
+      showFilterSheet?(coordinate, query)
+    }
+  }
+
+  func fetchFilteredEarthquakes(with query: EarthquakeQuery) {
     isLoading = true
     errorMessage = nil
-
-    let query = EarthquakeQuery.defaultAround(coordinate)
+    lastQuery = query
+    query.saveToDefaults()
 
     fetchNearbyEarthquakesUseCase.execute(query: query)
       .sink { [weak self] completion in
@@ -87,7 +116,9 @@ final class DefaultEarthquakeListViewModel: EarthquakeListViewModel {
 
     locationManager.locationPublisher
       .sink { [weak self] coordinate in
-        self?.fetchEarthquakes(around: coordinate)
+        let query = EarthquakeQuery.loadFromDefaults() ?? EarthquakeQuery.defaultAround(coordinate)
+        self?.fetchFilteredEarthquakes(with: query)
+        self?.lastCoordinate = coordinate
       }
       .store(in: &cancellables)
 

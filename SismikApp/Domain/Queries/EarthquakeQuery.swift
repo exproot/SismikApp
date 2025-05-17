@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct EarthquakeQuery {
+struct EarthquakeQuery: Codable, Equatable, Hashable {
   var minLatitude: Double?
   var maxLatitude: Double?
   var minLongitude: Double?
