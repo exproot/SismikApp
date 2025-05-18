@@ -28,6 +28,15 @@ enum EarthquakeFilterSnapshotBuilder {
         viewModel?.maxMagnitude = newVal
       })
 
+    let radiusSliderVM = SliderCellViewModel(
+      title: "Search Radius (km)",
+      value: viewModel.searchRadius,
+      minValue: 100.0,
+      maxValue: 1000.0,
+      onChange: { [weak viewModel] newVal in
+        viewModel?.searchRadius = newVal
+      })
+
     let startDateVM = DatePickerCellViewModel(
       title: "Start Date",
       date: viewModel.startDate,
@@ -57,7 +66,7 @@ enum EarthquakeFilterSnapshotBuilder {
     var snapshot = NSDiffableDataSourceSnapshot<FilterSection, FilterItem>()
 
     snapshot.appendSections([.magnitude, .timeRange, .actions])
-    snapshot.appendItems([.slider(minSliderVM), .slider(maxSliderVM)], toSection: .magnitude)
+    snapshot.appendItems([.slider(minSliderVM), .slider(maxSliderVM), .slider(radiusSliderVM)], toSection: .magnitude)
     snapshot.appendItems([.datePicker(startDateVM), .datePicker(endDateVM)], toSection: .timeRange)
     snapshot.appendItems([.buttonGroup(actionsVM)], toSection: .actions)
 

@@ -14,6 +14,7 @@ struct EarthquakeQuery: Codable, Equatable, Hashable {
   var maxLongitude: Double?
   var minMagnitude: Double?
   var maxMagnitude: Double?
+  var radiusKm: Double?
   var startTime: Date?
   var endTime: Date?
   var eventType: String? = "earthquake"

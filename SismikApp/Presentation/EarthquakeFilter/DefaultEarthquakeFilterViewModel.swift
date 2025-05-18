@@ -28,6 +28,7 @@ protocol EarthquakeFilterViewModelInput {
 protocol EarthquakeFilterViewModelOutput {
   var minMagnitude: Double { get set }
   var maxMagnitude: Double { get set }
+  var searchRadius: Double { get set }
   var startDate: Date { get set }
   var endDate: Date { get set }
 
@@ -42,6 +43,7 @@ final class DefaultEarthquakeFilterViewModel: EarthquakeFilterViewModelType {
 
   var minMagnitude: Double
   var maxMagnitude: Double
+  var searchRadius: Double
   var startDate: Date
   var endDate: Date
 
@@ -55,19 +57,22 @@ final class DefaultEarthquakeFilterViewModel: EarthquakeFilterViewModelType {
   init(initialQuery: EarthquakeQuery, coordinate: CLLocationCoordinate2D) {
     self.minMagnitude = initialQuery.minMagnitude ?? 4.0
     self.maxMagnitude = initialQuery.maxMagnitude ?? 10.0
+    self.searchRadius = initialQuery.radiusKm ?? 222.0
     self.startDate = initialQuery.startTime ?? Calendar.current.date(byAdding: .day, value: -7, to: Date())!
     self.endDate = initialQuery.endTime ?? Date()
     self.baseCoordinate = coordinate
   }
 
   func applyFilter() {
+    let degreeDelta = searchRadius / 111.0
     let query = EarthquakeQuery(
-      minLatitude: baseCoordinate.latitude - 2,
-      maxLatitude: baseCoordinate.latitude + 2,
-      minLongitude: baseCoordinate.longitude - 2,
-      maxLongitude: baseCoordinate.longitude + 2,
+      minLatitude: baseCoordinate.latitude - degreeDelta,
+      maxLatitude: baseCoordinate.latitude + degreeDelta,
+      minLongitude: baseCoordinate.longitude - degreeDelta,
+      maxLongitude: baseCoordinate.longitude + degreeDelta,
       minMagnitude: minMagnitude,
       maxMagnitude: maxMagnitude,
+      radiusKm: searchRadius,
       startTime: startDate,
       endTime: endDate
     )
@@ -79,6 +84,7 @@ final class DefaultEarthquakeFilterViewModel: EarthquakeFilterViewModelType {
   func resetToDefaults() {
     minMagnitude = 4.0
     maxMagnitude = 10.0
+    searchRadius = 222.0
     startDate = Calendar.current.date(byAdding: .day, value: -7, to: Date())!
     endDate = Date()
 

@@ -36,7 +36,7 @@ final class DefaultEarthquakeListViewModel: EarthquakeListViewModel {
 
   var showLocationDeniedScreen: (() -> Void)?
   var showEarthquakeDetails: ((Earthquake) -> Void)?
-  var showEarthquakeMap: (([Earthquake]) -> Void)?
+  var showEarthquakeMap: (([Earthquake], Double) -> Void)?
   var showFilterSheet: ((CLLocationCoordinate2D, EarthquakeQuery) -> Void)?
 
   var filterSummaryText: String? {
@@ -59,7 +59,7 @@ final class DefaultEarthquakeListViewModel: EarthquakeListViewModel {
     locationManager: LocationManagerProtocol,
     showLocationDeniedScreen: @escaping () -> Void,
     showEarthquakeDetails: @escaping (Earthquake) -> Void,
-    showEarthquakeMap: @escaping ([Earthquake]) -> Void,
+    showEarthquakeMap: @escaping ([Earthquake], Double) -> Void,
     showFilterSheet: @escaping (CLLocationCoordinate2D, EarthquakeQuery) -> Void)
   {
     self.fetchNearbyEarthquakesUseCase = fetchNearbyEarthquakesUseCase
@@ -68,6 +68,16 @@ final class DefaultEarthquakeListViewModel: EarthquakeListViewModel {
     self.showEarthquakeDetails = showEarthquakeDetails
     self.showEarthquakeMap = showEarthquakeMap
     self.showFilterSheet = showFilterSheet
+  }
+
+  var searchRadiusKm: Double {
+    if let query = lastQuery,
+       let radiusKm = query.radiusKm
+    {
+      return radiusKm
+    }
+
+    return 222.0
   }
 
   func showFilter() {
