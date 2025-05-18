@@ -19,7 +19,9 @@ struct EarthquakeListView: View {
     .toolbar {
       ToolbarItem(placement: .topBarLeading) {
         Button {
-          viewModel.showEarthquakeMap?(viewModel.earthquakes, viewModel.searchRadiusKm)
+          if let coordinate = viewModel.lastCoordinate {
+            viewModel.showEarthquakeMap?(viewModel.earthquakes, viewModel.searchRadiusKm, coordinate)
+          }
         } label: {
           Image(systemName: "map")
         }

@@ -39,7 +39,7 @@ struct EarthquakeDetailView: View {
         MiniMapViewWrapper(earthquake: viewModel.quake)
           .frame(height: 200)
           .onTapGesture {
-            viewModel.showEarthquakeMap?([viewModel.quake], viewModel.searchRadiusKm)
+            viewModel.showEarthquakeMap?([viewModel.quake], viewModel.searchRadiusKm, viewModel.userCoordinate)
           }
       }
       .padding()

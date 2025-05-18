@@ -64,15 +64,12 @@ final class DefaultEarthquakeFilterViewModel: EarthquakeFilterViewModelType {
   }
 
   func applyFilter() {
-    let degreeDelta = searchRadius / 111.0
     let query = EarthquakeQuery(
-      minLatitude: baseCoordinate.latitude - degreeDelta,
-      maxLatitude: baseCoordinate.latitude + degreeDelta,
-      minLongitude: baseCoordinate.longitude - degreeDelta,
-      maxLongitude: baseCoordinate.longitude + degreeDelta,
+      latitude: baseCoordinate.latitude,
+      longitude: baseCoordinate.longitude,
+      radiusKm: searchRadius,
       minMagnitude: minMagnitude,
       maxMagnitude: maxMagnitude,
-      radiusKm: searchRadius,
       startTime: startDate,
       endTime: endDate
     )

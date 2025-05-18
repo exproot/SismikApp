@@ -49,8 +49,12 @@ final class EarthquakeListCoordinator {
     navigationController?.pushViewController(earthquakeDetailsController, animated: true)
   }
 
-  private func showEarthquakeMap(_ earthquakes: [Earthquake], searchRadiusKm: Double) {
-    let earthquakeMapCoordinator = EarthquakeMapCoordinator(navigationController: navigationController, searchRadiusKm: searchRadiusKm)
+  private func showEarthquakeMap(_ earthquakes: [Earthquake], searchRadiusKm: Double, centerCoordinate: CLLocationCoordinate2D) {
+    let earthquakeMapCoordinator = EarthquakeMapCoordinator(
+      navigationController: navigationController,
+      searchRadiusKm: searchRadiusKm,
+      centerCoordinate: centerCoordinate
+    )
     let earthquakeMapController = earthquakeMapCoordinator.makeViewController(earthquakes: earthquakes)
 
     navigationController?.pushViewController(earthquakeMapController, animated: true)
