@@ -5,6 +5,7 @@
 //  Created by Ertan Yağmur on 26.04.2025.
 //
 
+import CoreLocation
 import SwiftUI
 
 final class EarthquakeDetailCoordinator {
@@ -24,8 +25,12 @@ final class EarthquakeDetailCoordinator {
     return hostingVC
   }
 
-  private func showEarthquakeMap(_ earthquakes: [Earthquake], searchRadiusKm: Double) {
-    let earthquakeMapCoordinator = EarthquakeMapCoordinator(navigationController: navigationController, searchRadiusKm: searchRadiusKm)
+  private func showEarthquakeMap(_ earthquakes: [Earthquake], searchRadiusKm: Double, centerCoordinate: CLLocationCoordinate2D) {
+    let earthquakeMapCoordinator = EarthquakeMapCoordinator(
+      navigationController: navigationController,
+      searchRadiusKm: searchRadiusKm,
+      centerCoordinate: centerCoordinate
+    )
     let earthquakeMapController = earthquakeMapCoordinator.makeViewController(earthquakes: earthquakes)
 
     navigationController?.pushViewController(earthquakeMapController, animated: true)

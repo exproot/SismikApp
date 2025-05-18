@@ -12,14 +12,14 @@ import Foundation
 extension EarthquakeQuery {
 
   static func defaultAround(_ coordinate: CLLocationCoordinate2D, radiusKm: Double = 222) -> EarthquakeQuery {
-    let degreeDelta = radiusKm / 111.0
-
     return EarthquakeQuery(
-      minLatitude: coordinate.latitude - degreeDelta,
-      maxLatitude: coordinate.latitude + degreeDelta,
-      minLongitude: coordinate.longitude - degreeDelta,
-      maxLongitude: coordinate.longitude + degreeDelta,
-      minMagnitude: 4.0
+      latitude: coordinate.latitude,
+      longitude: coordinate.longitude,
+      radiusKm: radiusKm,
+      minMagnitude: 4.0,
+      maxMagnitude: 10.0,
+      startTime: Calendar.current.date(byAdding: .day, value: -7, to: Date()),
+      endTime: Date()
     )
   }
 

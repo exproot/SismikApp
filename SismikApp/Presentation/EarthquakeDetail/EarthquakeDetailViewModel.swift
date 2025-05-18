@@ -18,7 +18,7 @@ final class EarthquakeDetailViewModel: ObservableObject {
   let coordinate: CLLocationCoordinate2D
   let magnitudeColor: Color
 
-  var showEarthquakeMap: (([Earthquake], Double) -> Void)?
+  var showEarthquakeMap: (([Earthquake], Double, CLLocationCoordinate2D) -> Void)?
 
   var searchRadiusKm: Double {
     let query = EarthquakeQuery.loadFromDefaults() ?? EarthquakeQuery.defaultAround(coordinate)
@@ -30,7 +30,18 @@ final class EarthquakeDetailViewModel: ObservableObject {
     return 222.0
   }
 
-  init(earthquake: Earthquake, showEarthquakeMap: @escaping ([Earthquake], Double) -> Void) {
+  var userCoordinate: CLLocationCoordinate2D {
+    if let query = EarthquakeQuery.loadFromDefaults(),
+       let lat = query.latitude,
+       let lon = query.longitude
+    {
+      return CLLocationCoordinate2D(latitude: lat, longitude: lon)
+    }
+
+    return CLLocationCoordinate2D(latitude: 35.0, longitude: 26.0)
+  }
+
+  init(earthquake: Earthquake, showEarthquakeMap: @escaping ([Earthquake], Double, CLLocationCoordinate2D) -> Void) {
     quake = earthquake
     title = earthquake.title
     magnitudeText = "Magnitude: \(String(format: "%.1f", earthquake.magnitude))"

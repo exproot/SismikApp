@@ -30,20 +30,16 @@ enum Endpoint {
         URLQueryItem(name: "limit", value: "\(query.limit)"),
       ]
 
-      if let minLatitude = query.minLatitude {
-        items.append(.init(name: "minlatitude", value: "\(minLatitude)"))
+      if let latitude = query.latitude {
+        items.append(.init(name: "latitude", value: "\(latitude)"))
       }
 
-      if let maxLatitude = query.maxLatitude {
-        items.append(.init(name: "maxlatitude", value: "\(maxLatitude)"))
+      if let longitude = query.longitude {
+        items.append(.init(name: "longitude", value: "\(longitude)"))
       }
 
-      if let minLongitude = query.minLongitude {
-        items.append(.init(name: "minlongitude", value: "\(minLongitude)"))
-      }
-
-      if let maxLongitude = query.maxLongitude {
-        items.append(.init(name: "maxlongitude", value: "\(maxLongitude)"))
+      if let radius = query.radiusKm {
+        items.append(.init(name: "maxradiuskm", value: "\(radius)"))
       }
 
       if let minMagnitude = query.minMagnitude {

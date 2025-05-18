@@ -31,12 +31,12 @@ final class DefaultEarthquakeListViewModel: EarthquakeListViewModel {
   private let fetchNearbyEarthquakesUseCase: FetchNearbyEarthquakesUseCaseProtocol
   private let locationManager: LocationManagerProtocol
 
-  private var lastCoordinate: CLLocationCoordinate2D?
+  private(set) var lastCoordinate: CLLocationCoordinate2D?
   private var lastQuery: EarthquakeQuery?
 
   var showLocationDeniedScreen: (() -> Void)?
   var showEarthquakeDetails: ((Earthquake) -> Void)?
-  var showEarthquakeMap: (([Earthquake], Double) -> Void)?
+  var showEarthquakeMap: (([Earthquake], Double, CLLocationCoordinate2D) -> Void)?
   var showFilterSheet: ((CLLocationCoordinate2D, EarthquakeQuery) -> Void)?
 
   var filterSummaryText: String? {
@@ -59,7 +59,7 @@ final class DefaultEarthquakeListViewModel: EarthquakeListViewModel {
     locationManager: LocationManagerProtocol,
     showLocationDeniedScreen: @escaping () -> Void,
     showEarthquakeDetails: @escaping (Earthquake) -> Void,
-    showEarthquakeMap: @escaping ([Earthquake], Double) -> Void,
+    showEarthquakeMap: @escaping ([Earthquake], Double, CLLocationCoordinate2D) -> Void,
     showFilterSheet: @escaping (CLLocationCoordinate2D, EarthquakeQuery) -> Void)
   {
     self.fetchNearbyEarthquakesUseCase = fetchNearbyEarthquakesUseCase
