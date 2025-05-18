@@ -25,7 +25,7 @@ final class EarthquakePopupView: UIView {
 
   private func configure(with quake: Earthquake) {
     titleLabel.text = quake.title
-    magnitudeLabel.text = "Magnitude: \(String(format: "%1.f", quake.magnitude))"
+    magnitudeLabel.text = "Magnitude: \(String(format: "%.1f", quake.magnitude))"
     dateLabel.text = quake.time.formatEarthquakeDate()
 
     if #available(iOS 15.0, *) {

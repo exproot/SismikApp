@@ -17,14 +17,15 @@ struct EarthquakeListView: View {
     }
     .navigationTitle("Recent Earthquakes")
     .toolbar {
-
-      ToolbarItemGroup(placement: .topBarTrailing) {
+      ToolbarItem(placement: .topBarLeading) {
         Button {
-          viewModel.showEarthquakeMap?(viewModel.earthquakes)
+          viewModel.showEarthquakeMap?(viewModel.earthquakes, viewModel.searchRadiusKm)
         } label: {
           Image(systemName: "map")
         }
+      }
 
+      ToolbarItem(placement: .topBarTrailing) {
         Button {
           viewModel.showFilter()
         } label: {

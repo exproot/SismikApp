@@ -11,15 +11,16 @@ final class EarthquakeMapCoordinator {
 
   weak var navigationController: UINavigationController?
 
-  init(navigationController: UINavigationController? = nil) {
+  private let searchRadiusKm: Double
+
+  init(navigationController: UINavigationController? = nil, searchRadiusKm: Double) {
     self.navigationController = navigationController
+    self.searchRadiusKm = searchRadiusKm
   }
 
   func makeViewController(earthquakes: [Earthquake]) -> UIViewController {
     let mapRegionProvider = MapRegionProvider()
-    let viewModel = EarthquakeMapViewModel(earthquakes: earthquakes, mapRegionProvider: mapRegionProvider)
-//    let view = EarthquakeMapView(viewModel: viewModel)
-//    let hostingVC = UIHostingController(rootView: view)
+    let viewModel = EarthquakeMapViewModel(earthquakes: earthquakes, mapRegionProvider: mapRegionProvider, searchRadiusKm: searchRadiusKm)
     let mapVC = EarthquakeMapViewController(viewModel: viewModel)
 
     return mapVC
