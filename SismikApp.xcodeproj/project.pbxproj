@@ -55,6 +55,11 @@
 		70BF517D2DBEF9B9009F1E8D /* EarthquakeMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF517C2DBEF9B9009F1E8D /* EarthquakeMapViewModel.swift */; };
 		70BF51862DBEF9D9009F1E8D /* MapRegionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF51832DBEF9D9009F1E8D /* MapRegionProvider.swift */; };
 		70BF51872DBEF9D9009F1E8D /* MapRegionProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF51842DBEF9D9009F1E8D /* MapRegionProviding.swift */; };
+		70C175CC2DEB4FA400856824 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C175CB2DEB4FA400856824 /* OnboardingViewController.swift */; };
+		70C175CE2DEB4FCB00856824 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C175CD2DEB4FCB00856824 /* OnboardingPageViewController.swift */; };
+		70C175D02DEB543300856824 /* UserDefaults+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C175CF2DEB543300856824 /* UserDefaults+Ext.swift */; };
+		70C175D22DEB545900856824 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C175D12DEB545900856824 /* OnboardingCoordinator.swift */; };
+		70C175D42DEB625600856824 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C175D32DEB625600856824 /* AppCoordinator.swift */; };
 		70ED271A2DD8D64500B0FC80 /* EarthquakeQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ED27192DD8D64500B0FC80 /* EarthquakeQuery.swift */; };
 		70ED271E2DD8D69700B0FC80 /* EarthquakeQuery+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ED271D2DD8D69700B0FC80 /* EarthquakeQuery+Default.swift */; };
 		70ED27202DD8D97A00B0FC80 /* DefaultEarthquakeFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ED271F2DD8D97A00B0FC80 /* DefaultEarthquakeFilterViewModel.swift */; };
@@ -130,6 +135,11 @@
 		70BF517C2DBEF9B9009F1E8D /* EarthquakeMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakeMapViewModel.swift; sourceTree = "<group>"; };
 		70BF51832DBEF9D9009F1E8D /* MapRegionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRegionProvider.swift; sourceTree = "<group>"; };
 		70BF51842DBEF9D9009F1E8D /* MapRegionProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRegionProviding.swift; sourceTree = "<group>"; };
+		70C175CB2DEB4FA400856824 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		70C175CD2DEB4FCB00856824 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
+		70C175CF2DEB543300856824 /* UserDefaults+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Ext.swift"; sourceTree = "<group>"; };
+		70C175D12DEB545900856824 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
+		70C175D32DEB625600856824 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		70ED27192DD8D64500B0FC80 /* EarthquakeQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakeQuery.swift; sourceTree = "<group>"; };
 		70ED271D2DD8D69700B0FC80 /* EarthquakeQuery+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EarthquakeQuery+Default.swift"; sourceTree = "<group>"; };
 		70ED271F2DD8D97A00B0FC80 /* DefaultEarthquakeFilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultEarthquakeFilterViewModel.swift; sourceTree = "<group>"; };
@@ -208,6 +218,7 @@
 			children = (
 				700CA4722DBBF70200C8759D /* AppDelegate.swift */,
 				700CA4732DBBF70200C8759D /* SceneDelegate.swift */,
+				70C175D32DEB625600856824 /* AppCoordinator.swift */,
 				7022EA832DBD4BE10099C8D1 /* AppNavigationControllerProvider.swift */,
 			);
 			path = App;
@@ -247,6 +258,7 @@
 			children = (
 				7022EA912DBD522F0099C8D1 /* Date+Ext.swift */,
 				70BF513D2DBEE7BD009F1E8D /* Double+Ext.swift */,
+				70C175CF2DEB543300856824 /* UserDefaults+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -254,6 +266,7 @@
 		700CA4992DBBFE2200C8759D /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				70C175CA2DEB4F9700856824 /* Onboarding */,
 				70BF51782DBEF68C009F1E8D /* EarthquakeMapView */,
 				70BF51562DBEED0A009F1E8D /* EarthquakeDetail */,
 				70ED27252DD8E42500B0FC80 /* EarthquakeFilter */,
@@ -501,6 +514,16 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
+		70C175CA2DEB4F9700856824 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				70C175CB2DEB4FA400856824 /* OnboardingViewController.swift */,
+				70C175CD2DEB4FCB00856824 /* OnboardingPageViewController.swift */,
+				70C175D12DEB545900856824 /* OnboardingCoordinator.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		70ED271C2DD8D68800B0FC80 /* Queries */ = {
 			isa = PBXGroup;
 			children = (
@@ -646,6 +669,7 @@
 				7042757C2DD7CCF300FB22B8 /* MiniMapView.swift in Sources */,
 				7042757D2DD7CCF300FB22B8 /* MiniMapViewWrapper.swift in Sources */,
 				70BF51622DBEED0A009F1E8D /* EarthquakeListCoordinator.swift in Sources */,
+				70C175D42DEB625600856824 /* AppCoordinator.swift in Sources */,
 				70BF51632DBEED0A009F1E8D /* EarthquakeListView.swift in Sources */,
 				70ED271E2DD8D69700B0FC80 /* EarthquakeQuery+Default.swift in Sources */,
 				70BF517B2DBEF9B3009F1E8D /* EarthquakeMapCoordinator.swift in Sources */,
@@ -669,11 +693,14 @@
 				7022EA4E2DBD22ED0099C8D1 /* EarthquakePropertiesDTO.swift in Sources */,
 				700CA4752DBBF70200C8759D /* AppDelegate.swift in Sources */,
 				70ED27292DD8F0B100B0FC80 /* EarthquakeFilterViewController.swift in Sources */,
+				70C175D22DEB545900856824 /* OnboardingCoordinator.swift in Sources */,
 				7022EAC82DBD671F0099C8D1 /* LocationManagerProtocol.swift in Sources */,
+				70C175CE2DEB4FCB00856824 /* OnboardingPageViewController.swift in Sources */,
 				700CA4762DBBF70200C8759D /* SceneDelegate.swift in Sources */,
 				70ED27332DD9180900B0FC80 /* ButtonGroupCell.swift in Sources */,
 				70BF51732DBEF25F009F1E8D /* EarthquakeList.swift in Sources */,
 				70ED27312DD914E200B0FC80 /* DatePickerCell.swift in Sources */,
+				70C175D02DEB543300856824 /* UserDefaults+Ext.swift in Sources */,
 				7022EA922DBD522F0099C8D1 /* Date+Ext.swift in Sources */,
 				70BF516D2DBEF24A009F1E8D /* EmptyStateView.swift in Sources */,
 				70ED27352DD9250700B0FC80 /* EarthquakeFilterSnapshotBuilder.swift in Sources */,
@@ -681,6 +708,7 @@
 				70BF516F2DBEF24F009F1E8D /* LoadingView.swift in Sources */,
 				7022EA502DBD23100099C8D1 /* EarthquakeGeometryDTO.swift in Sources */,
 				7022EA782DBD44760099C8D1 /* USGSEarthquakeService.swift in Sources */,
+				70C175CC2DEB4FA400856824 /* OnboardingViewController.swift in Sources */,
 				7022EAD82DBD6AFA0099C8D1 /* EarthquakeFeatureDTO+Mapping.swift in Sources */,
 				70BF517D2DBEF9B9009F1E8D /* EarthquakeMapViewModel.swift in Sources */,
 				7042756F2DD79BFA00FB22B8 /* EarthquakeMapViewController.swift in Sources */,
