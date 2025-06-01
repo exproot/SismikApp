@@ -53,6 +53,9 @@ final class SliderCell: UITableViewCell {
   }
 
   func setupUI() {
+    titleLabel.textColor = .secondaryLabel
+    valueLabel.textColor = .label
+
     let stack = UIStackView(arrangedSubviews: [titleLabel, valueLabel, slider])
 
     stack.axis = .vertical

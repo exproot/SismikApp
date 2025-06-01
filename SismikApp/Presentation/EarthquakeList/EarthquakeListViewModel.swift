@@ -42,7 +42,7 @@ final class DefaultEarthquakeListViewModel: EarthquakeListViewModel {
   var filterSummaryText: String? {
     guard let query = lastQuery else { return nil }
 
-    let magText = "Magnitude \(String(format: "%.1f", query.minMagnitude ?? 0.0)) – \(String(format: "%.1f", query.maxMagnitude ?? 10.0))"
+    let magText = "\(NSLocalizedString("earthquakes.magnitude", comment: "")) \(String(format: "%.1f", query.minMagnitude ?? 0.0)) - \(String(format: "%.1f", query.maxMagnitude ?? 10.0))"
 
     let formatter = DateFormatter()
     formatter.dateStyle = .medium
@@ -100,7 +100,7 @@ final class DefaultEarthquakeListViewModel: EarthquakeListViewModel {
         self.isLoading = false
 
         if case .failure = completion {
-          self.errorMessage = "Failed to load earthquakes. Please try again."
+          self.errorMessage = NSLocalizedString("earthquakes.error", comment: "")
         }
       } receiveValue: { [weak self] earthquakes in
         self?.earthquakes = earthquakes

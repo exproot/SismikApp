@@ -44,7 +44,7 @@ struct EarthquakeList: View {
       Text(earthquake.title)
         .font(.headline)
 
-      Text("Mag: \(String(format: "%.1f", earthquake.magnitude))")
+      Text("\(NSLocalizedString("earthquakes.magnitude", comment: "")): \(String(format: "%.1f", earthquake.magnitude))")
         .font(.subheadline)
         .foregroundStyle(earthquake.magnitude.magnitudeColor())
 

@@ -44,14 +44,27 @@ final class EarthquakeDetailViewModel: ObservableObject {
   init(earthquake: Earthquake, showEarthquakeMap: @escaping ([Earthquake], Double, CLLocationCoordinate2D) -> Void) {
     quake = earthquake
     title = earthquake.title
-    magnitudeText = "Magnitude: \(String(format: "%.1f", earthquake.magnitude))"
+    magnitudeText = String(
+      format: NSLocalizedString("detail.magnitude", comment: ""),
+      earthquake.magnitude
+    )
+
+    locationText = String(
+      format: NSLocalizedString("detail.location", comment: ""),
+      earthquake.latitude,
+      earthquake.longitude
+    )
+
+    depthText = String(
+      format: NSLocalizedString("detail.depth", comment: ""),
+      earthquake.depth
+    )
+
     timeText = earthquake.time.formatEarthquakeDate()
-    locationText = "Location: \(String(format: "%.3f", earthquake.latitude)), \(String(format: "%.3f", earthquake.longitude))"
-    depthText = "Depth: \(String(format: "%1.f", earthquake.depth)) km"
+
     coordinate = CLLocationCoordinate2D(latitude: earthquake.latitude, longitude: earthquake.longitude)
     magnitudeColor = earthquake.magnitude.magnitudeColor()
     self.showEarthquakeMap = showEarthquakeMap
   }
-
 
 }

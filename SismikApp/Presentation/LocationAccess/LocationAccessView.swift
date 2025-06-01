@@ -10,12 +10,20 @@ import SwiftUI
 struct LocationAccessView: View {
   var body: some View {
     VStack(spacing: 16) {
-      Text("Location Required")
+      Image(systemName: "location.circle.fill")
+        .resizable()
+        .scaledToFit()
+        .frame(width: 80, height: 80)
+        .foregroundStyle(Color.blue)
+
+      Text(NSLocalizedString("locationAccess.title", comment: ""))
         .font(.headline)
         .bold()
 
-      Text("We need your location to show nearby earthquakes.")
+      Text(NSLocalizedString("locationAccess.desc", comment: ""))
         .font(.subheadline)
+        .foregroundStyle(.secondary)
+        .multilineTextAlignment(.center)
 
       Button {
         if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
@@ -24,7 +32,8 @@ struct LocationAccessView: View {
           }
         }
       } label: {
-        Text("Open Settings")
+        Text(NSLocalizedString("locationAccess.button.settings", comment: ""))
+          .foregroundStyle(Color.blue)
       }
     }
     .padding()

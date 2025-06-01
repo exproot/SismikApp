@@ -11,7 +11,7 @@ import UIKit
 enum EarthquakeFilterSnapshotBuilder {
   static func build(from viewModel: DefaultEarthquakeFilterViewModel) -> NSDiffableDataSourceSnapshot<FilterSection, FilterItem> {
     let minSliderVM = SliderCellViewModel(
-      title: "Min Magnitude",
+      title: NSLocalizedString("filter.minMagnitude", comment: ""),
       value: viewModel.minMagnitude,
       minValue: 0.0,
       maxValue: 10.0,
@@ -20,7 +20,7 @@ enum EarthquakeFilterSnapshotBuilder {
       })
 
     let maxSliderVM = SliderCellViewModel(
-      title: "Max Magnitude",
+      title: NSLocalizedString("filter.maxMagnitude", comment: ""),
       value: viewModel.maxMagnitude,
       minValue: 0.0,
       maxValue: 10.0,
@@ -29,7 +29,7 @@ enum EarthquakeFilterSnapshotBuilder {
       })
 
     let radiusSliderVM = SliderCellViewModel(
-      title: "Search Radius (km)",
+      title: NSLocalizedString("filter.searchRadius", comment: ""),
       value: viewModel.searchRadius,
       minValue: 100.0,
       maxValue: 1000.0,
@@ -38,27 +38,27 @@ enum EarthquakeFilterSnapshotBuilder {
       })
 
     let startDateVM = DatePickerCellViewModel(
-      title: "Start Date",
+      title: NSLocalizedString("filter.startDate", comment: ""),
       date: viewModel.startDate,
       onChange: { [weak viewModel] date in
         viewModel?.startDate = date
       })
 
     let endDateVM = DatePickerCellViewModel(
-      title: "End Date",
+      title: NSLocalizedString("filter.endDate", comment: ""),
       date: viewModel.endDate,
       onChange: { [weak viewModel] date in
         viewModel?.endDate = date
       })
 
     let actionsVM = ButtonGroupCellViewModel(buttons: [
-      .init(title: "Reset", style: .destructive, action: { [weak viewModel] in
+      .init(title: NSLocalizedString("filter.button.reset", comment: ""), style: .destructive, action: { [weak viewModel] in
         viewModel?.resetToDefaults()
       }),
-      .init(title: "Cancel", style: .cancel, action: { [weak viewModel] in
+      .init(title: NSLocalizedString("filter.button.cancel", comment: ""), style: .cancel, action: { [weak viewModel] in
         viewModel?.onDismiss?()
       }),
-      .init(title: "Apply", style: .default, action: { [weak viewModel] in
+      .init(title: NSLocalizedString("filter.button.apply", comment: ""), style: .default, action: { [weak viewModel] in
         viewModel?.applyFilter()
       })
     ])

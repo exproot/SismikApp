@@ -75,6 +75,7 @@
 		70ED27352DD9250700B0FC80 /* EarthquakeFilterSnapshotBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ED27342DD9250700B0FC80 /* EarthquakeFilterSnapshotBuilder.swift */; };
 		70ED27372DD92FA500B0FC80 /* FilterSummaryBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ED27362DD92FA500B0FC80 /* FilterSummaryBannerView.swift */; };
 		70ED27392DD9331900B0FC80 /* EarthquakeQuery+Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ED27382DD9331900B0FC80 /* EarthquakeQuery+Persistence.swift */; };
+		70F683D02DECF34800EC6199 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 70F683CE2DECF34800EC6199 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,6 +159,8 @@
 		70ED27342DD9250700B0FC80 /* EarthquakeFilterSnapshotBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakeFilterSnapshotBuilder.swift; sourceTree = "<group>"; };
 		70ED27362DD92FA500B0FC80 /* FilterSummaryBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSummaryBannerView.swift; sourceTree = "<group>"; };
 		70ED27382DD9331900B0FC80 /* EarthquakeQuery+Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EarthquakeQuery+Persistence.swift"; sourceTree = "<group>"; };
+		70F683CF2DECF34800EC6199 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		70F683D12DECF37400EC6199 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +221,7 @@
 				7022EA592DBD261C0099C8D1 /* Domain */,
 				700CA4992DBBFE2200C8759D /* Presentation */,
 				700CA4662DBBF6F900C8759D /* Supporting */,
+				70F683CE2DECF34800EC6199 /* Localizable.strings */,
 			);
 			path = SismikApp;
 			sourceTree = "<group>";
@@ -643,6 +647,7 @@
 			knownRegions = (
 				en,
 				Base,
+				tr,
 			);
 			mainGroup = 700CA4202DBBF6AB00C8759D;
 			minimizedProjectReferenceProxies = 1;
@@ -666,6 +671,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				700CA46B2DBBF6F900C8759D /* Assets.xcassets in Resources */,
+				70F683D02DECF34800EC6199 /* Localizable.strings in Resources */,
 				70C175F52DEB6FAF00856824 /* globe.lottie in Resources */,
 				70C175F62DEB6FAF00856824 /* filter.lottie in Resources */,
 				70C175F72DEB6FAF00856824 /* map.lottie in Resources */,
@@ -769,6 +775,18 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		70F683CE2DECF34800EC6199 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				70F683CF2DECF34800EC6199 /* en */,
+				70F683D12DECF37400EC6199 /* tr */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		700CA43D2DBBF6AB00C8759D /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -843,6 +861,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -906,6 +925,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

@@ -11,9 +11,8 @@ import SwiftUI
 extension Date {
   func formatEarthquakeDate() -> String {
     let formatter = DateFormatter()
-    formatter.dateStyle = .medium
-    formatter.timeStyle = .short
 
-    return "Time: \(formatter.string(from: self))"
+    formatter.dateFormat =  NSLocalizedString("earthquakes.dateFormat", comment: "")
+    return "\(NSLocalizedString("earthquakes.time", comment: "")): \(formatter.string(from: self))"
   }
 }

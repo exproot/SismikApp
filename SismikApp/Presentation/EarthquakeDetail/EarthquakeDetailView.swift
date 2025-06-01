@@ -44,7 +44,7 @@ struct EarthquakeDetailView: View {
       }
       .padding()
     }
-    .navigationTitle("Details")
+    .navigationTitle(NSLocalizedString("detail.navigation.title", comment: ""))
   }
 }
 
