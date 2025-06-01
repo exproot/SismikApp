@@ -60,6 +60,10 @@
 		70C175D02DEB543300856824 /* UserDefaults+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C175CF2DEB543300856824 /* UserDefaults+Ext.swift */; };
 		70C175D22DEB545900856824 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C175D12DEB545900856824 /* OnboardingCoordinator.swift */; };
 		70C175D42DEB625600856824 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C175D32DEB625600856824 /* AppCoordinator.swift */; };
+		70C175F52DEB6FAF00856824 /* globe.lottie in Resources */ = {isa = PBXBuildFile; fileRef = 70C175F32DEB6FAF00856824 /* globe.lottie */; };
+		70C175F62DEB6FAF00856824 /* filter.lottie in Resources */ = {isa = PBXBuildFile; fileRef = 70C175F22DEB6FAF00856824 /* filter.lottie */; };
+		70C175F72DEB6FAF00856824 /* map.lottie in Resources */ = {isa = PBXBuildFile; fileRef = 70C175F42DEB6FAF00856824 /* map.lottie */; };
+		70C175FA2DEB70A500856824 /* DotLottie in Frameworks */ = {isa = PBXBuildFile; productRef = 70C175F92DEB70A500856824 /* DotLottie */; };
 		70ED271A2DD8D64500B0FC80 /* EarthquakeQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ED27192DD8D64500B0FC80 /* EarthquakeQuery.swift */; };
 		70ED271E2DD8D69700B0FC80 /* EarthquakeQuery+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ED271D2DD8D69700B0FC80 /* EarthquakeQuery+Default.swift */; };
 		70ED27202DD8D97A00B0FC80 /* DefaultEarthquakeFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ED271F2DD8D97A00B0FC80 /* DefaultEarthquakeFilterViewModel.swift */; };
@@ -140,6 +144,9 @@
 		70C175CF2DEB543300856824 /* UserDefaults+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Ext.swift"; sourceTree = "<group>"; };
 		70C175D12DEB545900856824 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
 		70C175D32DEB625600856824 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		70C175F22DEB6FAF00856824 /* filter.lottie */ = {isa = PBXFileReference; lastKnownFileType = file; path = filter.lottie; sourceTree = "<group>"; };
+		70C175F32DEB6FAF00856824 /* globe.lottie */ = {isa = PBXFileReference; lastKnownFileType = file; path = globe.lottie; sourceTree = "<group>"; };
+		70C175F42DEB6FAF00856824 /* map.lottie */ = {isa = PBXFileReference; lastKnownFileType = file; path = map.lottie; sourceTree = "<group>"; };
 		70ED27192DD8D64500B0FC80 /* EarthquakeQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakeQuery.swift; sourceTree = "<group>"; };
 		70ED271D2DD8D69700B0FC80 /* EarthquakeQuery+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EarthquakeQuery+Default.swift"; sourceTree = "<group>"; };
 		70ED271F2DD8D97A00B0FC80 /* DefaultEarthquakeFilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultEarthquakeFilterViewModel.swift; sourceTree = "<group>"; };
@@ -158,6 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70C175FA2DEB70A500856824 /* DotLottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,6 +200,7 @@
 		700CA4662DBBF6F900C8759D /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
+				70C175E82DEB6E7700856824 /* Lottie */,
 				700CA4622DBBF6F900C8759D /* Assets.xcassets */,
 				700CA4632DBBF6F900C8759D /* Info.plist */,
 				706578B92DC956C50018A011 /* LaunchScreen.storyboard */,
@@ -524,6 +533,16 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		70C175E82DEB6E7700856824 /* Lottie */ = {
+			isa = PBXGroup;
+			children = (
+				70C175F22DEB6FAF00856824 /* filter.lottie */,
+				70C175F32DEB6FAF00856824 /* globe.lottie */,
+				70C175F42DEB6FAF00856824 /* map.lottie */,
+			);
+			path = Lottie;
+			sourceTree = "<group>";
+		};
 		70ED271C2DD8D68800B0FC80 /* Queries */ = {
 			isa = PBXGroup;
 			children = (
@@ -573,6 +592,7 @@
 			);
 			name = SismikApp;
 			packageProductDependencies = (
+				70C175F92DEB70A500856824 /* DotLottie */,
 			);
 			productName = SismikApp;
 			productReference = 700CA4292DBBF6AB00C8759D /* SismikApp.app */;
@@ -626,6 +646,9 @@
 			);
 			mainGroup = 700CA4202DBBF6AB00C8759D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				70C175F82DEB70A500856824 /* XCRemoteSwiftPackageReference "dotlottie-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 700CA42A2DBBF6AB00C8759D /* Products */;
 			projectDirPath = "";
@@ -643,6 +666,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				700CA46B2DBBF6F900C8759D /* Assets.xcassets in Resources */,
+				70C175F52DEB6FAF00856824 /* globe.lottie in Resources */,
+				70C175F62DEB6FAF00856824 /* filter.lottie in Resources */,
+				70C175F72DEB6FAF00856824 /* map.lottie in Resources */,
 				706578BA2DC956C50018A011 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1000,6 +1026,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		70C175F82DEB70A500856824 /* XCRemoteSwiftPackageReference "dotlottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/LottieFiles/dotlottie-ios";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		70C175F92DEB70A500856824 /* DotLottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 70C175F82DEB70A500856824 /* XCRemoteSwiftPackageReference "dotlottie-ios" */;
+			productName = DotLottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 700CA4212DBBF6AB00C8759D /* Project object */;
 }

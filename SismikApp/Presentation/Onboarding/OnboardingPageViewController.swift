@@ -5,19 +5,23 @@
 //  Created by Ertan Yağmur on 31.05.2025.
 //
 
-
+import DotLottie
 import UIKit
 
 final class OnboardingPageViewController: UIViewController {
 
   private let titleText: String
   private let descriptionText: String
-  private let imageName: String
+  private let animationName: String
 
-  init(titleText: String, descriptionText: String, imageName: String) {
+  private let titleLabel = UILabel()
+  private let descriptionLabel = UILabel()
+  private var animationView: DotLottieAnimationView?
+
+  init(titleText: String, descriptionText: String, animationName: String) {
     self.titleText = titleText
     self.descriptionText = descriptionText
-    self.imageName = imageName
+    self.animationName = animationName
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -27,37 +31,51 @@ final class OnboardingPageViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .systemBackground
+    setupLottieAnimation()
     setupUI()
+    view.backgroundColor = .systemBackground
+  }
+
+  private func setupLottieAnimation() {
+    let anim = DotLottieAnimation(fileName: animationName, config: AnimationConfig(autoplay: true, loop: true))
+
+    animationView = anim.view()
   }
 
   private func setupUI() {
-    let imageView = UIImageView(image: UIImage(named: imageName))
-    imageView.contentMode = .scaleAspectFit
+    view.backgroundColor = .systemBackground
 
-    let titleLabel = UILabel()
     titleLabel.text = titleText
-    titleLabel.font = .boldSystemFont(ofSize: 24)
+    titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
     titleLabel.textAlignment = .center
+    titleLabel.numberOfLines = 0
 
-    let descriptionLabel = UILabel()
     descriptionLabel.text = descriptionText
     descriptionLabel.font = .systemFont(ofSize: 16)
-    descriptionLabel.numberOfLines = 0
     descriptionLabel.textAlignment = .center
+    descriptionLabel.numberOfLines = 0
+    descriptionLabel.textColor = .secondaryLabel
 
-    let stackView = UIStackView(arrangedSubviews: [imageView, titleLabel, descriptionLabel])
-    stackView.axis = .vertical
-    stackView.spacing = 16
-    stackView.translatesAutoresizingMaskIntoConstraints = false
+    guard let animationView else { return }
 
-    view.addSubview(stackView)
+    animationView.translatesAutoresizingMaskIntoConstraints = false
+    animationView.contentMode = .scaleAspectFit
+
+    let stack = UIStackView(arrangedSubviews: [animationView, titleLabel, descriptionLabel])
+    stack.axis = .vertical
+    stack.spacing = 20
+    stack.alignment = .center
+    stack.translatesAutoresizingMaskIntoConstraints = false
+
+    view.addSubview(stack)
 
     NSLayoutConstraint.activate([
-      stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-      stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-      stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+      animationView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3),
+      animationView.widthAnchor.constraint(equalTo: animationView.heightAnchor),
+
+      stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+      stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+      stack.centerYAnchor.constraint(equalTo: view.centerYAnchor)
     ])
   }
 

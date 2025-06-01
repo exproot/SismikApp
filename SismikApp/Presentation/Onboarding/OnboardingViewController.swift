@@ -24,7 +24,15 @@ class OnboardingViewController: UIPageViewController {
 
   private lazy var nextButton: UIButton = {
     let button = UIButton(type: .system)
-    button.setTitle("Next", for: .normal)
+    var configuration = UIButton.Configuration.filled()
+
+    configuration.cornerStyle = .capsule
+    configuration.baseForegroundColor = .systemBackground
+    configuration.baseBackgroundColor = .systemBlue
+    configuration.buttonSize = .large
+    configuration.title = "Next"
+
+    button.configuration = configuration
     button.addTarget(self, action: #selector(nextTapped), for: .touchUpInside)
     button.translatesAutoresizingMaskIntoConstraints = false
     return button
@@ -36,19 +44,19 @@ class OnboardingViewController: UIPageViewController {
     let page1 = OnboardingPageViewController(
       titleText: "Welcome",
       descriptionText: "Track earthquakes near you in real-time.",
-      imageName: "onboarding1"
+      animationName: "globe"
     )
 
     let page2 = OnboardingPageViewController(
       titleText: "Filters",
       descriptionText: "Filter quakes by date, magnitude and distance.",
-      imageName: "onboarding2"
+      animationName: "filter"
     )
 
     let page3 = OnboardingPageViewController(
       titleText: "Map View",
       descriptionText: "Visualize recent earthquakes on a map.",
-      imageName: "onboarding3"
+      animationName: "map"
     )
 
     self.pages = [page1, page2, page3]
@@ -66,19 +74,19 @@ class OnboardingViewController: UIPageViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    setupControls()
+    setupUI()
   }
 
-  private func setupControls() {
+  private func setupUI() {
     view.addSubview(pageControl)
     view.addSubview(nextButton)
 
     NSLayoutConstraint.activate([
-      pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60),
-      pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
+      nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
-      nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-      nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+      pageControl.bottomAnchor.constraint(equalTo: nextButton.topAnchor, constant: -20),
+      pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
     ])
   }
 

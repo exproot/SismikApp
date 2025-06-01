@@ -17,7 +17,6 @@ final class AppCoordinator {
   }
 
   func start() {
-    UserDefaults.standard.hasSeenOnboarding = false
     if !UserDefaults.standard.hasSeenOnboarding {
       showOnboarding()
     } else {
