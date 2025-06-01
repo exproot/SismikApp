@@ -30,7 +30,7 @@ class OnboardingViewController: UIPageViewController {
     configuration.baseForegroundColor = .systemBackground
     configuration.baseBackgroundColor = .systemBlue
     configuration.buttonSize = .large
-    configuration.title = "Next"
+    configuration.title = NSLocalizedString("onboarding.button.next", comment: "")
 
     button.configuration = configuration
     button.addTarget(self, action: #selector(nextTapped), for: .touchUpInside)
@@ -42,20 +42,20 @@ class OnboardingViewController: UIPageViewController {
 
   init() {
     let page1 = OnboardingPageViewController(
-      titleText: "Welcome",
-      descriptionText: "Track earthquakes near you in real-time.",
+      titleText: NSLocalizedString("onboarding.title1", comment: ""),
+      descriptionText: NSLocalizedString("onboarding.desc1", comment: ""),
       animationName: "globe"
     )
 
     let page2 = OnboardingPageViewController(
-      titleText: "Filters",
-      descriptionText: "Filter quakes by date, magnitude and distance.",
+      titleText: NSLocalizedString("onboarding.title2", comment: ""),
+      descriptionText: NSLocalizedString("onboarding.desc2", comment: ""),
       animationName: "filter"
     )
 
     let page3 = OnboardingPageViewController(
-      titleText: "Map View",
-      descriptionText: "Visualize recent earthquakes on a map.",
+      titleText: NSLocalizedString("onboarding.title3", comment: ""),
+      descriptionText: NSLocalizedString("onboarding.desc3", comment: ""),
       animationName: "map"
     )
 

@@ -57,6 +57,7 @@ final class DatePickerCell: UITableViewCell {
   }
 
   private func setupUI() {
+    titleLabel.textColor = .secondaryLabel
     titleLabel.font = .systemFont(ofSize: 15, weight: .medium)
     datePicker.datePickerMode = .date
 

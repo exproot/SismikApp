@@ -17,11 +17,11 @@ struct EmptyStateView: View {
         .frame(width: 80, height: 80)
         .foregroundStyle(Color.orange)
 
-      Text("No earthquakes nearby")
+      Text(NSLocalizedString("earthquakes.emptyState.title", comment: ""))
         .font(.title2)
         .fontWeight(.semibold)
 
-      Text("You're safe! Check back later for recent seismic activities.")
+      Text(NSLocalizedString("earthquakes.emptyState.desc", comment: ""))
         .font(.body)
         .multilineTextAlignment(.center)
         .foregroundStyle(Color.secondary)

@@ -15,7 +15,7 @@ struct EarthquakeListView: View {
     ZStack {
       content
     }
-    .navigationTitle("Recent Earthquakes")
+    .navigationTitle(NSLocalizedString("earthquakes.navigation.title", comment: ""))
     .toolbar {
       ToolbarItem(placement: .topBarLeading) {
         Button {
