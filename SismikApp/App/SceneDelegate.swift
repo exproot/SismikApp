@@ -10,18 +10,18 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
   var window: UIWindow?
+  var appFlowCoordinator: AppCoordinator?
 
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     guard let windowScene = (scene as? UIWindowScene) else { return }
-    let window = UIWindow(windowScene: windowScene)
     let navigationController = AppNavigationControllerProvider.makeNavigationController()
-    let earthquakeListVC = EarthquakeListCoordinator(navigationController: navigationController).makeViewController()
 
-    navigationController.setViewControllers([earthquakeListVC], animated: false)
+    window = UIWindow(windowScene: windowScene)
+    window?.rootViewController = navigationController
+    window?.makeKeyAndVisible()
 
-    window.rootViewController = navigationController
-    window.makeKeyAndVisible()
-    self.window = window
+    appFlowCoordinator = AppCoordinator(navigationController: navigationController)
+    appFlowCoordinator?.start()
   }
 
 }
