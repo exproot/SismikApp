@@ -1,22 +1,21 @@
 //
-//  EarthquakeFeatureDTO+Mapping.swift
+//  USGSEarthquakeDTO+Mapping.swift
 //  SismikApp
 //
 //  Created by Ertan Yağmur on 26.04.2025.
 //
 
-
 import Foundation
 
-extension EarthquakeFeatureDTO {
-  func mapToDomain() -> Earthquake? {
+extension USGSEarthquakeDTO: EarthquakeDTOConvertible {
+  func toDomainModel() -> Earthquake {
     let longitude = geometry.coordinates[0]
     let latitude = geometry.coordinates[1]
     let depth = geometry.coordinates[2]
-    let time = Date(timeIntervalSince1970: TimeInterval(properties.time / 1000))
+    let time = DateParsers.fromUnixMilliseconds(properties.time)
 
     return Earthquake(
-      id: self.id,
+      id: id,
       title: properties.title,
       magnitude: properties.mag ?? 0.0,
       place: properties.place,
@@ -27,3 +26,5 @@ extension EarthquakeFeatureDTO {
     )
   }
 }
+
+

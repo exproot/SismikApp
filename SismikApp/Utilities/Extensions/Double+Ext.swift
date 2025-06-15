@@ -21,4 +21,8 @@ extension Double {
       return .red
     }
   }
+
+  func toDegreesApprox() -> Double {
+    return self / 111.0
+  }
 }

@@ -18,7 +18,7 @@ final class EarthquakeListCoordinator {
   }
 
   func makeViewController() -> UIViewController {
-    let earthquakeService = USGSEarthquakeService()
+    let earthquakeService = EMSCEarthquakeService()
     let locationManager = DefaultLocationManager()
     let earthquakeRepository = DefaultEarthquakeRepository(service: earthquakeService)
     let fetchNearbyEarthquakesUseCase = DefaultFetchNearbyEarthquakesUseCase(repository: earthquakeRepository)

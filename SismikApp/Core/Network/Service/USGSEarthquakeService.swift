@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-class USGSEarthquakeService: EarthquakeServiceProtocol {
+final class USGSEarthquakeService: EarthquakeServiceProtocol {
 
   private let session: URLSession
 
@@ -16,16 +16,16 @@ class USGSEarthquakeService: EarthquakeServiceProtocol {
     self.session = session
   }
 
-  func fetchRecentEarthquakes(query: EarthquakeQuery) -> AnyPublisher<[EarthquakeFeatureDTO], Error> {
+  func fetchRecentEarthquakes(query: EarthquakeQuery) -> AnyPublisher<[EarthquakeDTOConvertible], Error> {
 
-    guard let url = Endpoint.earthquakes(query: query).url else {
+    guard let url = Endpoint.usgsEarthquakes(query: query).url else {
       return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
     }
 
     return session.dataTaskPublisher(for: url)
-      .map { $0.data }
-      .decode(type: EarthquakeResponseDTO.self, decoder: JSONDecoder())
-      .map { $0.features }
+      .map(\.data)
+      .decode(type: USGSEarthquakeResponseDTO.self, decoder: JSONDecoder())
+      .map { $0.features as [EarthquakeDTOConvertible] }
       .receive(on: DispatchQueue.main)
       .eraseToAnyPublisher()
   }

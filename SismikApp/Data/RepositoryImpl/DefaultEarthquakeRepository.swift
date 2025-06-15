@@ -23,7 +23,7 @@ extension DefaultEarthquakeRepository: EarthquakeRepositoryProtocol {
   func fetchRecentEarthquakes(query: EarthquakeQuery) -> AnyPublisher<[Earthquake], Error> {
     return service.fetchRecentEarthquakes(query: query)
       .compactMap { features in
-        features.compactMap { $0.mapToDomain() }
+        features.compactMap { $0.toDomainModel() }
       }
       .eraseToAnyPublisher()
   }

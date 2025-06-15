@@ -1,14 +1,13 @@
 //
-//  Properties.swift
+//  USGSEarthquakePropertiesDTO.swift
 //  SismikApp
 //
-//  Created by Ertan Yağmur on 26.04.2025.
+//  Created by Ertan Yağmur on 15.06.2025.
 //
-
 
 import Foundation
 
-struct EarthquakePropertiesDTO: Codable {
+struct USGSEarthquakePropertiesDTO: Codable {
   let mag: Double?
   let place: String
   let time: Int64

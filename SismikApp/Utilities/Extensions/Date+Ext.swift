@@ -5,8 +5,7 @@
 //  Created by Ertan Yağmur on 26.04.2025.
 //
 
-
-import SwiftUI
+import Foundation
 
 extension Date {
   func formatEarthquakeDate() -> String {
