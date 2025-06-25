@@ -91,6 +91,7 @@ final class EarthquakeListViewController: UIViewController {
 
   private func setupViews() {
     view.backgroundColor = .systemBackground
+    title = NSLocalizedString("earthquakes.navigation.title", comment: "")
 
     navigationItem.leftBarButtonItem = UIBarButtonItem(
       image: UIImage(systemName: "map"),

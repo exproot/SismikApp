@@ -6,52 +6,39 @@
 //
 
 import MapKit
-import SwiftUI
 
-final class EarthquakeDetailViewModel: ObservableObject {
+final class EarthquakeDetailViewModel {
 
+  // MARK: Dependencies
   private let queryStore: EarthquakeQueryStoring
 
+  // MARK: Input
   let quake: Earthquake
+
+  // MARK: Output
   let title: String
   let magnitudeText: String
   let timeText: String
   let locationText: String
   let depthText: String
   let coordinate: CLLocationCoordinate2D
-  let magnitudeColor: Color
+  let magnitudeColor: UIColor
 
+  // MARK: Callback
   var showEarthquakeMap: (([Earthquake], Double, CLLocationCoordinate2D) -> Void)?
 
-  var searchRadiusKm: Double {
-    let query = queryStore.load() ?? EarthquakeQuery.defaultAround(coordinate)
-
-    if let radiusKm = query.radiusKm {
-      return radiusKm
-    }
-
-    return 222.0
-  }
-
-  var userCoordinate: CLLocationCoordinate2D {
-    if let query = queryStore.load(),
-       let lat = query.latitude,
-       let lon = query.longitude
-    {
-      return CLLocationCoordinate2D(latitude: lat, longitude: lon)
-    }
-
-    return CLLocationCoordinate2D(latitude: 35.0, longitude: 26.0)
-  }
-
+  // MARK: Init
   init(
     earthquake: Earthquake,
     queryStore: EarthquakeQueryStoring,
     showEarthquakeMap: @escaping ([Earthquake], Double, CLLocationCoordinate2D) -> Void
   ) {
     self.queryStore = queryStore
+    self.showEarthquakeMap = showEarthquakeMap
     quake = earthquake
+
     title = earthquake.title
+
     magnitudeText = String(
       format: NSLocalizedString("detail.magnitude", comment: ""),
       earthquake.magnitude
@@ -68,11 +55,29 @@ final class EarthquakeDetailViewModel: ObservableObject {
       earthquake.depth
     )
 
-    timeText = earthquake.time.formatEarthquakeDate()
-
-    coordinate = CLLocationCoordinate2D(latitude: earthquake.latitude, longitude: earthquake.longitude)
     magnitudeColor = earthquake.magnitude.magnitudeColor()
-    self.showEarthquakeMap = showEarthquakeMap
+
+    timeText = earthquake.time.formatEarthquakeDate()
+    coordinate = CLLocationCoordinate2D(latitude: earthquake.latitude, longitude: earthquake.longitude)
+  }
+
+  // MARK: Helpers
+  var searchRadiusKm: Double {
+    let query = queryStore.load() ?? EarthquakeQuery.defaultAround(coordinate)
+
+    return query.radiusKm ?? 222.0
+  }
+
+  var userCoordinate: CLLocationCoordinate2D {
+    guard
+      let query = queryStore.load(),
+      let lat = query.latitude,
+      let lon = query.longitude
+    else {
+      return CLLocationCoordinate2D(latitude: 35.0, longitude: 26.0)
+    }
+
+    return CLLocationCoordinate2D(latitude: lat, longitude: lon)
   }
 
 }
