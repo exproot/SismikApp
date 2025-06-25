@@ -19,7 +19,13 @@ final class EarthquakeDetailCoordinator {
   }
 
   func makeViewController() -> UIViewController {
-    let viewModel = EarthquakeDetailViewModel(earthquake: earthquake, showEarthquakeMap: showEarthquakeMap)
+    let queryStore = DefaultEarthquakeQueryStore()
+
+    let viewModel = EarthquakeDetailViewModel(
+      earthquake: earthquake,
+      queryStore: queryStore,
+      showEarthquakeMap: showEarthquakeMap
+    )
     let detailView = EarthquakeDetailView(viewModel: viewModel)
     let hostingVC = UIHostingController(rootView: detailView)
     return hostingVC

@@ -23,6 +23,7 @@
 
 "earthquakes.loading" = "Yükleniyor...";
 "earthquakes.error" = "Deprem verileri yüklenemedi. Lütfen tekrar deneyin.";
+"earthquakes.error.retry" = "Tekrar dene";
 
 "earthquakes.magnitude" = "Büyüklük";
 "earthquakes.time" = "Tarih";
