@@ -6,7 +6,7 @@
 //
 
 import CoreLocation
-import SwiftUI
+import UIKit
 
 final class EarthquakeDetailCoordinator {
 
@@ -18,7 +18,7 @@ final class EarthquakeDetailCoordinator {
     self.earthquake = earthquake
   }
 
-  func makeViewController() -> UIViewController {
+  func makeViewController() -> EarthquakeDetailViewController {
     let queryStore = DefaultEarthquakeQueryStore()
 
     let viewModel = EarthquakeDetailViewModel(
@@ -26,9 +26,8 @@ final class EarthquakeDetailCoordinator {
       queryStore: queryStore,
       showEarthquakeMap: showEarthquakeMap
     )
-    let detailView = EarthquakeDetailView(viewModel: viewModel)
-    let hostingVC = UIHostingController(rootView: detailView)
-    return hostingVC
+
+    return EarthquakeDetailViewController(viewModel: viewModel)
   }
 
   private func showEarthquakeMap(_ earthquakes: [Earthquake], searchRadiusKm: Double, centerCoordinate: CLLocationCoordinate2D) {
@@ -37,9 +36,9 @@ final class EarthquakeDetailCoordinator {
       searchRadiusKm: searchRadiusKm,
       centerCoordinate: centerCoordinate
     )
-    let earthquakeMapController = earthquakeMapCoordinator.makeViewController(earthquakes: earthquakes)
 
-    navigationController?.pushViewController(earthquakeMapController, animated: true)
+    let mapVC = earthquakeMapCoordinator.makeViewController(earthquakes: earthquakes)
+    navigationController?.pushViewController(mapVC, animated: true)
   }
 
 }

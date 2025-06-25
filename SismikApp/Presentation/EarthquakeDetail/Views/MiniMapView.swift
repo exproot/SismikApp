@@ -9,7 +9,7 @@
 import MapKit
 import SwiftUI
 
-final class MiniMapView: UIView, MKMapViewDelegate {
+final class MiniMapView: UIView {
 
   private let mapView = MKMapView()
 
@@ -47,6 +47,10 @@ final class MiniMapView: UIView, MKMapViewDelegate {
     mapView.delegate = self
   }
 
+}
+
+// MARK: MKMapViewDelegate
+extension MiniMapView: MKMapViewDelegate {
   func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
     guard let quakeAnnotation = annotation as? EarthquakeAnnotation else { return nil }
 
@@ -56,5 +60,4 @@ final class MiniMapView: UIView, MKMapViewDelegate {
     view.configure(with: quakeAnnotation.magnitude)
     return view
   }
-
 }
