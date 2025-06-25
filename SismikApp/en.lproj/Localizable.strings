@@ -23,6 +23,7 @@
 
 "earthquakes.loading" = "Loading...";
 "earthquakes.error" = "Failed to load earthquakes. Please try again.";
+"earthquakes.error.retry" = "Retry";
 
 "earthquakes.magnitude" = "Mag";
 "earthquakes.time" = "Time";

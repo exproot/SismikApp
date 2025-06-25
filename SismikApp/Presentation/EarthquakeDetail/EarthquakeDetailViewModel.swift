@@ -9,6 +9,9 @@ import MapKit
 import SwiftUI
 
 final class EarthquakeDetailViewModel: ObservableObject {
+
+  private let queryStore: EarthquakeQueryStoring
+
   let quake: Earthquake
   let title: String
   let magnitudeText: String
@@ -21,7 +24,7 @@ final class EarthquakeDetailViewModel: ObservableObject {
   var showEarthquakeMap: (([Earthquake], Double, CLLocationCoordinate2D) -> Void)?
 
   var searchRadiusKm: Double {
-    let query = EarthquakeQuery.loadFromDefaults() ?? EarthquakeQuery.defaultAround(coordinate)
+    let query = queryStore.load() ?? EarthquakeQuery.defaultAround(coordinate)
 
     if let radiusKm = query.radiusKm {
       return radiusKm
@@ -31,7 +34,7 @@ final class EarthquakeDetailViewModel: ObservableObject {
   }
 
   var userCoordinate: CLLocationCoordinate2D {
-    if let query = EarthquakeQuery.loadFromDefaults(),
+    if let query = queryStore.load(),
        let lat = query.latitude,
        let lon = query.longitude
     {
@@ -41,7 +44,12 @@ final class EarthquakeDetailViewModel: ObservableObject {
     return CLLocationCoordinate2D(latitude: 35.0, longitude: 26.0)
   }
 
-  init(earthquake: Earthquake, showEarthquakeMap: @escaping ([Earthquake], Double, CLLocationCoordinate2D) -> Void) {
+  init(
+    earthquake: Earthquake,
+    queryStore: EarthquakeQueryStoring,
+    showEarthquakeMap: @escaping ([Earthquake], Double, CLLocationCoordinate2D) -> Void
+  ) {
+    self.queryStore = queryStore
     quake = earthquake
     title = earthquake.title
     magnitudeText = String(

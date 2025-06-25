@@ -5,62 +5,70 @@
 //  Created by Ertan Yağmur on 26.04.2025.
 //
 
+import UIKit
 import CoreLocation
-import SwiftUI
 
 final class EarthquakeListCoordinator {
 
   weak var navigationController: UINavigationController?
   private var activeFilterCoordinator: EarthquakeFilterCoordinator?
+  private var viewModel: DefaultEarthquakeListViewModel?
 
   init(navigationController: UINavigationController?) {
     self.navigationController = navigationController
   }
 
   func makeViewController() -> UIViewController {
-    let earthquakeService = EMSCEarthquakeService()
+    let earthquakeService = USGSEarthquakeService()
     let locationManager = DefaultLocationManager()
+    let locationStateController = DefaultLocationStateController(locationManager: locationManager)
+    let queryStore = DefaultEarthquakeQueryStore()
     let earthquakeRepository = DefaultEarthquakeRepository(service: earthquakeService)
     let fetchNearbyEarthquakesUseCase = DefaultFetchNearbyEarthquakesUseCase(repository: earthquakeRepository)
+
     let earthquakeListViewModel = DefaultEarthquakeListViewModel(
       fetchNearbyEarthquakesUseCase: fetchNearbyEarthquakesUseCase,
-      locationManager: locationManager,
-      showLocationDeniedScreen: showLocationDeniedScreen,
-      showEarthquakeDetails: showEarthquakeDetails,
-      showEarthquakeMap: showEarthquakeMap,
-      showFilterSheet: showFilterSheet
+      locationState: locationStateController,
+      queryStore: queryStore,
+      delegate: self
     )
-    let view = EarthquakeListView(viewModel: earthquakeListViewModel)
-    let hostingVC = UIHostingController(rootView: view)
 
-    return hostingVC
+    self.viewModel = earthquakeListViewModel
+
+    let listVC = EarthquakeListViewController(viewModel: earthquakeListViewModel)
+    return listVC
   }
 
-  private func showLocationDeniedScreen() {
+}
+
+// MARK: EarthquakeListViewModelDelegate
+extension EarthquakeListCoordinator: EarthquakeListViewModelDelegate {
+  func showLocationPermissionScreen() {
     let locationAccessVC = LocationAccessCoordinator(navigationController: navigationController).makeViewController()
 
     navigationController?.present(locationAccessVC, animated: true)
   }
-
-  private func showEarthquakeDetails(_ earthquake: Earthquake) {
+  
+  func showDetail(for earthquake: Earthquake) {
     let earthquakeDetailsCoordinator = EarthquakeDetailCoordinator(navigationController: navigationController, earthquake: earthquake)
     let earthquakeDetailsController = earthquakeDetailsCoordinator.makeViewController()
 
     navigationController?.pushViewController(earthquakeDetailsController, animated: true)
   }
-
-  private func showEarthquakeMap(_ earthquakes: [Earthquake], searchRadiusKm: Double, centerCoordinate: CLLocationCoordinate2D) {
+  
+  func showMap(earthquakes: [Earthquake], radiusKm: Double, center: CLLocationCoordinate2D) {
     let earthquakeMapCoordinator = EarthquakeMapCoordinator(
       navigationController: navigationController,
-      searchRadiusKm: searchRadiusKm,
-      centerCoordinate: centerCoordinate
+      searchRadiusKm: radiusKm,
+      centerCoordinate: center
     )
+
     let earthquakeMapController = earthquakeMapCoordinator.makeViewController(earthquakes: earthquakes)
 
     navigationController?.pushViewController(earthquakeMapController, animated: true)
   }
 
-  private func showFilterSheet(coordinate: CLLocationCoordinate2D, currentQuery: EarthquakeQuery) {
+  func showFilterSheet(coordinate: CLLocationCoordinate2D, currentQuery: EarthquakeQuery) {
     let filterCoordinator = EarthquakeFilterCoordinator(
       navigationController: navigationController,
       coordinate: coordinate,
@@ -70,9 +78,7 @@ final class EarthquakeListCoordinator {
     activeFilterCoordinator = filterCoordinator
 
     let filterVC = filterCoordinator.makeViewController { [weak self] query in
-      if let hostingVC = self?.navigationController?.topViewController as? UIHostingController<EarthquakeListView> {
-        hostingVC.rootView.viewModel.fetchFilteredEarthquakes(with: query)
-      }
+      self?.viewModel?.fetchFilteredEarthquakes(with: query)
     }
 
     filterCoordinator.onCleanup = { [weak self] in
@@ -88,5 +94,4 @@ final class EarthquakeListCoordinator {
 
     navigationController?.present(filterVC, animated: true)
   }
-
 }

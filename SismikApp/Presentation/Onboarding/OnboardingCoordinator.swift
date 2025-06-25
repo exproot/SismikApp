@@ -7,8 +7,10 @@
 
 import UIKit
 
-class OnboardingCoordinator {
+final class OnboardingCoordinator {
+
   weak var navigationController: UINavigationController?
+  var onFinish: (() -> Void)?
 
   init(navigationController: UINavigationController?) {
     self.navigationController = navigationController
@@ -17,15 +19,11 @@ class OnboardingCoordinator {
   func makeViewController() -> UIViewController {
     let onboardingVC = OnboardingViewController()
 
-    onboardingVC.onFinish = showEarthquakeList
+    onboardingVC.onFinish = { [weak self] in
+      self?.onFinish?()
+    }
 
     return onboardingVC
   }
 
-  private func showEarthquakeList() {
-    let listVC = EarthquakeListCoordinator(navigationController: navigationController).makeViewController()
-
-    UserDefaults.standard.hasSeenOnboarding = true
-    navigationController?.setViewControllers([listVC], animated: true)
-  }
 }
