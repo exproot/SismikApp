@@ -14,4 +14,10 @@ extension Date {
     formatter.dateFormat =  NSLocalizedString("earthquakes.dateFormat", comment: "")
     return "\(NSLocalizedString("earthquakes.time", comment: "")): \(formatter.string(from: self))"
   }
+
+  func timeAgoString() -> String {
+    let formatter = RelativeDateTimeFormatter()
+    formatter.unitsStyle = .short
+    return formatter.localizedString(for: self, relativeTo: Date())
+  }
 }

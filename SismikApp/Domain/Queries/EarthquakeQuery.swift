@@ -26,10 +26,10 @@ extension EarthquakeQuery {
     return EarthquakeQuery(
       latitude: coordinate.latitude,
       longitude: coordinate.longitude,
-      radiusKm: radiusKm,
+      radiusKm: radiusKm + 200,
       minMagnitude: 4.0,
       maxMagnitude: 10.0,
-      startTime: Calendar.current.date(byAdding: .day, value: -7, to: Date()),
+      startTime: Calendar.current.date(byAdding: .day, value: -42, to: Date()),
       endTime: Date()
     )
   }
