@@ -13,7 +13,7 @@ final class LoadingView: UIView {
   private let activityIndicator = UIActivityIndicatorView(style: .medium)
   private let loadingLabel: UILabel = {
     let label = UILabel()
-    label.text = NSLocalizedString("earthquakes.loading", comment: "")
+    label.text = NSLocalizedString("explore.loading", comment: "")
     label.font = .preferredFont(forTextStyle: .body)
     label.textColor = .secondaryLabel
     return label

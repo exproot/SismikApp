@@ -1,5 +1,5 @@
 //
-//  EarthquakeListViewModel.swift
+//  EarthquakeExploreViewModel.swift
 //  SismikApp
 //
 //  Created by Ertan Yağmur on 26.04.2025.
@@ -9,43 +9,60 @@ import CoreLocation
 import Combine
 import Foundation
 
-enum EarthquakeListViewState {
+enum EarthquakeExploreViewState {
   case loading
   case loaded([Earthquake])
   case empty
   case error(String)
 }
 
-protocol EarthquakeListViewModelDelegate: AnyObject {
-  func showLocationPermissionScreen()
+protocol EarthquakeExploreViewModelDelegate: AnyObject {
   func showDetail(for earthquake: Earthquake)
   func showMap(earthquakes: [Earthquake], radiusKm: Double, center: CLLocationCoordinate2D)
   func showFilterSheet(coordinate: CLLocationCoordinate2D, currentQuery: EarthquakeQuery)
 }
 
-final class DefaultEarthquakeListViewModel {
+final class EarthquakeExploreViewModel {
 
-  @Published private(set) var state: EarthquakeListViewState = .loading
+  @Published private(set) var state: EarthquakeExploreViewState = .empty
 
   private let fetchNearbyEarthquakesUseCase: FetchNearbyEarthquakesUseCaseProtocol
-  private let locationState: LocationStateControlling
+  private let geocoder: GeocodingServiceProtocol
   private let queryStore: EarthquakeQueryStoring
   private var cancellables = Set<AnyCancellable>()
-  private weak var delegate: EarthquakeListViewModelDelegate?
+  private weak var delegate: EarthquakeExploreViewModelDelegate?
 
   private(set) var lastCoordinate: CLLocationCoordinate2D?
-  private var lastQuery: EarthquakeQuery?
+  private(set) var lastQuery: EarthquakeQuery?
 
   init(
     fetchNearbyEarthquakesUseCase: FetchNearbyEarthquakesUseCaseProtocol,
-    locationState: LocationStateControlling,
+    geocoder: GeocodingServiceProtocol,
     queryStore: EarthquakeQueryStoring,
-    delegate: EarthquakeListViewModelDelegate
+    delegate: EarthquakeExploreViewModelDelegate
   ) {
     self.fetchNearbyEarthquakesUseCase = fetchNearbyEarthquakesUseCase
-    self.locationState = locationState
+    self.geocoder = geocoder
     self.queryStore = queryStore
     self.delegate = delegate
+  }
+
+  func search(for placeName: String) {
+    guard !placeName.isEmpty else { return }
+
+    state = .loading
+
+    geocoder.geocode(placeName)
+      .sink { [weak self] completion in
+        if case .failure = completion {
+          self?.state = .error(NSLocalizedString("explore.geocoding.error", comment: ""))
+        }
+      } receiveValue: { [weak self] coordinate in
+        self?.lastCoordinate = coordinate
+        let query = EarthquakeQuery.defaultAround(coordinate)
+        self?.fetchFilteredEarthquakes(with: query)
+      }
+      .store(in: &cancellables)
   }
 
   func showFilter() {
@@ -55,7 +72,6 @@ final class DefaultEarthquakeListViewModel {
   }
 
   func fetchFilteredEarthquakes(with query: EarthquakeQuery) {
-    state = .loading
     lastQuery = query
     queryStore.save(query)
 
@@ -64,38 +80,13 @@ final class DefaultEarthquakeListViewModel {
         guard let self = self else { return }
 
         if case .failure = completion {
-          self.state = .error(NSLocalizedString("earthquakes.error", comment: ""))
+          self.state = .error(NSLocalizedString("explore.error", comment: ""))
         }
       } receiveValue: { [weak self] earthquakes in
-        if earthquakes.isEmpty {
-          self?.state = .empty
-        } else {
-          self?.state = .loaded(earthquakes)
-        }
+        self?.state = earthquakes.isEmpty ? .empty : .loaded(earthquakes)
       }
       .store(in: &cancellables)
 
-  }
-
-  func requestUserLocation() {
-    locationState.authorizationStatusPublisher
-      .sink { [weak self] status in
-        if status == .denied {
-          self?.delegate?.showLocationPermissionScreen()
-        }
-      }
-      .store(in: &cancellables)
-
-    locationState.coordinatePublisher
-      .sink { [weak self] coordinate in
-        let query = self?.queryStore.load() ?? EarthquakeQuery.defaultAround(coordinate)
-
-        self?.fetchFilteredEarthquakes(with: query)
-        self?.lastCoordinate = coordinate
-      }
-      .store(in: &cancellables)
-
-    locationState.requestLocation()
   }
 
   func didSelectEarthquake(_ earthquake: Earthquake) {

@@ -15,19 +15,21 @@
 
 "onboarding.button.next" = "Devam";
 
-// MARK: - Earthquake List
-"earthquakes.navigation.title" = "Son Depremler";
+// MARK: - Earthquake Explore
+"explore.navigation.title" = "Keşfet";
+"explore.search.placeholder" = "Bir yer ara";
 
-"earthquakes.emptyState.title" = "Yakınlarda deprem bulunamadı.";
-"earthquakes.emptyState.desc" = "Güvendesiniz! Çevrenizdeki sismik aktiviteleri daha sonra tekrar kontrol edebilirsiniz.";
+"explore.emptyState.title" = "Keşfetmeye Başla";
+"explore.emptyState.desc" = "Dünyanın herhangi bir yerindeki depremleri görmek için arama yap.";
 
-"earthquakes.loading" = "Yükleniyor...";
-"earthquakes.error" = "Deprem verileri yüklenemedi. Lütfen tekrar deneyin.";
-"earthquakes.error.retry" = "Tekrar dene";
+"explore.loading" = "Yükleniyor...";
+"explore.error" = "Depremler yüklenemedi. Lütfen tekrar deneyin.";
+"explore.error.retry" = "Yeniden dene";
+"explore.geocoding.error" = "Konum bulunamadı. Lütfen başka bir yer deneyin.";
 
-"earthquakes.magnitude" = "Büyüklük";
-"earthquakes.time" = "Tarih";
-"earthquakes.dateFormat" = "d MMM yyyy HH:mm";
+"explore.magnitude" = "Büyüklük";
+"explore.time" = "Zaman";
+"explore.dateFormat" = "d MMM yyyy HH:mm";
 
 // MARK: - Earthquake Detail
 "detail.navigation.title" = "Detaylar";

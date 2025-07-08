@@ -1,5 +1,5 @@
 //
-//  EarthquakeListSnapshotBuilder.swift
+//  EarthquakeExploreSnapshotBuilder.swift
 //  SismikApp
 //
 //  Created by Ertan Yağmur on 25.06.2025.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class EarthquakeListSnapshotBuilder {
+final class EarthquakeExploreSnapshotBuilder {
 
   enum Section: Int, CaseIterable {
     case main

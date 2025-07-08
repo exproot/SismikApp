@@ -1,5 +1,5 @@
 //
-//  EarthquakeListCoordinator.swift
+//  EarthquakeExploreCoordinator.swift
 //  SismikApp
 //
 //  Created by Ertan Yağmur on 26.04.2025.
@@ -8,11 +8,11 @@
 import UIKit
 import CoreLocation
 
-final class EarthquakeListCoordinator {
+final class EarthquakeExploreCoordinator {
 
   weak var navigationController: UINavigationController?
   private var activeFilterCoordinator: EarthquakeFilterCoordinator?
-  private var viewModel: DefaultEarthquakeListViewModel?
+  private var viewModel: EarthquakeExploreViewModel?
 
   init(navigationController: UINavigationController?) {
     self.navigationController = navigationController
@@ -20,35 +20,28 @@ final class EarthquakeListCoordinator {
 
   func makeViewController() -> UIViewController {
     let earthquakeService = USGSEarthquakeService()
-    let locationManager = DefaultLocationManager()
-    let locationStateController = DefaultLocationStateController(locationManager: locationManager)
+    let geocoder = DefaultGeocodingService()
     let queryStore = DefaultEarthquakeQueryStore()
     let earthquakeRepository = DefaultEarthquakeRepository(service: earthquakeService)
     let fetchNearbyEarthquakesUseCase = DefaultFetchNearbyEarthquakesUseCase(repository: earthquakeRepository)
 
-    let earthquakeListViewModel = DefaultEarthquakeListViewModel(
+    let earthquakeExploreViewModel = EarthquakeExploreViewModel(
       fetchNearbyEarthquakesUseCase: fetchNearbyEarthquakesUseCase,
-      locationState: locationStateController,
+      geocoder: geocoder,
       queryStore: queryStore,
       delegate: self
     )
 
-    self.viewModel = earthquakeListViewModel
+    self.viewModel = earthquakeExploreViewModel
 
-    let listVC = EarthquakeListViewController(viewModel: earthquakeListViewModel)
+    let listVC = EarthquakeExploreViewController(viewModel: earthquakeExploreViewModel)
     return listVC
   }
 
 }
 
 // MARK: EarthquakeListViewModelDelegate
-extension EarthquakeListCoordinator: EarthquakeListViewModelDelegate {
-  func showLocationPermissionScreen() {
-    let locationAccessVC = LocationAccessCoordinator(navigationController: navigationController).makeViewController()
-
-    navigationController?.present(locationAccessVC, animated: true)
-  }
-  
+extension EarthquakeExploreCoordinator: EarthquakeExploreViewModelDelegate {  
   func showDetail(for earthquake: Earthquake) {
     let earthquakeDetailsCoordinator = EarthquakeDetailCoordinator(navigationController: navigationController, earthquake: earthquake)
     let earthquakeDetailsController = earthquakeDetailsCoordinator.makeViewController()

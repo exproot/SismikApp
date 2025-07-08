@@ -23,7 +23,7 @@ final class ErrorView: UIView {
 
   private let retryButton: UIButton = {
     let button = UIButton(type: .system)
-    button.setTitle(NSLocalizedString("earthquakes.error.retry", comment: ""), for: .normal)
+    button.setTitle(NSLocalizedString("explore.error.retry", comment: ""), for: .normal)
     button.titleLabel?.font = .preferredFont(forTextStyle: .body)
     return button
   }()

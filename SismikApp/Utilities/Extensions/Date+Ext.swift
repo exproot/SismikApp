@@ -11,8 +11,8 @@ extension Date {
   func formatEarthquakeDate() -> String {
     let formatter = DateFormatter()
 
-    formatter.dateFormat =  NSLocalizedString("earthquakes.dateFormat", comment: "")
-    return "\(NSLocalizedString("earthquakes.time", comment: "")): \(formatter.string(from: self))"
+    formatter.dateFormat =  NSLocalizedString("explore.dateFormat", comment: "")
+    return "\(NSLocalizedString("explore.time", comment: "")): \(formatter.string(from: self))"
   }
 
   func timeAgoString() -> String {

@@ -1,5 +1,5 @@
 //
-//  EarthquakeListViewController.swift
+//  EarthquakeExploreViewController.swift
 //  SismikApp
 //
 //  Created by Ertan Yağmur on 25.06.2025.
@@ -8,22 +8,23 @@
 import Combine
 import UIKit
 
-final class EarthquakeListViewController: UIViewController {
+final class EarthquakeExploreViewController: UIViewController {
 
   // MARK: UI Components
+  private let searchController = UISearchController(searchResultsController: nil)
   private let tableView = UITableView(frame: .zero, style: .insetGrouped)
   private let loadingView = LoadingView()
   private let emptyView = EmptyStateView()
   private let errorView = ErrorView()
 
   // MARK: Dependencies
-  let viewModel: DefaultEarthquakeListViewModel
-  private let snapshotBuilder = EarthquakeListSnapshotBuilder()
+  let viewModel: EarthquakeExploreViewModel
+  private let snapshotBuilder = EarthquakeExploreSnapshotBuilder()
   private var dataSource: UITableViewDiffableDataSource<Int, Earthquake>?
   private var cancellables = Set<AnyCancellable>()
 
   // MARK: Init
-  init(viewModel: DefaultEarthquakeListViewModel) {
+  init(viewModel: EarthquakeExploreViewModel) {
     self.viewModel = viewModel
     super.init(nibName: nil, bundle: nil)
   }
@@ -35,12 +36,12 @@ final class EarthquakeListViewController: UIViewController {
   // MARK: Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
+    setupSearchController()
     setupViews()
     setupBindings()
-    viewModel.requestUserLocation()
   }
 
-  private func handle(state: EarthquakeListViewState) {
+  private func handle(state: EarthquakeExploreViewState) {
     tableView.refreshControl?.endRefreshing()
     loadingView.isHidden = true
     emptyView.isHidden = true
@@ -60,7 +61,8 @@ final class EarthquakeListViewController: UIViewController {
       errorView.isHidden = false
       errorView.updateMessage(message)
       errorView.setRetryAction { [weak self] in
-        self?.viewModel.requestUserLocation()
+        guard let query = self?.searchController.searchBar.text, !query.isEmpty else { return }
+        self?.viewModel.search(for: query)
       }
     }
   }
@@ -89,23 +91,28 @@ final class EarthquakeListViewController: UIViewController {
     }
   }
 
+  private func setupSearchController() {
+    searchController.obscuresBackgroundDuringPresentation = false
+    searchController.searchBar.placeholder = NSLocalizedString("explore.search.placeholder", comment: "")
+    searchController.searchBar.delegate = self
+    searchController.hidesNavigationBarDuringPresentation = false
+    navigationItem.hidesSearchBarWhenScrolling = false
+    navigationItem.searchController = searchController
+    definesPresentationContext = true
+  }
+
+  private func setupTableHeader() {
+    let header = ExploreActionHeaderView()
+    header.mapButton.addTarget(self, action: #selector(didTapMap), for: .touchUpInside)
+    header.filterButton.addTarget(self, action: #selector(didTapFilter), for: .touchUpInside)
+
+    header.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 56)
+    tableView.tableHeaderView = header
+  }
+
   private func setupViews() {
     view.backgroundColor = .systemBackground
-    title = NSLocalizedString("earthquakes.navigation.title", comment: "")
-
-    navigationItem.leftBarButtonItem = UIBarButtonItem(
-      image: UIImage(systemName: "map"),
-      style: .plain,
-      target: self,
-      action: #selector(didTapMap)
-    )
-
-    navigationItem.rightBarButtonItem = UIBarButtonItem(
-      image: UIImage(systemName: "line.3.horizontal.decrease.circle"),
-      style: .plain,
-      target: self,
-      action: #selector(didTapFilter)
-    )
+    title = NSLocalizedString("explore.navigation.title", comment: "")
 
     tableView.translatesAutoresizingMaskIntoConstraints = false
     tableView.delegate = self
@@ -133,10 +140,11 @@ final class EarthquakeListViewController: UIViewController {
     NSLayoutConstraint.activate([
       tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
       tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
       tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
     ])
 
+    setupTableHeader()
     configureDataSource()
   }
 
@@ -150,17 +158,31 @@ final class EarthquakeListViewController: UIViewController {
   }
 
   @objc private func handlePullToRefresh() {
-    viewModel.requestUserLocation()
+    guard let last = viewModel.lastQuery else {
+      tableView.refreshControl?.endRefreshing()
+      return
+    }
+
+    viewModel.fetchFilteredEarthquakes(with: last)
   }
 
 }
 
 // MARK: UITableViewDelegate
-extension EarthquakeListViewController: UITableViewDelegate {
+extension EarthquakeExploreViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     guard let earthquake = dataSource?.itemIdentifier(for: indexPath) else { return }
 
     viewModel.didSelectEarthquake(earthquake)
     tableView.deselectRow(at: indexPath, animated: true)
+  }
+}
+
+// MARK: UISearchBarDelegate
+extension EarthquakeExploreViewController: UISearchBarDelegate {
+  func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    guard let query = searchBar.text, !query.isEmpty else { return }
+
+    viewModel.search(for: query)
   }
 }

@@ -14,7 +14,7 @@ final class AppCoordinator {
 
   private var onboardingCoordinator: OnboardingCoordinator?
   private var dashboardCoordinator: EarthquakeDashboardCoordinator?
-  private var earthquakeListCoordinator: EarthquakeListCoordinator?
+  private var earthquakeExploreCoordinator: EarthquakeExploreCoordinator?
 
   init(window: UIWindow) {
     self.window = window
@@ -51,17 +51,21 @@ final class AppCoordinator {
     dashboardNav.setViewControllers([dashboardVC], animated: false)
     dashboardNav.tabBarItem = UITabBarItem(title: "Dashboard", image: UIImage(systemName: "house"), tag: 0)
 
-    let listNav = UINavigationController()
-    let earthquakeListCoordinator = EarthquakeListCoordinator(navigationController: listNav)
-    let listVC = earthquakeListCoordinator.makeViewController()
+    let exploreNav = UINavigationController()
+    let earthquakeExploreCoordinator = EarthquakeExploreCoordinator(navigationController: exploreNav)
+    let exploreVC = earthquakeExploreCoordinator.makeViewController()
 
-    listNav.setViewControllers([listVC], animated: false)
-    listNav.tabBarItem = UITabBarItem(title: "Earthquakes", image: UIImage(systemName: "list.bullet"), tag: 1)
+    exploreNav.setViewControllers([exploreVC], animated: false)
+    exploreNav.tabBarItem = UITabBarItem(
+      title: "Explore",
+      image: UIImage(systemName: "globe.europe.africa"),
+      tag: 1
+    )
 
     self.dashboardCoordinator = dashboardCoordinator
-    self.earthquakeListCoordinator = earthquakeListCoordinator
+    self.earthquakeExploreCoordinator = earthquakeExploreCoordinator
 
-    tabBarController.viewControllers = [dashboardNav, listNav]
+    tabBarController.viewControllers = [dashboardNav, exploreNav]
     window.rootViewController = tabBarController
     window.makeKeyAndVisible()
   }

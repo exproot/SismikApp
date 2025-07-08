@@ -15,19 +15,21 @@
 
 "onboarding.button.next" = "Next";
 
-// MARK: - Earthquake List
-"earthquakes.navigation.title" = "Recent Earthquakes";
+// MARK: - Earthquake Explore
+"explore.navigation.title" = "Explore";
+"explore.search.placeholder" = "Search for a place";
 
-"earthquakes.emptyState.title" = "No earthquakes nearby";
-"earthquakes.emptyState.desc" = "You're safe! Check back later for recent seismic activities.";
+"explore.emptyState.title" = "Start Exploring";
+"explore.emptyState.desc" = "Search for any place to see earthquakes around the world.";
 
-"earthquakes.loading" = "Loading...";
-"earthquakes.error" = "Failed to load earthquakes. Please try again.";
-"earthquakes.error.retry" = "Retry";
+"explore.loading" = "Loading...";
+"explore.error" = "Failed to load earthquakes. Please try again.";
+"explore.error.retry" = "Retry";
+"explore.geocoding.error" = "Could not find location. Please try another place.";
 
-"earthquakes.magnitude" = "Mag";
-"earthquakes.time" = "Time";
-"earthquakes.dateFormat" = "MMM d, yyyy HH:mm";
+"explore.magnitude" = "Magnitude";
+"explore.time" = "Time";
+"explore.dateFormat" = "MMM d, yyyy HH:mm";
 
 // MARK: - Earthquake Detail
 "detail.navigation.title" = "Details";

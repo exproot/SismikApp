@@ -30,7 +30,7 @@ final class EarthquakeListCell: UITableViewCell {
   // MARK: Configure
   func configure(with earthquake: Earthquake) {
     titleLabel.text = earthquake.title
-    magnitudeLabel.text = String(format: NSLocalizedString("earthquakes.magnitude", comment: "") + ": %.1f", earthquake.magnitude)
+    magnitudeLabel.text = String(format: NSLocalizedString("explore.magnitude", comment: "") + ": %.1f", earthquake.magnitude)
     magnitudeLabel.textColor = earthquake.magnitude.magnitudeColor()
 
     timeLabel.text = earthquake.time.formatEarthquakeDate()

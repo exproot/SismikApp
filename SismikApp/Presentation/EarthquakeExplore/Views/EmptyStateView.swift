@@ -11,7 +11,7 @@ final class EmptyStateView: UIView {
 
   // MARK: UI Components
   private let imageView: UIImageView = {
-    let image = UIImage(systemName: "exclamationmark.triangle")
+    let image = UIImage(systemName: "globe.desk.fill")
     let view = UIImageView(image: image)
     view.tintColor = .systemOrange
     view.contentMode = .scaleAspectFit
@@ -21,7 +21,7 @@ final class EmptyStateView: UIView {
 
   private let titleLabel: UILabel = {
     let label = UILabel()
-    label.text = NSLocalizedString("earthquakes.emptyState.title", comment: "")
+    label.text = NSLocalizedString("explore.emptyState.title", comment: "")
     label.font = .preferredFont(forTextStyle: .title2)
     label.textAlignment = .center
     label.font = .boldSystemFont(ofSize: 20)
@@ -31,7 +31,7 @@ final class EmptyStateView: UIView {
 
   private let descriptionLabel: UILabel = {
     let label = UILabel()
-    label.text = NSLocalizedString("earthquakes.emptyState.desc", comment: "")
+    label.text = NSLocalizedString("explore.emptyState.desc", comment: "")
     label.font = .preferredFont(forTextStyle: .body)
     label.textAlignment = .center
     label.textColor = .secondaryLabel
