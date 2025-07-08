@@ -331,13 +331,13 @@
 		700CA4992DBBFE2200C8759D /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				704A84962E0C7B7D0064D747 /* EarthquakeDashboard */,
 				70C175CA2DEB4F9700856824 /* Onboarding */,
+				70BF515D2DBEED0A009F1E8D /* LocationAccess */,
+				704A84962E0C7B7D0064D747 /* EarthquakeDashboard */,
 				70BF51782DBEF68C009F1E8D /* EarthquakeMapView */,
 				70BF51562DBEED0A009F1E8D /* EarthquakeDetail */,
 				70ED27252DD8E42500B0FC80 /* EarthquakeFilter */,
 				70BF515A2DBEED0A009F1E8D /* EarthquakeList */,
-				70BF515D2DBEED0A009F1E8D /* LocationAccess */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";

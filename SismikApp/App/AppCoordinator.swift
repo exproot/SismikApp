@@ -9,12 +9,16 @@ import UIKit
 
 final class AppCoordinator {
 
-  var navigationController: UINavigationController
+  var window: UIWindow
+  private var tabBarController: UITabBarController
+
   private var onboardingCoordinator: OnboardingCoordinator?
+  private var dashboardCoordinator: EarthquakeDashboardCoordinator?
   private var earthquakeListCoordinator: EarthquakeListCoordinator?
 
-  init(navigationController: UINavigationController) {
-    self.navigationController = navigationController
+  init(window: UIWindow) {
+    self.window = window
+    self.tabBarController = UITabBarController()
   }
 
   func start() {
@@ -26,25 +30,40 @@ final class AppCoordinator {
   }
 
   private func showOnboarding() {
-    let coordinator = OnboardingCoordinator(navigationController: navigationController)
-    onboardingCoordinator = coordinator
+    let onboardingCoordinator = OnboardingCoordinator(navigationController: UINavigationController())
+    self.onboardingCoordinator = onboardingCoordinator
 
-    coordinator.onFinish = { [weak self] in
+    onboardingCoordinator.onFinish = { [weak self] in
       UserDefaults.standard.hasSeenOnboarding = true
       self?.showMainApp()
       self?.onboardingCoordinator = nil
     }
 
-    let onboardingVC = coordinator.makeViewController()
-    navigationController.setViewControllers([onboardingVC], animated: false)
+    window.rootViewController = onboardingCoordinator.makeViewController()
+    window.makeKeyAndVisible()
   }
 
   private func showMainApp() {
-    let coordinator = EarthquakeListCoordinator(navigationController: navigationController)
-    earthquakeListCoordinator = coordinator
+    let dashboardNav = UINavigationController()
+    let dashboardCoordinator = EarthquakeDashboardCoordinator(navigationController: dashboardNav)
+    let dashboardVC = dashboardCoordinator.makeViewController()
 
-    let earthquakeListVC = coordinator.makeViewController()
+    dashboardNav.setViewControllers([dashboardVC], animated: false)
+    dashboardNav.tabBarItem = UITabBarItem(title: "Dashboard", image: UIImage(systemName: "house"), tag: 0)
 
-    navigationController.setViewControllers([earthquakeListVC], animated: false)
+    let listNav = UINavigationController()
+    let earthquakeListCoordinator = EarthquakeListCoordinator(navigationController: listNav)
+    let listVC = earthquakeListCoordinator.makeViewController()
+
+    listNav.setViewControllers([listVC], animated: false)
+    listNav.tabBarItem = UITabBarItem(title: "Earthquakes", image: UIImage(systemName: "list.bullet"), tag: 1)
+
+    self.dashboardCoordinator = dashboardCoordinator
+    self.earthquakeListCoordinator = earthquakeListCoordinator
+
+    tabBarController.viewControllers = [dashboardNav, listNav]
+    window.rootViewController = tabBarController
+    window.makeKeyAndVisible()
   }
+
 }

@@ -34,7 +34,6 @@ enum EarthquakeDashboardLayoutFactory {
 
     let section = NSCollectionLayoutSection(group: group)
     section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 8, trailing: 16)
-    section.boundarySupplementaryItems = [makeHeader()]
     return section
   }
 
