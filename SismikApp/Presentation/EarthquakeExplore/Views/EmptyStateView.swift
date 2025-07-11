@@ -13,7 +13,7 @@ final class EmptyStateView: UIView {
   private let imageView: UIImageView = {
     let image = UIImage(systemName: "globe.desk.fill")
     let view = UIImageView(image: image)
-    view.tintColor = .systemOrange
+    view.tintColor = UIColor(named: "AccentColor")
     view.contentMode = .scaleAspectFit
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
@@ -24,7 +24,6 @@ final class EmptyStateView: UIView {
     label.text = NSLocalizedString("explore.emptyState.title", comment: "")
     label.font = .preferredFont(forTextStyle: .title2)
     label.textAlignment = .center
-    label.font = .boldSystemFont(ofSize: 20)
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()

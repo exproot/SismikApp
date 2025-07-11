@@ -5,7 +5,6 @@
 //  Created by Ertan Yağmur on 17.05.2025.
 //
 
-import CoreLocation
 import Foundation
 
 enum FilterSection: Int, CaseIterable {
@@ -26,14 +25,8 @@ protocol EarthquakeFilterViewModelInput {
 }
 
 protocol EarthquakeFilterViewModelOutput {
-  var minMagnitude: Double { get set }
-  var maxMagnitude: Double { get set }
-  var searchRadius: Double { get set }
-  var startDate: Date { get set }
-  var endDate: Date { get set }
-
   var onUIUpdate: (() -> Void)? { get set }
-  var onApply: ((EarthquakeQuery) -> Void)? { get set }
+  var onApply: ((EarthquakeFilterOptions) -> Void)? { get set }
   var onDismiss: (() -> Void)? { get set }
 }
 
@@ -41,50 +34,48 @@ typealias EarthquakeFilterViewModelType = EarthquakeFilterViewModelInput & Earth
 
 final class DefaultEarthquakeFilterViewModel: EarthquakeFilterViewModelType {
 
-  var minMagnitude: Double
-  var maxMagnitude: Double
-  var searchRadius: Double
-  var startDate: Date
-  var endDate: Date
+  var initialOptions: EarthquakeFilterOptions
 
   var onUIUpdate: (() -> Void)?
-  var onApply: ((EarthquakeQuery) -> Void)?
+  var onApply: ((EarthquakeFilterOptions) -> Void)?
   var onDismiss: (() -> Void)?
 
-  // MARK: State
-  private let baseCoordinate: CLLocationCoordinate2D
+  init(initialOptions: EarthquakeFilterOptions) {
+    self.initialOptions = initialOptions
+  }
 
-  init(initialQuery: EarthquakeQuery, coordinate: CLLocationCoordinate2D) {
-    self.minMagnitude = initialQuery.minMagnitude ?? 4.0
-    self.maxMagnitude = initialQuery.maxMagnitude ?? 10.0
-    self.searchRadius = initialQuery.radiusKm ?? 222.0
-    self.startDate = initialQuery.startTime ?? Calendar.current.date(byAdding: .day, value: -7, to: Date())!
-    self.endDate = initialQuery.endTime ?? Date()
-    self.baseCoordinate = coordinate
+  var minMagnitude: Double {
+    get { initialOptions.minMagnitude }
+    set { initialOptions.minMagnitude = newValue }
+  }
+
+  var maxMagnitude: Double {
+    get { initialOptions.maxMagnitude }
+    set { initialOptions.maxMagnitude = newValue }
+  }
+
+  var searchRadius: Double {
+    get { initialOptions.radiusKm }
+    set { initialOptions.radiusKm = newValue }
+  }
+
+  var startDate: Date {
+    get { initialOptions.startDate }
+    set { initialOptions.startDate = newValue }
+  }
+
+  var endDate: Date {
+    get { initialOptions.endDate }
+    set { initialOptions.endDate = newValue }
   }
 
   func applyFilter() {
-    let query = EarthquakeQuery(
-      latitude: baseCoordinate.latitude,
-      longitude: baseCoordinate.longitude,
-      radiusKm: searchRadius,
-      minMagnitude: minMagnitude,
-      maxMagnitude: maxMagnitude,
-      startTime: startDate,
-      endTime: endDate
-    )
-
-    onApply?(query)
+    onApply?(initialOptions)
     onDismiss?()
   }
 
   func resetToDefaults() {
-    minMagnitude = 4.0
-    maxMagnitude = 10.0
-    searchRadius = 222.0
-    startDate = Calendar.current.date(byAdding: .day, value: -7, to: Date())!
-    endDate = Date()
-
+    initialOptions = .default
     onUIUpdate?()
   }
   

@@ -16,7 +16,7 @@ final class ErrorView: UIView {
     let label = UILabel()
     label.font = .preferredFont(forTextStyle: .headline)
     label.textAlignment = .center
-    label.textColor = .secondaryLabel
+    label.textColor = .systemRed.withAlphaComponent(0.8)
     label.numberOfLines = 0
     return label
   }()

@@ -41,7 +41,7 @@ final class EarthquakeExploreCoordinator {
 }
 
 // MARK: EarthquakeListViewModelDelegate
-extension EarthquakeExploreCoordinator: EarthquakeExploreViewModelDelegate {  
+extension EarthquakeExploreCoordinator: EarthquakeExploreViewModelDelegate {
   func showDetail(for earthquake: Earthquake) {
     let earthquakeDetailsCoordinator = EarthquakeDetailCoordinator(navigationController: navigationController, earthquake: earthquake)
     let earthquakeDetailsController = earthquakeDetailsCoordinator.makeViewController()
@@ -58,20 +58,21 @@ extension EarthquakeExploreCoordinator: EarthquakeExploreViewModelDelegate {
 
     let earthquakeMapController = earthquakeMapCoordinator.makeViewController(earthquakes: earthquakes)
 
+    earthquakeMapController.hidesBottomBarWhenPushed = true
+
     navigationController?.pushViewController(earthquakeMapController, animated: true)
   }
 
-  func showFilterSheet(coordinate: CLLocationCoordinate2D, currentQuery: EarthquakeQuery) {
+  func showFilterSheet(options: EarthquakeFilterOptions) {
     let filterCoordinator = EarthquakeFilterCoordinator(
       navigationController: navigationController,
-      coordinate: coordinate,
-      initialQuery: currentQuery
+      initialOptions: options
     )
 
     activeFilterCoordinator = filterCoordinator
 
-    let filterVC = filterCoordinator.makeViewController { [weak self] query in
-      self?.viewModel?.fetchFilteredEarthquakes(with: query)
+    let filterVC = filterCoordinator.makeViewController { [weak self] options in
+      self?.viewModel?.updateFilter(options)
     }
 
     filterCoordinator.onCleanup = { [weak self] in
@@ -87,4 +88,5 @@ extension EarthquakeExploreCoordinator: EarthquakeExploreViewModelDelegate {
 
     navigationController?.present(filterVC, animated: true)
   }
+
 }

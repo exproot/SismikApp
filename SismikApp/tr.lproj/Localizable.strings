@@ -15,12 +15,40 @@
 
 "onboarding.button.next" = "Devam";
 
+//MARK: - TabBar
+"tabbar.dashboard" = "Panel";
+"tabbar.explore" = "Keşfet";
+
+//MARK: - Earthquake Dashboard
+"dashboard.navigation.title" = "Panel";
+
+"dashboard.magnitude" = "Büyüklük: %.1f";
+"dashboard.biggest.title" = "Son Dönemin En Büyük Depremi";
+
+"dashboard.section.summary.title" = "Genel Bakış";
+"dashboard.section.summary.total" = "Toplam";
+"dashboard.section.summary.average" = "Ort. Büyüklük";
+"dashboard.section.summary.max.depth" = "Maks. Derinlik";
+
+"dashboard.section.recent.title" = "Son Depremler";
+"dashboard.section.biggest.title" = "En Büyük Deprem";
+"dashboard.section.tip.title" = "Günün Önerisi";
+
+"dashboard.tip.stay.away.windows" = "Deprem sırasında camlardan uzak durun.";
+"dashboard.tip.keep.emergency.kit" = "Bir acil durum çantası hazır bulundurun.";
+"dashboard.tip.drop.cover.hold" = "Çök-Kapan-Tutun uygulayın.";
+"dashboard.tip.identify.safe.spots" = "Her odadaki güvenli alanları belirleyin.";
+"dashboard.tip.have.family.plan" = "Aileniz için acil iletişim planı oluşturun.";
+
 // MARK: - Earthquake Explore
 "explore.navigation.title" = "Keşfet";
 "explore.search.placeholder" = "Bir yer ara";
 
-"explore.emptyState.title" = "Keşfetmeye Başla";
-"explore.emptyState.desc" = "Dünyanın herhangi bir yerindeki depremleri görmek için arama yap.";
+"explore.emptyState.title" = "Henüz Sonuç Yok";
+"explore.emptyState.desc" = "Depremleri görmek için bir lokasyon arayın ve filtreleri uygulayın.";
+
+"explore.segmented.list" = "Liste";
+"explore.segmented.map" = "Harita";
 
 "explore.loading" = "Yükleniyor...";
 "explore.error" = "Depremler yüklenemedi. Lütfen tekrar deneyin.";

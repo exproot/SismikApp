@@ -15,12 +15,40 @@
 
 "onboarding.button.next" = "Next";
 
+//MARK: - TabBar
+"tabbar.dashboard" = "Dashboard";
+"tabbar.explore" = "Explore";
+
+//MARK: - Earthquake Dashboard
+"dashboard.navigation.title" = "Dashboard";
+
+"dashboard.magnitude" = "Magnitude: %.1f";
+"dashboard.biggest.title" = "Biggest Earthquake Recently";
+
+"dashboard.section.summary.title" = "Overview";
+"dashboard.section.summary.total" = "Total";
+"dashboard.section.summary.average" = "Avg. Magnitude";
+"dashboard.section.summary.max.depth" = "Max. Depth";
+
+"dashboard.section.recent.title" = "Recent Earthquakes";
+"dashboard.section.biggest.title" = "Biggest Earthquake";
+"dashboard.section.tip.title" = "Tip of the Day";
+
+"dashboard.tip.stay.away.windows" = "Stay away from windows during a quake.";
+"dashboard.tip.keep.emergency.kit" = "Keep an emergency kit ready.";
+"dashboard.tip.drop.cover.hold" = "Drop, Cover, and Hold On.";
+"dashboard.tip.identify.safe.spots" = "Identify safe spots in each room.";
+"dashboard.tip.have.family.plan" = "Have a family emergency communication plan.";
+
 // MARK: - Earthquake Explore
 "explore.navigation.title" = "Explore";
 "explore.search.placeholder" = "Search for a place";
 
-"explore.emptyState.title" = "Start Exploring";
-"explore.emptyState.desc" = "Search for any place to see earthquakes around the world.";
+"explore.emptyState.title" = "No Results Yet";
+"explore.emptyState.desc" = "Search for a place and apply filters to see earthquakes around the world.";
+
+"explore.segmented.list" = "List";
+"explore.segmented.map" = "Map";
 
 "explore.loading" = "Loading...";
 "explore.error" = "Failed to load earthquakes. Please try again.";
@@ -52,24 +80,3 @@
 "filter.button.reset" = "Reset";
 "filter.button.cancel" = "Cancel";
 "filter.button.apply" = "Apply";
-
-//MARK: - Earthquake Dashboard
-"dashboard.navigation.title" = "Dashboard";
-
-"dashboard.magnitude" = "Magnitude: %.1f";
-"dashboard.biggest.title" = "Biggest Earthquake Recently";
-
-"dashboard.section.summary.title" = "Overview";
-"dashboard.section.recent.title" = "Recent Earthquakes";
-"dashboard.section.biggest.title" = "Biggest Earthquake";
-"dashboard.section.tip.title" = "Tip of the Day";
-
-
-"dashboard.tip.stay.away.windows" = "Stay away from windows during a quake.";
-"dashboard.tip.keep.emergency.kit" = "Keep an emergency kit ready.";
-"dashboard.tip.drop.cover.hold" = "Drop, Cover, and Hold On.";
-"dashboard.tip.identify.safe.spots" = "Identify safe spots in each room.";
-"dashboard.tip.have.family.plan" = "Have a family emergency communication plan.";
-
-
-

@@ -16,15 +16,23 @@ enum EarthquakeExploreViewState {
   case error(String)
 }
 
+enum ExploreViewMode {
+  case list
+  case map
+}
+
 protocol EarthquakeExploreViewModelDelegate: AnyObject {
   func showDetail(for earthquake: Earthquake)
   func showMap(earthquakes: [Earthquake], radiusKm: Double, center: CLLocationCoordinate2D)
-  func showFilterSheet(coordinate: CLLocationCoordinate2D, currentQuery: EarthquakeQuery)
+  func showFilterSheet(options: EarthquakeFilterOptions)
 }
 
 final class EarthquakeExploreViewModel {
 
   @Published private(set) var state: EarthquakeExploreViewState = .empty
+  @Published private(set) var viewMode: ExploreViewMode = .list
+
+  var currentFilterOptions: EarthquakeFilterOptions = .default
 
   private let fetchNearbyEarthquakesUseCase: FetchNearbyEarthquakesUseCaseProtocol
   private let geocoder: GeocodingServiceProtocol
@@ -33,7 +41,6 @@ final class EarthquakeExploreViewModel {
   private weak var delegate: EarthquakeExploreViewModelDelegate?
 
   private(set) var lastCoordinate: CLLocationCoordinate2D?
-  private(set) var lastQuery: EarthquakeQuery?
 
   init(
     fetchNearbyEarthquakesUseCase: FetchNearbyEarthquakesUseCaseProtocol,
@@ -47,9 +54,20 @@ final class EarthquakeExploreViewModel {
     self.delegate = delegate
   }
 
+  func buildQuery(with coordinate: CLLocationCoordinate2D) -> EarthquakeQuery {
+    EarthquakeQuery(
+      latitude: coordinate.latitude,
+      longitude: coordinate.longitude,
+      radiusKm: currentFilterOptions.radiusKm,
+      minMagnitude: currentFilterOptions.minMagnitude,
+      maxMagnitude: currentFilterOptions.maxMagnitude,
+      startTime: currentFilterOptions.startDate,
+      endTime: currentFilterOptions.endDate
+    )
+  }
+
   func search(for placeName: String) {
     guard !placeName.isEmpty else { return }
-
     state = .loading
 
     geocoder.geocode(placeName)
@@ -58,21 +76,33 @@ final class EarthquakeExploreViewModel {
           self?.state = .error(NSLocalizedString("explore.geocoding.error", comment: ""))
         }
       } receiveValue: { [weak self] coordinate in
-        self?.lastCoordinate = coordinate
-        let query = EarthquakeQuery.defaultAround(coordinate)
-        self?.fetchFilteredEarthquakes(with: query)
+        guard let self = self else { return }
+        self.lastCoordinate = coordinate
+
+        let query = self.buildQuery(with: coordinate)
+
+        self.fetchFilteredEarthquakes(with: query)
       }
       .store(in: &cancellables)
   }
 
-  func showFilter() {
-    if let coordinate = lastCoordinate, let query = lastQuery {
-      delegate?.showFilterSheet(coordinate: coordinate, currentQuery: query)
+  func updateViewMode(_ mode: ExploreViewMode) {
+    viewMode = mode
+
+    if mode == .map {
+      didTapMap()
     }
   }
 
+  func updateFilter(_ options: EarthquakeFilterOptions) {
+    currentFilterOptions = options
+  }
+
+  func showFilter() {
+    delegate?.showFilterSheet(options: currentFilterOptions)
+  }
+
   func fetchFilteredEarthquakes(with query: EarthquakeQuery) {
-    lastQuery = query
     queryStore.save(query)
 
     fetchNearbyEarthquakesUseCase.execute(query: query)
@@ -94,12 +124,16 @@ final class EarthquakeExploreViewModel {
   }
 
   func didTapMap() {
-    guard let coordinate = lastCoordinate,
-          let searchRadiusKm = lastQuery?.radiusKm
-    else { return }
-    
+    guard let coordinate = lastCoordinate else { return }
+
+    let radiusKm = currentFilterOptions.radiusKm
+
     if case let .loaded(earthquakes) = state {
-      delegate?.showMap(earthquakes: earthquakes, radiusKm: searchRadiusKm, center: coordinate)
+      delegate?.showMap(
+        earthquakes: earthquakes,
+        radiusKm: radiusKm,
+        center: coordinate
+      )
     }
   }
 
@@ -107,6 +141,5 @@ final class EarthquakeExploreViewModel {
     cancellables.removeAll()
     state = .loading
     lastCoordinate = nil
-    lastQuery = nil
   }
 }

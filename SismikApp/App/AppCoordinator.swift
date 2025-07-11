@@ -49,7 +49,11 @@ final class AppCoordinator {
     let dashboardVC = dashboardCoordinator.makeViewController()
 
     dashboardNav.setViewControllers([dashboardVC], animated: false)
-    dashboardNav.tabBarItem = UITabBarItem(title: "Dashboard", image: UIImage(systemName: "house"), tag: 0)
+    dashboardNav.tabBarItem = UITabBarItem(
+      title: NSLocalizedString("tabbar.dashboard", comment: ""),
+      image: UIImage(systemName: "house"),
+      tag: 0
+    )
 
     let exploreNav = UINavigationController()
     let earthquakeExploreCoordinator = EarthquakeExploreCoordinator(navigationController: exploreNav)
@@ -57,7 +61,7 @@ final class AppCoordinator {
 
     exploreNav.setViewControllers([exploreVC], animated: false)
     exploreNav.tabBarItem = UITabBarItem(
-      title: "Explore",
+      title: NSLocalizedString("tabbar.explore", comment: ""),
       image: UIImage(systemName: "globe.europe.africa"),
       tag: 1
     )

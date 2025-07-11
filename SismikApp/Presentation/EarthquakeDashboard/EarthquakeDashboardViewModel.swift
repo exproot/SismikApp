@@ -16,12 +16,31 @@ final class EarthquakeDashboardViewModel {
   private let locationController: LocationStateControlling
   private var cancellables = Set<AnyCancellable>()
 
+  var showLocationDeniedScreen: (() -> Void)?
+
   init(
     useCase: FetchNearbyEarthquakesUseCaseProtocol,
-    locationController: LocationStateControlling
+    locationController: LocationStateControlling,
+    showLocationDeniedScreen: @escaping () -> Void
   ) {
     self.useCase = useCase
     self.locationController = locationController
+    self.showLocationDeniedScreen = showLocationDeniedScreen
+  }
+
+  func fetchLocationPermission() {
+    locationController.authorizationStatusPublisher
+      .sink { [weak self] status in
+        switch status {
+        case .authorized:
+          self?.loadDashboard()
+        case .denied:
+          self?.showLocationDeniedScreen?()
+        case .notDetermined:
+          self?.locationController.requestLocation()
+        }
+      }
+      .store(in: &cancellables)
   }
 
   func loadDashboard() {

@@ -5,44 +5,39 @@
 //  Created by Ertan Yağmur on 17.05.2025.
 //
 
-import CoreLocation
-import SwiftUI
+import UIKit
 
 final class EarthquakeFilterCoordinator {
 
   private weak var navigationController: UINavigationController?
-  private let coordinate: CLLocationCoordinate2D
-  private let initialQuery: EarthquakeQuery
-  private var onApply: ((EarthquakeQuery) -> Void)?
+  private let initialOptions: EarthquakeFilterOptions
+  private var onApply: ((EarthquakeFilterOptions) -> Void)?
   var onCleanup: (() -> Void)?
 
   init(
     navigationController: UINavigationController?,
-    coordinate: CLLocationCoordinate2D,
-    initialQuery: EarthquakeQuery
+    initialOptions: EarthquakeFilterOptions
   ) {
     self.navigationController = navigationController
-    self.coordinate = coordinate
-    self.initialQuery = initialQuery
+    self.initialOptions = initialOptions
   }
 
-  func makeViewController(onApply: @escaping (EarthquakeQuery) -> Void) -> UIViewController {
+  func makeViewController(onApply: @escaping (EarthquakeFilterOptions) -> Void) -> EarthquakeFilterViewController {
     self.onApply = onApply
 
-    let viewModel = DefaultEarthquakeFilterViewModel(
-      initialQuery: initialQuery,
-      coordinate: coordinate
-    )
+    let viewModel = DefaultEarthquakeFilterViewModel(initialOptions: initialOptions)
 
-    viewModel.onApply = { [weak self] query in
-      self?.onApply?(query)
-      self?.navigationController?.dismiss(animated: true, completion: {
+    viewModel.onApply = { [weak self] options in
+      self?.onApply?(options)
+      self?.navigationController?.dismiss(animated: true) {
         self?.onCleanup?()
-      })
+      }
     }
 
     viewModel.onDismiss = { [weak self] in
-      self?.navigationController?.dismiss(animated: true)
+      self?.navigationController?.dismiss(animated: true) {
+        self?.onCleanup?()
+      }
     }
 
     let controller = EarthquakeFilterViewController(viewModel: viewModel)

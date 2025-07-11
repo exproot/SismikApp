@@ -5,7 +5,6 @@
 //  Created by Ertan Yağmur on 16.05.2025.
 //
 
-
 import Combine
 import UIKit
 import MapKit
@@ -31,7 +30,7 @@ final class EarthquakePinAnnotationView: MKAnnotationView {
     label.text = String(format: "%.1f", magnitude)
 
     backgroundColor = .clear
-    subviews.first?.backgroundColor = UIColor(magnitude.magnitudeColor())
+    container.backgroundColor = magnitude.magnitudeColor()
   }
 
   private func animatePopIn() {

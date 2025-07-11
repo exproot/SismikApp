@@ -16,7 +16,7 @@ final class EarthquakeExploreSnapshotBuilder {
   func applySnapshot(
     to dataSource: UITableViewDiffableDataSource<Int, Earthquake>?,
     with earthquakes: [Earthquake],
-    animatingDifferences: Bool = true
+    animatingDifferences: Bool = false
   ) {
     var snapshot = NSDiffableDataSourceSnapshot<Int, Earthquake>()
 

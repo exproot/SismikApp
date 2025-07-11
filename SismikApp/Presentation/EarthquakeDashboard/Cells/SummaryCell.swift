@@ -34,9 +34,21 @@ final class SummaryCell: UICollectionViewCell {
   func configure(with item: EarthquakeDashboardSummaryItem) {
     stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
-    let total = StatView(icon: UIImage(systemName: "globe"), value: "\(item.totalCount)", labelText: "Total")
-    let avgMag = StatView(icon: UIImage(systemName: "waveform.path.ecg"), value: String(format: "%.1f", item.averageMagnitude), labelText: "Avg Mag")
-    let maxDepth = StatView(icon: UIImage(systemName: "arrow.down.to.line"), value: String(format: "%.0f km", item.maxDepth), labelText: "Max Depth")
+    let total = StatView(
+      icon: UIImage(systemName: "globe"),
+      value: "\(item.totalCount)",
+      labelText: NSLocalizedString("dashboard.section.summary.total", comment: "")
+    )
+    let avgMag = StatView(
+      icon: UIImage(systemName: "waveform.path.ecg"),
+      value: String(format: "%.1f", item.averageMagnitude),
+      labelText: NSLocalizedString("dashboard.section.summary.average", comment: "")
+    )
+    let maxDepth = StatView(
+      icon: UIImage(systemName: "arrow.down.to.line"),
+      value: String(format: "%.0f km", item.maxDepth),
+      labelText: NSLocalizedString("dashboard.section.summary.max.depth", comment: "")
+    )
 
     [total, avgMag, maxDepth].forEach { view in
       view.translatesAutoresizingMaskIntoConstraints = false
@@ -58,11 +70,10 @@ final class SummaryCell: UICollectionViewCell {
       stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
     ])
 
-    // Gradient background layer
     let gradient = CAGradientLayer()
     gradient.colors = [
-      UIColor.systemIndigo.cgColor,
-      UIColor.systemBlue.cgColor
+      UIColor(named: "SecondaryAccent")!.cgColor,
+      UIColor(named: "AccentColor")!.cgColor
     ]
     gradient.startPoint = CGPoint(x: 0, y: 0)
     gradient.endPoint = CGPoint(x: 1, y: 1)
@@ -70,7 +81,6 @@ final class SummaryCell: UICollectionViewCell {
     gradient.masksToBounds = true
     contentView.layer.insertSublayer(gradient, at: 0)
 
-    // Rounded corners and soft shadow
     contentView.layer.cornerRadius = 16
     contentView.layer.masksToBounds = true
     layer.shadowColor = UIColor.black.cgColor

@@ -14,7 +14,6 @@ final class EarthquakeDetailView: UIView {
   private let stackView = UIStackView()
 
   private let titleLabel = UILabel()
-  private let magnitudeLabel = UILabel()
   private let locationLabel = UILabel()
   private let depthLabel = UILabel()
   private let timeLabel = UILabel()
@@ -37,8 +36,9 @@ final class EarthquakeDetailView: UIView {
   // MARK: Configuration
   func configure(with viewModel: EarthquakeDetailViewModel) {
     titleLabel.text = viewModel.title
-    magnitudeLabel.text = viewModel.magnitudeText
-    magnitudeLabel.textColor = viewModel.magnitudeColor
+    titleLabel.textColor = UIColor(named: "AccentColor")
+    titleLabel.numberOfLines = 0
+
     locationLabel.text = viewModel.locationText
     depthLabel.text = viewModel.depthText
     timeLabel.text = viewModel.timeText
@@ -94,7 +94,6 @@ final class EarthquakeDetailView: UIView {
     ])
 
     titleLabel.font = .preferredFont(forTextStyle: .title3, compatibleWith: UITraitCollection(legibilityWeight: .bold))
-    magnitudeLabel.font = .preferredFont(forTextStyle: .body)
 
     [locationLabel, depthLabel, timeLabel].forEach {
       $0.font = .preferredFont(forTextStyle: .body)
@@ -107,6 +106,8 @@ final class EarthquakeDetailView: UIView {
 
     mapViewContainer.translatesAutoresizingMaskIntoConstraints = false
     mapViewContainer.heightAnchor.constraint(equalToConstant: 200).isActive = true
+    mapViewContainer.layer.borderColor = UIColor(named: "AccentColor")!.withAlphaComponent(0.4).cgColor
+    mapViewContainer.layer.borderWidth = 1
     mapViewContainer.layer.cornerRadius = 12
     mapViewContainer.clipsToBounds = true
 
@@ -114,7 +115,6 @@ final class EarthquakeDetailView: UIView {
     mapViewContainer.addGestureRecognizer(tap)
 
     stackView.addArrangedSubview(titleLabel)
-    stackView.addArrangedSubview(magnitudeLabel)
     stackView.addArrangedSubview(divider())
     stackView.addArrangedSubview(infoStack)
     stackView.addArrangedSubview(divider())

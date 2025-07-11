@@ -77,8 +77,10 @@ final class BiggestEarthquakeCell: UICollectionViewCell {
   private func setupGradient() {
     backgroundGradient.colors = [
       UIColor.systemOrange.cgColor,
-      UIColor.systemRed.cgColor
+      UIColor.systemRed.cgColor,
+      UIColor.systemRed.withAlphaComponent(0.8).cgColor
     ]
+    backgroundGradient.locations = [0.0, 0.7, 1.0]
     backgroundGradient.startPoint = CGPoint(x: 0, y: 0)
     backgroundGradient.endPoint = CGPoint(x: 1, y: 1)
     backgroundGradient.cornerRadius = 12

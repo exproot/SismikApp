@@ -31,6 +31,7 @@ final class LoadingView: UIView {
   
   // MARK: Setup
   private func setupViews() {
+    activityIndicator.color = UIColor(named: "AccentColor")
     activityIndicator.startAnimating()
 
     let stack = UIStackView(arrangedSubviews: [activityIndicator, loadingLabel])

@@ -32,10 +32,7 @@ final class EarthquakePopupView: UIView {
     )
 
     dateLabel.text = quake.time.formatEarthquakeDate()
-
-    if #available(iOS 15.0, *) {
-      magnitudeLabel.textColor = UIColor(quake.magnitude.magnitudeColor())
-    }
+    magnitudeLabel.textColor = quake.magnitude.magnitudeColor()
   }
 
   private func setupUI() {

@@ -46,7 +46,6 @@ final class EarthquakeDashboardViewController: UIViewController {
   init(viewModel: EarthquakeDashboardViewModel) {
     self.viewModel = viewModel
     super.init(nibName: nil, bundle: nil)
-    title = NSLocalizedString("dashboard.navigation.title", comment: "")
   }
 
   required init?(coder: NSCoder) {
@@ -58,7 +57,7 @@ final class EarthquakeDashboardViewController: UIViewController {
     super.viewDidLoad()
     setupCollectionView()
     setupBindings()
-    viewModel.loadDashboard()
+    viewModel.fetchLocationPermission()
   }
 
   // MARK: Binding

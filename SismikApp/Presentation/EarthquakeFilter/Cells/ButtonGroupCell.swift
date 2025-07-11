@@ -66,7 +66,7 @@ final class ButtonGroupCell: UITableViewCell {
 
       switch item.style {
       case .default:
-        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(UIColor(named: "AccentColor"), for: .normal)
       case .cancel:
         button.setTitleColor(.systemRed, for: .normal)
       case .destructive:

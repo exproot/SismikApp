@@ -11,7 +11,9 @@ import UIKit
 final class EarthquakeExploreViewController: UIViewController {
 
   // MARK: UI Components
-  private let searchController = UISearchController(searchResultsController: nil)
+  private var suggestionsController: SearchSuggestionsViewController!
+  private var searchController: UISearchController!
+  private var viewModeHeader: ExploreViewModeHeaderView?
   private let tableView = UITableView(frame: .zero, style: .insetGrouped)
   private let loadingView = LoadingView()
   private let emptyView = EmptyStateView()
@@ -39,9 +41,19 @@ final class EarthquakeExploreViewController: UIViewController {
     setupSearchController()
     setupViews()
     setupBindings()
+    tableView.backgroundColor = .clear
   }
 
-  private func handle(state: EarthquakeExploreViewState) {
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+
+    if let header = viewModeHeader, viewModel.viewMode == .map {
+      viewModel.updateViewMode(.list)
+      header.segmentedControl.selectedSegmentIndex = 0
+    }
+  }
+
+  private func renderState(_ state: EarthquakeExploreViewState) {
     tableView.refreshControl?.endRefreshing()
     loadingView.isHidden = true
     emptyView.isHidden = true
@@ -72,7 +84,7 @@ final class EarthquakeExploreViewController: UIViewController {
     viewModel.$state
       .receive(on: DispatchQueue.main)
       .sink { [weak self] state in
-        self?.handle(state: state)
+        self?.renderState(state)
       }
       .store(in: &cancellables)
   }
@@ -92,33 +104,42 @@ final class EarthquakeExploreViewController: UIViewController {
   }
 
   private func setupSearchController() {
-    searchController.obscuresBackgroundDuringPresentation = false
-    searchController.searchBar.placeholder = NSLocalizedString("explore.search.placeholder", comment: "")
+    let suggestionsVM = SearchSuggestionsViewModel()
+    suggestionsController = SearchSuggestionsViewController(viewModel: suggestionsVM)
+    searchController = UISearchController(searchResultsController: suggestionsController)
+
+    suggestionsController.didSelectSuggestion = { [weak self] suggestion in
+      self?.viewModel.search(for: suggestion)
+      self?.searchController.isActive = false
+    }
+
     searchController.searchBar.delegate = self
+    searchController.searchResultsUpdater = suggestionsController
+    searchController.searchBar.showsBookmarkButton = true
+    searchController.obscuresBackgroundDuringPresentation = false
     searchController.hidesNavigationBarDuringPresentation = false
+    searchController.searchBar.placeholder = NSLocalizedString("explore.search.placeholder", comment: "")
+
+    searchController.searchBar.setImage(UIImage(systemName: "slider.horizontal.3"), for: .bookmark, state: .normal)
+    searchController.searchBar.setImage(UIImage(systemName: "slider.horizontal.3"), for: .bookmark, state: [.highlighted, .selected])
+
     navigationItem.hidesSearchBarWhenScrolling = false
     navigationItem.searchController = searchController
     definesPresentationContext = true
-  }
-
-  private func setupTableHeader() {
-    let header = ExploreActionHeaderView()
-    header.mapButton.addTarget(self, action: #selector(didTapMap), for: .touchUpInside)
-    header.filterButton.addTarget(self, action: #selector(didTapFilter), for: .touchUpInside)
-
-    header.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 56)
-    tableView.tableHeaderView = header
   }
 
   private func setupViews() {
     view.backgroundColor = .systemBackground
     title = NSLocalizedString("explore.navigation.title", comment: "")
 
-    tableView.translatesAutoresizingMaskIntoConstraints = false
     tableView.delegate = self
-    tableView.register(EarthquakeListCell.self, forCellReuseIdentifier: EarthquakeListCell.reuseIdentifier)
+    tableView.rowHeight = UITableView.automaticDimension
+    tableView.estimatedRowHeight = 60
+    tableView.translatesAutoresizingMaskIntoConstraints = false
     tableView.refreshControl = UIRefreshControl()
     tableView.refreshControl?.addTarget(self, action: #selector(handlePullToRefresh), for: .valueChanged)
+    tableView.register(EarthquakeListCell.self, forCellReuseIdentifier: EarthquakeListCell.reuseIdentifier)
+    tableView.register(ExploreViewModeHeaderView.self, forHeaderFooterViewReuseIdentifier: ExploreViewModeHeaderView.reuseIdentifier)
     view.addSubview(tableView)
 
     [loadingView, emptyView, errorView].forEach {
@@ -144,11 +165,21 @@ final class EarthquakeExploreViewController: UIViewController {
       tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
     ])
 
-    setupTableHeader()
     configureDataSource()
   }
 
   // MARK: Actions
+  @objc private func viewModeChanged(_ sender: UISegmentedControl) {
+    if case .empty = viewModel.state {
+      sender.selectedSegmentIndex = 0
+      return
+    }
+
+    let selectedMode: ExploreViewMode = sender.selectedSegmentIndex == 0 ? .list : .map
+
+    viewModel.updateViewMode(selectedMode)
+  }
+
   @objc private func didTapMap() {
     viewModel.didTapMap()
   }
@@ -158,12 +189,12 @@ final class EarthquakeExploreViewController: UIViewController {
   }
 
   @objc private func handlePullToRefresh() {
-    guard let last = viewModel.lastQuery else {
+    guard let coordinate = viewModel.lastCoordinate else {
       tableView.refreshControl?.endRefreshing()
       return
     }
 
-    viewModel.fetchFilteredEarthquakes(with: last)
+    viewModel.fetchFilteredEarthquakes(with: viewModel.buildQuery(with: coordinate))
   }
 
 }
@@ -176,13 +207,46 @@ extension EarthquakeExploreViewController: UITableViewDelegate {
     viewModel.didSelectEarthquake(earthquake)
     tableView.deselectRow(at: indexPath, animated: true)
   }
+
+  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    guard
+      section == 0,
+      let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: ExploreViewModeHeaderView.reuseIdentifier) as? ExploreViewModeHeaderView
+    else {
+      return nil
+    }
+
+    header.segmentedControl.addTarget(
+      self,
+      action: #selector(viewModeChanged(_:)),
+      for: .valueChanged
+    )
+
+    header.segmentedControl.selectedSegmentIndex = viewModel.viewMode == .map ? 1 : 0
+    viewModeHeader = header
+
+    return header
+  }
+
+  func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    UITableView.automaticDimension
+  }
+
+  func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+    56
+  }
 }
 
 // MARK: UISearchBarDelegate
 extension EarthquakeExploreViewController: UISearchBarDelegate {
+  func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+    didTapFilter()
+  }
+
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
     guard let query = searchBar.text, !query.isEmpty else { return }
 
     viewModel.search(for: query)
   }
+
 }

@@ -33,7 +33,7 @@ final class RecentEarthquakeCell: UICollectionViewCell {
   }
 
   private func setupLayout() {
-    iconView.tintColor = .systemRed
+    iconView.tintColor = .tintColor
     iconView.contentMode = .scaleAspectFit
     iconView.translatesAutoresizingMaskIntoConstraints = false
     iconView.setContentHuggingPriority(.required, for: .horizontal)
@@ -55,7 +55,7 @@ final class RecentEarthquakeCell: UICollectionViewCell {
     stackView.addArrangedSubview(iconView)
     stackView.addArrangedSubview(textStack)
 
-    contentView.backgroundColor = .tertiarySystemGroupedBackground
+    contentView.backgroundColor = .secondarySystemBackground
     contentView.layer.cornerRadius = 12
 
     contentView.addSubview(stackView)

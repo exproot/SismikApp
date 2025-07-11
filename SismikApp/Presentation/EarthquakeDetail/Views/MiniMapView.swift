@@ -5,9 +5,7 @@
 //  Created by Ertan Yağmur on 16.05.2025.
 //
 
-
 import MapKit
-import SwiftUI
 
 final class MiniMapView: UIView {
 
@@ -27,6 +25,7 @@ final class MiniMapView: UIView {
     let coordinate = CLLocationCoordinate2D(latitude: quake.latitude, longitude: quake.longitude)
 
     mapView.isUserInteractionEnabled = false
+    mapView.tintColor = UIColor(named: "AccentColor")
     mapView.layer.cornerRadius = 12
     mapView.translatesAutoresizingMaskIntoConstraints = false
 

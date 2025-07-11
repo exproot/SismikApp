@@ -55,7 +55,7 @@ final class TipCell: UICollectionViewCell {
     stackView.addArrangedSubview(iconView)
     stackView.addArrangedSubview(tipLabel)
 
-    contentView.backgroundColor = .tertiarySystemBackground
+    contentView.backgroundColor = .secondarySystemBackground
     contentView.layer.cornerRadius = 12
     contentView.layer.shadowColor = UIColor.black.cgColor
     contentView.layer.shadowOpacity = 0.08
