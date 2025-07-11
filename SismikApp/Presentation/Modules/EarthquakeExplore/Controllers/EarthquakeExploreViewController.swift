@@ -120,8 +120,16 @@ final class EarthquakeExploreViewController: UIViewController {
     searchController.hidesNavigationBarDuringPresentation = false
     searchController.searchBar.placeholder = NSLocalizedString("explore.search.placeholder", comment: "")
 
-    searchController.searchBar.setImage(UIImage(systemName: "slider.horizontal.3"), for: .bookmark, state: .normal)
-    searchController.searchBar.setImage(UIImage(systemName: "slider.horizontal.3"), for: .bookmark, state: [.highlighted, .selected])
+    searchController.searchBar.setImage(
+      UIImage(systemName: "slider.horizontal.3")?.withTintColor(.tintColor, renderingMode: .alwaysOriginal),
+      for: .bookmark,
+      state: .normal
+    )
+    searchController.searchBar.setImage(
+      UIImage(systemName: "slider.horizontal.3"),
+      for: .bookmark,
+      state: [.highlighted, .selected]
+    )
 
     navigationItem.hidesSearchBarWhenScrolling = false
     navigationItem.searchController = searchController

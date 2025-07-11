@@ -32,8 +32,8 @@ final class SectionHeaderView: UICollectionReusableView {
 
     addSubview(titleLabel)
     NSLayoutConstraint.activate([
-      titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-      titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+      titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+      titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
       titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
       titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4)
     ])

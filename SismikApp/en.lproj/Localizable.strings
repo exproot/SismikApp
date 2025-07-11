@@ -21,19 +21,22 @@
 
 //MARK: - Earthquake Dashboard
 "dashboard.navigation.title" = "Dashboard";
-
+"dashboard.error" = "Something went wrong. Please try again.";
 "dashboard.magnitude" = "Magnitude: %.1f";
 "dashboard.biggest.title" = "Biggest Earthquake Recently";
 
-"dashboard.section.summary.title" = "Overview";
+"dashboard.section.summary.header" = "Overview";
 "dashboard.section.summary.total" = "Total";
 "dashboard.section.summary.average" = "Avg. Magnitude";
 "dashboard.section.summary.max.depth" = "Max. Depth";
 
-"dashboard.section.recent.title" = "Recent Earthquakes";
-"dashboard.section.biggest.title" = "Biggest Earthquake";
-"dashboard.section.tip.title" = "Tip of the Day";
+"dashboard.section.recent.header" = "Recent Earthquakes";
+"dashboard.section.recent.empty" = "No recent earthquakes in your area.";
 
+"dashboard.section.biggest.header" = "Biggest Earthquake";
+"dashboard.section.biggest.empty" = "No significant earthquakes found.";
+
+"dashboard.section.tip.header" = "Tip of the Day";
 "dashboard.tip.stay.away.windows" = "Stay away from windows during a quake.";
 "dashboard.tip.keep.emergency.kit" = "Keep an emergency kit ready.";
 "dashboard.tip.drop.cover.hold" = "Drop, Cover, and Hold On.";
@@ -52,7 +55,7 @@
 
 "explore.loading" = "Loading...";
 "explore.error" = "Failed to load earthquakes. Please try again.";
-"explore.error.retry" = "Retry";
+"explore.error.retry" = "Try Again";
 "explore.geocoding.error" = "Could not find location. Please try another place.";
 
 "explore.magnitude" = "Magnitude";

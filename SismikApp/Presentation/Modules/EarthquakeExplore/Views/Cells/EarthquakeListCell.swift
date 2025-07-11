@@ -58,18 +58,10 @@ final class EarthquakeListCell: UITableViewCell {
     contentView.backgroundColor = .clear
 
     containerView.translatesAutoresizingMaskIntoConstraints = false
+    containerView.backgroundColor = UIColor(named: "AccentColor")
     containerView.layer.cornerRadius = 12
     containerView.clipsToBounds = true
     contentView.addSubview(containerView)
-
-    gradientLayer.colors = [
-      UIColor(named: "AccentColor")!.withAlphaComponent(1).cgColor,
-      UIColor(named: "AccentColor")!.withAlphaComponent(0.75).cgColor
-    ]
-    gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-    gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-    gradientLayer.cornerRadius = 12
-    containerView.layer.insertSublayer(gradientLayer, at: 0)
 
     magnitudeBadge.translatesAutoresizingMaskIntoConstraints = false
     magnitudeBadge.layer.borderWidth = 1
@@ -84,18 +76,6 @@ final class EarthquakeListCell: UITableViewCell {
     titleLabel.font = .preferredFont(forTextStyle: .headline)
     titleLabel.numberOfLines = 0
 
-    timeIcon.image = UIImage(systemName: "clock")
-    timeIcon.tintColor = .white.withAlphaComponent(0.7)
-    timeIcon.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([
-      timeIcon.widthAnchor.constraint(equalToConstant: 14),
-      timeIcon.heightAnchor.constraint(equalToConstant: 14)
-    ])
-
-    timeLabel.font = .preferredFont(forTextStyle: .caption1)
-    timeLabel.textColor = .white.withAlphaComponent(0.7)
-    timeLabel.numberOfLines = 1
-
     locationIcon.image = UIImage(systemName: "mappin.and.ellipse")
     locationIcon.tintColor = .white.withAlphaComponent(0.7)
     locationIcon.translatesAutoresizingMaskIntoConstraints = false
@@ -108,21 +88,33 @@ final class EarthquakeListCell: UITableViewCell {
     locationLabel.textColor = .white.withAlphaComponent(0.7)
     locationLabel.numberOfLines = 1
 
-    let timeStack = UIStackView(arrangedSubviews: [timeIcon, timeLabel])
-    timeStack.axis = .horizontal
-    timeStack.spacing = 4
-    timeStack.alignment = .center
-    timeStack.distribution = .fill
+    timeIcon.image = UIImage(systemName: "clock")
+    timeIcon.tintColor = .white.withAlphaComponent(0.7)
+    timeIcon.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+      timeIcon.widthAnchor.constraint(equalToConstant: 14),
+      timeIcon.heightAnchor.constraint(equalToConstant: 14)
+    ])
+
+    timeLabel.font = .preferredFont(forTextStyle: .caption1)
+    timeLabel.textColor = .white.withAlphaComponent(0.7)
+    timeLabel.numberOfLines = 1
 
     let locationStack = UIStackView(arrangedSubviews: [locationIcon, locationLabel])
     locationStack.axis = .horizontal
     locationStack.spacing = 4
     locationStack.alignment = .center
 
+    let timeStack = UIStackView(arrangedSubviews: [timeIcon, timeLabel])
+    timeStack.axis = .horizontal
+    timeStack.spacing = 4
+    timeStack.alignment = .center
+    timeStack.distribution = .fill
+
     infoStack.axis = .vertical
     infoStack.spacing = 2
-    infoStack.addArrangedSubview(timeStack)
     infoStack.addArrangedSubview(locationStack)
+    infoStack.addArrangedSubview(timeStack)
 
     textStack.axis = .vertical
     textStack.spacing = 8

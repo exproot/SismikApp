@@ -21,19 +21,22 @@
 
 //MARK: - Earthquake Dashboard
 "dashboard.navigation.title" = "Panel";
-
+"dashboard.error" = "Bir şeyler ters gitti. Lütfen tekrar deneyin.";
 "dashboard.magnitude" = "Büyüklük: %.1f";
 "dashboard.biggest.title" = "Son Dönemin En Büyük Depremi";
 
-"dashboard.section.summary.title" = "Genel Bakış";
+"dashboard.section.summary.header" = "Genel Bakış";
 "dashboard.section.summary.total" = "Toplam";
 "dashboard.section.summary.average" = "Ort. Büyüklük";
 "dashboard.section.summary.max.depth" = "Maks. Derinlik";
 
-"dashboard.section.recent.title" = "Son Depremler";
-"dashboard.section.biggest.title" = "En Büyük Deprem";
-"dashboard.section.tip.title" = "Günün Önerisi";
+"dashboard.section.recent.header" = "Son Depremler";
+"dashboard.section.recent.empty" = "Bölgenizde son zamanlarda deprem olmadı.";
 
+"dashboard.section.biggest.header" = "En Büyük Deprem";
+"dashboard.section.biggest.empty" = "No significant earthquakes found.";
+
+"dashboard.section.tip.header" = "Günün Önerisi";
 "dashboard.tip.stay.away.windows" = "Deprem sırasında camlardan uzak durun.";
 "dashboard.tip.keep.emergency.kit" = "Bir acil durum çantası hazır bulundurun.";
 "dashboard.tip.drop.cover.hold" = "Çök-Kapan-Tutun uygulayın.";

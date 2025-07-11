@@ -8,9 +8,15 @@
 import Combine
 import UIKit
 
+enum EarthquakeDashboardState {
+  case loading
+  case loaded(NSDiffableDataSourceSnapshot<EarthquakeDashboardSection, EarthquakeDashboardItem>)
+  case error(String)
+}
+
 final class EarthquakeDashboardViewModel {
 
-  @Published private(set) var snapshot: NSDiffableDataSourceSnapshot<EarthquakeDashboardSection, EarthquakeDashboardItem> = .init()
+  @Published private(set) var state: EarthquakeDashboardState = .loading
 
   private let useCase: FetchNearbyEarthquakesUseCaseProtocol
   private let locationController: LocationStateControlling
@@ -44,6 +50,7 @@ final class EarthquakeDashboardViewModel {
   }
 
   func loadDashboard() {
+    state = .loading
     locationController.coordinatePublisher
       .prefix(1)
       .sink { [weak self] coordinate in
@@ -60,35 +67,55 @@ final class EarthquakeDashboardViewModel {
     useCase.execute(query: query)
       .receive(on: DispatchQueue.main)
       .sink(
-        receiveCompletion: { _ in },
+        receiveCompletion: { [weak self] completion in
+          if case .failure = completion {
+            self?.state = .error(NSLocalizedString("dashboard.error", comment: ""))
+          }
+        },
         receiveValue: { [weak self] quakes in
-          self?.buildSnapshot(from: quakes)
+          guard let self = self else { return }
+          let snapshot = self.buildSnapshot(from: quakes)
+          self.state = .loaded(snapshot)
         }
       )
       .store(in: &cancellables)
   }
 
-  private func buildSnapshot(from earthquakes: [Earthquake]) {
+  private func buildSnapshot(from earthquakes: [Earthquake]) -> NSDiffableDataSourceSnapshot<EarthquakeDashboardSection, EarthquakeDashboardItem> {
     var snapshot = NSDiffableDataSourceSnapshot<EarthquakeDashboardSection, EarthquakeDashboardItem>()
 
     snapshot.appendSections([.summary])
     let summary = EarthquakeDashboardSummaryItem.make(from: earthquakes)
     snapshot.appendItems([.summary(summary)], toSection: .summary)
 
-    snapshot.appendSections([.recent])
-    let recent = earthquakes.sorted(by: { $0.time > $1.time }).prefix(10)
-    snapshot.appendItems(recent.map { .recent($0) }, toSection: .recent)
+    if earthquakes.isEmpty {
+      snapshot.appendSections([.recent])
+      snapshot.appendItems([.recentPlaceholder(NSLocalizedString("dashboard.section.recent.empty", comment: ""))], toSection: .recent)
 
-    snapshot.appendSections([.biggest])
-    if let biggest = earthquakes
-      .max(by: { $0.magnitude < $1.magnitude }) {
-      snapshot.appendItems([.biggest(biggest)], toSection: .biggest)
+      snapshot.appendSections([.biggest])
+      snapshot.appendItems([.biggestPlaceholder(NSLocalizedString("dashboard.section.biggest.empty", comment: ""))])
+    } else {
+      snapshot.appendSections([.recent])
+      let recent = earthquakes.sorted(by: { $0.time > $1.time }).prefix(10)
+
+      if recent.isEmpty {
+        snapshot.appendItems([.recentPlaceholder(NSLocalizedString("dashboard.section.recent.empty", comment: ""))], toSection: .recent)
+      } else {
+        snapshot.appendItems(recent.map { .recent($0) }, toSection: .recent)
+      }
+
+      snapshot.appendSections([.biggest])
+      if let biggest = earthquakes.max(by: { $0.magnitude < $1.magnitude }) {
+        snapshot.appendItems([.biggest(biggest)], toSection: .biggest)
+      } else {
+        snapshot.appendItems([.biggestPlaceholder(NSLocalizedString("dashboard.section.biggest.empty", comment: ""))])
+      }
     }
 
     snapshot.appendSections([.tip])
     snapshot.appendItems([.tip(EarthquakeTips.randomTip())], toSection: .tip)
 
-    self.snapshot = snapshot
+    return snapshot
   }
 
 }

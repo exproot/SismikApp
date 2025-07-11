@@ -8,39 +8,16 @@
 import Combine
 import UIKit
 
-enum EarthquakeDashboardSection: Int, CaseIterable {
-  case summary
-  case recent
-  case biggest
-  case tip
-
-  var title: String? {
-    switch self {
-    case .summary:
-      return NSLocalizedString("dashboard.section.summary.title", comment: "")
-    case .recent:
-      return NSLocalizedString("dashboard.section.recent.title", comment: "")
-    case .biggest:
-      return NSLocalizedString("dashboard.section.biggest.title", comment: "")
-    case .tip:
-      return NSLocalizedString("dashboard.section.tip.title", comment: "")
-    }
-  }
-}
-
-enum EarthquakeDashboardItem: Hashable {
-  case summary(EarthquakeDashboardSummaryItem)
-  case recent(Earthquake)
-  case biggest(Earthquake)
-  case tip(String)
-}
-
 final class EarthquakeDashboardViewController: UIViewController {
 
   private let viewModel: EarthquakeDashboardViewModel
-  private var collectionView: UICollectionView!
   private var dataSource: UICollectionViewDiffableDataSource<EarthquakeDashboardSection, EarthquakeDashboardItem>!
   private var cancellables = Set<AnyCancellable>()
+
+  // MARK: UI Components
+  private var collectionView: UICollectionView!
+  private let loadingView = LoadingView()
+  private let errorView = ErrorView()
 
   // MARK: Init
   init(viewModel: EarthquakeDashboardViewModel) {
@@ -56,18 +33,41 @@ final class EarthquakeDashboardViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     setupCollectionView()
+    setupViews()
     setupBindings()
     viewModel.fetchLocationPermission()
   }
 
   // MARK: Binding
   private func setupBindings() {
-    viewModel.$snapshot
+    viewModel.$state
       .receive(on: DispatchQueue.main)
-      .sink { [weak self] snapshot in
-        self?.dataSource.apply(snapshot, animatingDifferences: true)
+      .sink { [weak self] state in
+        self?.render(state)
       }
       .store(in: &cancellables)
+  }
+
+  private func render(_ state: EarthquakeDashboardState) {
+    loadingView.isHidden = true
+    errorView.isHidden = true
+    collectionView.isHidden = true
+
+    switch state {
+    case .loading:
+      loadingView.isHidden = false
+
+    case .loaded(let snapshot):
+      collectionView.isHidden = false
+      dataSource.apply(snapshot, animatingDifferences: true)
+
+    case .error(let message):
+      errorView.isHidden = false
+      errorView.updateMessage(message)
+      errorView.setRetryAction { [weak self] in
+        self?.viewModel.loadDashboard()
+      }
+    }
   }
 
   private func configureDataSource() {
@@ -118,6 +118,17 @@ final class EarthquakeDashboardViewController: UIViewController {
 
         cell.configure(with: text)
         return cell
+
+      case .recentPlaceholder(let text), .biggestPlaceholder(let text):
+        guard
+          let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: PlaceholderDashboardEmptyStateCell.reuseIdentifier,
+            for: indexPath
+          ) as? PlaceholderDashboardEmptyStateCell
+        else { return UICollectionViewCell() }
+
+        cell.configure(with: text)
+        return cell
       }
     }
 
@@ -160,16 +171,30 @@ final class EarthquakeDashboardViewController: UIViewController {
     )
 
     collectionView.register(SummaryCell.self, forCellWithReuseIdentifier: SummaryCell.reuseIdentifier)
-
-    collectionView.register(RecentEarthquakeCell.self,
-                            forCellWithReuseIdentifier: RecentEarthquakeCell.reuseIdentifier)
-
-    collectionView.register(BiggestEarthquakeCell.self,
-                            forCellWithReuseIdentifier: BiggestEarthquakeCell.reuseIdentifier)
-
+    collectionView.register(RecentEarthquakeCell.self, forCellWithReuseIdentifier: RecentEarthquakeCell.reuseIdentifier)
+    collectionView.register(BiggestEarthquakeCell.self, forCellWithReuseIdentifier: BiggestEarthquakeCell.reuseIdentifier)
     collectionView.register(TipCell.self, forCellWithReuseIdentifier: TipCell.reuseIdentifier)
+    collectionView.register(PlaceholderDashboardEmptyStateCell.self, forCellWithReuseIdentifier: PlaceholderDashboardEmptyStateCell.reuseIdentifier)
 
     configureDataSource()
+  }
+
+  private func setupViews() {
+    view.backgroundColor = .systemBackground
+
+    [loadingView, errorView].forEach {
+      $0.translatesAutoresizingMaskIntoConstraints = false
+      view.addSubview($0)
+
+      NSLayoutConstraint.activate([
+        $0.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+        $0.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        $0.topAnchor.constraint(equalTo: view.topAnchor),
+        $0.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+      ])
+
+      $0.isHidden = true
+    }
   }
 
 }

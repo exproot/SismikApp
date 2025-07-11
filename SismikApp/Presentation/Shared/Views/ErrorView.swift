@@ -12,11 +12,19 @@ final class ErrorView: UIView {
   private var retryAction: (() -> Void)?
 
   // MARK: UI Components
+  private let imageView: UIImageView = {
+    let image = UIImage(systemName: "xmark.circle")
+    let view = UIImageView(image: image)
+    view.tintColor = .systemRed
+    view.contentMode = .scaleAspectFit
+    view.translatesAutoresizingMaskIntoConstraints = false
+    return view
+  }()
+
   private let messageLabel: UILabel = {
     let label = UILabel()
-    label.font = .preferredFont(forTextStyle: .headline)
+    label.font = .preferredFont(forTextStyle: .body)
     label.textAlignment = .center
-    label.textColor = .systemRed.withAlphaComponent(0.8)
     label.numberOfLines = 0
     return label
   }()
@@ -49,22 +57,36 @@ final class ErrorView: UIView {
 
   // MARK: Setup
   private func setupViews() {
-    retryButton.addTarget(self, action: #selector(didTapRetry), for: .touchUpInside)
+    let imageContainer = UIView()
 
-    let stack = UIStackView(arrangedSubviews: [messageLabel, retryButton])
+    imageContainer.translatesAutoresizingMaskIntoConstraints = false
+    imageContainer.addSubview(imageView)
+
+    NSLayoutConstraint.activate([
+      imageView.centerXAnchor.constraint(equalTo: imageContainer.centerXAnchor),
+      imageView.centerYAnchor.constraint(equalTo: imageContainer.centerYAnchor),
+      imageView.widthAnchor.constraint(equalToConstant: 80),
+      imageView.heightAnchor.constraint(equalToConstant: 80)
+    ])
+
+    let stack = UIStackView(arrangedSubviews: [imageContainer, messageLabel, retryButton])
     stack.axis = .vertical
-    stack.spacing = 12
-    stack.alignment = .center
+    stack.spacing = 16
+    stack.alignment = .fill
     stack.translatesAutoresizingMaskIntoConstraints = false
 
     addSubview(stack)
 
     NSLayoutConstraint.activate([
+      imageContainer.heightAnchor.constraint(equalToConstant: 100),
+
       stack.centerXAnchor.constraint(equalTo: centerXAnchor),
       stack.centerYAnchor.constraint(equalTo: centerYAnchor),
       stack.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 32),
       stack.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -32)
     ])
+
+    retryButton.addTarget(self, action: #selector(didTapRetry), for: .touchUpInside)
   }
 
   // MARK: Actions
