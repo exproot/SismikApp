@@ -81,7 +81,8 @@ final class EarthquakeDashboardViewModel {
       .store(in: &cancellables)
   }
 
-  private func buildSnapshot(from earthquakes: [Earthquake]) -> NSDiffableDataSourceSnapshot<EarthquakeDashboardSection, EarthquakeDashboardItem> {
+  private func buildSnapshot(from earthquakes: [EnrichedEarthquake]) -> NSDiffableDataSourceSnapshot<EarthquakeDashboardSection, EarthquakeDashboardItem> {
+    let earthquakes = earthquakes.map { $0.earthquake }
     var snapshot = NSDiffableDataSourceSnapshot<EarthquakeDashboardSection, EarthquakeDashboardItem>()
 
     snapshot.appendSections([.summary])

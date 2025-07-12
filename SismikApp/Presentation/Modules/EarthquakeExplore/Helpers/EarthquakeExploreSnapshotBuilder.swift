@@ -14,11 +14,11 @@ final class EarthquakeExploreSnapshotBuilder {
   }
 
   func applySnapshot(
-    to dataSource: UITableViewDiffableDataSource<Int, Earthquake>?,
-    with earthquakes: [Earthquake],
+    to dataSource: UITableViewDiffableDataSource<Int, EnrichedEarthquake>?,
+    with earthquakes: [EnrichedEarthquake],
     animatingDifferences: Bool = false
   ) {
-    var snapshot = NSDiffableDataSourceSnapshot<Int, Earthquake>()
+    var snapshot = NSDiffableDataSourceSnapshot<Int, EnrichedEarthquake>()
 
     snapshot.appendSections([Section.main.rawValue])
     snapshot.appendItems(earthquakes, toSection: Section.main.rawValue)

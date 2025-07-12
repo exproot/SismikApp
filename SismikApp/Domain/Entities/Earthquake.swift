@@ -18,7 +18,6 @@ struct Earthquake: Identifiable, Equatable, Hashable {
   let longitude: Double
   let depth: Double
 
-
   static let sampleEarthquake = Earthquake(
     id: "0",
     title: "M 4.3 - 19 km S of Mock, Place",
@@ -29,4 +28,9 @@ struct Earthquake: Identifiable, Equatable, Hashable {
     longitude: 40.8476,
     depth: 13.696
   )
+}
+
+struct EnrichedEarthquake: Hashable {
+  let earthquake: Earthquake
+  let locationName: String
 }

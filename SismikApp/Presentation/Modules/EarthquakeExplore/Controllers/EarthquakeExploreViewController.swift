@@ -22,7 +22,7 @@ final class EarthquakeExploreViewController: UIViewController {
   // MARK: Dependencies
   let viewModel: EarthquakeExploreViewModel
   private let snapshotBuilder = EarthquakeExploreSnapshotBuilder()
-  private var dataSource: UITableViewDiffableDataSource<Int, Earthquake>?
+  private var dataSource: UITableViewDiffableDataSource<Int, EnrichedEarthquake>?
   private var cancellables = Set<AnyCancellable>()
 
   // MARK: Init
@@ -63,8 +63,8 @@ final class EarthquakeExploreViewController: UIViewController {
     case .loading:
       loadingView.isHidden = false
 
-    case .loaded(let earthquakes):
-      snapshotBuilder.applySnapshot(to: dataSource, with: earthquakes)
+    case .loaded(let cellModels):
+      snapshotBuilder.applySnapshot(to: dataSource, with: cellModels)
 
     case .empty:
       emptyView.isHidden = false
@@ -91,14 +91,14 @@ final class EarthquakeExploreViewController: UIViewController {
 
   // MARK: Setup
   private func configureDataSource() {
-    dataSource = UITableViewDiffableDataSource<Int, Earthquake>(tableView: tableView) { tableView, indexPath, item in
+    dataSource = UITableViewDiffableDataSource<Int, EnrichedEarthquake>(tableView: tableView) { tableView, indexPath, earthquake in
       guard
         let cell = tableView.dequeueReusableCell(withIdentifier: EarthquakeListCell.reuseIdentifier, for: indexPath) as? EarthquakeListCell
       else {
         return UITableViewCell()
       }
 
-      cell.configure(with: item)
+      cell.configure(with: earthquake)
       return cell
     }
   }
@@ -210,9 +210,9 @@ final class EarthquakeExploreViewController: UIViewController {
 // MARK: UITableViewDelegate
 extension EarthquakeExploreViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    guard let earthquake = dataSource?.itemIdentifier(for: indexPath) else { return }
+    guard let model = dataSource?.itemIdentifier(for: indexPath) else { return }
 
-    viewModel.didSelectEarthquake(earthquake)
+    viewModel.didSelectEarthquake(model.earthquake)
     tableView.deselectRow(at: indexPath, animated: true)
   }
 

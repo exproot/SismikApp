@@ -17,7 +17,9 @@ final class EarthquakeDashboardCoordinator {
   func makeViewController() -> EarthquakeDashboardViewController {
     let service = USGSEarthquakeService()
     let repository = DefaultEarthquakeRepository(service: service)
-    let useCase = DefaultFetchNearbyEarthquakesUseCase(repository: repository)
+    let geocoder = DefaultGeocodingService()
+    let enrichmentService = EarthquakeEnrichmentService(geocoder: geocoder)
+    let useCase = DefaultFetchNearbyEarthquakesUseCase(repository: repository, enrichmentService: enrichmentService)
     let locationManager = DefaultLocationManager()
     let locationController = DefaultLocationStateController(locationManager: locationManager)
 

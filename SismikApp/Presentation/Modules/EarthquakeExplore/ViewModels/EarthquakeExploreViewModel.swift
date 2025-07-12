@@ -9,18 +9,6 @@ import CoreLocation
 import Combine
 import Foundation
 
-enum EarthquakeExploreViewState {
-  case loading
-  case loaded([Earthquake])
-  case empty
-  case error(String)
-}
-
-enum ExploreViewMode {
-  case list
-  case map
-}
-
 protocol EarthquakeExploreViewModelDelegate: AnyObject {
   func showDetail(for earthquake: Earthquake)
   func showMap(earthquakes: [Earthquake], radiusKm: Double, center: CLLocationCoordinate2D)
@@ -37,8 +25,8 @@ final class EarthquakeExploreViewModel {
   private let fetchNearbyEarthquakesUseCase: FetchNearbyEarthquakesUseCaseProtocol
   private let geocoder: GeocodingServiceProtocol
   private let queryStore: EarthquakeQueryStoring
-  private var cancellables = Set<AnyCancellable>()
   private weak var delegate: EarthquakeExploreViewModelDelegate?
+  private var cancellables = Set<AnyCancellable>()
 
   private(set) var lastCoordinate: CLLocationCoordinate2D?
 
@@ -128,9 +116,9 @@ final class EarthquakeExploreViewModel {
 
     let radiusKm = currentFilterOptions.radiusKm
 
-    if case let .loaded(earthquakes) = state {
+    if case let .loaded(cellModels) = state {
       delegate?.showMap(
-        earthquakes: earthquakes,
+        earthquakes: cellModels.map { $0.earthquake },
         radiusKm: radiusKm,
         center: coordinate
       )
@@ -142,4 +130,5 @@ final class EarthquakeExploreViewModel {
     state = .loading
     lastCoordinate = nil
   }
+
 }

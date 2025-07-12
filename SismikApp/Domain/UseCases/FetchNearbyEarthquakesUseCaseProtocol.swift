@@ -9,5 +9,5 @@ import Combine
 import Foundation
 
 protocol FetchNearbyEarthquakesUseCaseProtocol {
-  func execute(query: EarthquakeQuery) -> AnyPublisher<[Earthquake], Error>
+  func execute(query: EarthquakeQuery) -> AnyPublisher<[EnrichedEarthquake], Error>
 }

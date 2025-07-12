@@ -34,7 +34,7 @@
 "dashboard.section.recent.empty" = "Bölgenizde son zamanlarda deprem olmadı.";
 
 "dashboard.section.biggest.header" = "En Büyük Deprem";
-"dashboard.section.biggest.empty" = "No significant earthquakes found.";
+"dashboard.section.biggest.empty" = "Büyük bir deprem bulunamadı.";
 
 "dashboard.section.tip.header" = "Günün Önerisi";
 "dashboard.tip.stay.away.windows" = "Deprem sırasında camlardan uzak durun.";

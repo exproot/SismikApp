@@ -41,14 +41,14 @@ final class EarthquakeListCell: UITableViewCell {
   }
 
   // MARK: Configure
-  func configure(with earthquake: Earthquake) {
-    magnitudeBadge.text = String(format: "%.1f", earthquake.magnitude)
-    magnitudeBadge.backgroundColor = earthquake.magnitude.magnitudeColor()
+  func configure(with model: EnrichedEarthquake) {
+    magnitudeBadge.text = String(format: "%.1f", model.earthquake.magnitude)
+    magnitudeBadge.backgroundColor = model.earthquake.magnitude.magnitudeColor()
     magnitudeBadge.textColor = .white
 
-    titleLabel.text = earthquake.title
-    timeLabel.text = earthquake.time.formatEarthquakeDate()
-    locationLabel.text = String(format: "%.1f", earthquake.latitude)
+    titleLabel.text = model.earthquake.title
+    timeLabel.text = model.earthquake.time.formatEarthquakeDate()
+    locationLabel.text = model.locationName
   }
 
   // MARK: Setup

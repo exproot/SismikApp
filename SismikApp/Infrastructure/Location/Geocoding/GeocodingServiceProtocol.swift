@@ -11,4 +11,5 @@ import Foundation
 
 protocol GeocodingServiceProtocol {
   func geocode(_ placeName: String) -> AnyPublisher<CLLocationCoordinate2D, Error>
+  func reverseGeocode(_ coordinate: CLLocationCoordinate2D) -> AnyPublisher<String, Error>
 }

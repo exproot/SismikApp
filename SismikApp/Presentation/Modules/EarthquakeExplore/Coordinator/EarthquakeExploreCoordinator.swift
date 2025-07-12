@@ -19,11 +19,12 @@ final class EarthquakeExploreCoordinator {
   }
 
   func makeViewController() -> UIViewController {
-    let earthquakeService = USGSEarthquakeService()
+    let earthquakeService = EMSCEarthquakeService()
     let geocoder = DefaultGeocodingService()
+    let enrichmentService = EarthquakeEnrichmentService(geocoder: geocoder)
     let queryStore = DefaultEarthquakeQueryStore()
     let earthquakeRepository = DefaultEarthquakeRepository(service: earthquakeService)
-    let fetchNearbyEarthquakesUseCase = DefaultFetchNearbyEarthquakesUseCase(repository: earthquakeRepository)
+    let fetchNearbyEarthquakesUseCase = DefaultFetchNearbyEarthquakesUseCase(repository: earthquakeRepository, enrichmentService: enrichmentService)
 
     let earthquakeExploreViewModel = EarthquakeExploreViewModel(
       fetchNearbyEarthquakesUseCase: fetchNearbyEarthquakesUseCase,
