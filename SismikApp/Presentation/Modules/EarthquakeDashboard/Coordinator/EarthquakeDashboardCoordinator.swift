@@ -24,6 +24,7 @@ final class EarthquakeDashboardCoordinator {
     let locationController = DefaultLocationStateController(locationManager: locationManager)
 
     let viewModel = EarthquakeDashboardViewModel(
+      delegate: self,
       useCase: useCase,
       locationController: locationController,
       showLocationDeniedScreen: presentLocationDeniedScreen
@@ -37,5 +38,15 @@ final class EarthquakeDashboardCoordinator {
     let locationAccessVC = LocationAccessCoordinator(navigationController: navigationController).makeViewController()
 
     navigationController?.present(locationAccessVC, animated: true)
+  }
+}
+
+// MARK: EarthquakeDashboardViewModelDelegate
+extension EarthquakeDashboardCoordinator: EarthquakeDashboardViewModelDelegate {
+  func showDetail(for earthquake: Earthquake) {
+    let earthquakeDetailsCoordinator = EarthquakeDetailCoordinator(navigationController: navigationController, earthquake: earthquake)
+    let earthquakeDetailsController = earthquakeDetailsCoordinator.makeViewController()
+
+    navigationController?.pushViewController(earthquakeDetailsController, animated: true)
   }
 }

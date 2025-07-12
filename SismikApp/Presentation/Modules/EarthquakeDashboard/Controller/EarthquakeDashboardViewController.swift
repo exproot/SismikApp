@@ -151,10 +151,10 @@ final class EarthquakeDashboardViewController: UIViewController {
 
   // MARK: Setup
   private func setupCollectionView() {
-    collectionView = UICollectionView(frame: .zero,
-                                      collectionViewLayout: EarthquakeDashboardLayoutFactory.makeLayout())
-    collectionView.backgroundColor = .systemBackground
+    collectionView = UICollectionView(frame: .zero, collectionViewLayout: EarthquakeDashboardLayoutFactory.makeLayout())
     collectionView.translatesAutoresizingMaskIntoConstraints = false
+    collectionView.backgroundColor = .systemBackground
+    collectionView.delegate = self
     view.addSubview(collectionView)
 
     NSLayoutConstraint.activate([
@@ -197,4 +197,25 @@ final class EarthquakeDashboardViewController: UIViewController {
     }
   }
 
+}
+
+// MARK: UICollectionViewDelegate
+extension EarthquakeDashboardViewController: UICollectionViewDelegate {
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    guard let section = EarthquakeDashboardSection(rawValue: indexPath.section) else { return }
+
+    switch section {
+    case .summary, .tip:
+      break
+
+    case .recent, .biggest:
+      guard let sectionItem = dataSource.itemIdentifier(for: indexPath) else { return }
+
+      if case .recent(let quake) = sectionItem {
+        viewModel.didSelectEarthquake(quake)
+      } else if case .biggest(let quake) = sectionItem {
+        viewModel.didSelectEarthquake(quake)
+      }
+    }
+  }
 }

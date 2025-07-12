@@ -8,6 +8,10 @@
 import Combine
 import UIKit
 
+protocol EarthquakeDashboardViewModelDelegate: AnyObject {
+  func showDetail(for earthquake: Earthquake)
+}
+
 enum EarthquakeDashboardState {
   case loading
   case loaded(NSDiffableDataSourceSnapshot<EarthquakeDashboardSection, EarthquakeDashboardItem>)
@@ -18,6 +22,7 @@ final class EarthquakeDashboardViewModel {
 
   @Published private(set) var state: EarthquakeDashboardState = .loading
 
+  private weak var delegate: EarthquakeDashboardViewModelDelegate?
   private let useCase: FetchNearbyEarthquakesUseCaseProtocol
   private let locationController: LocationStateControlling
   private var cancellables = Set<AnyCancellable>()
@@ -25,13 +30,19 @@ final class EarthquakeDashboardViewModel {
   var showLocationDeniedScreen: (() -> Void)?
 
   init(
+    delegate: EarthquakeDashboardViewModelDelegate,
     useCase: FetchNearbyEarthquakesUseCaseProtocol,
     locationController: LocationStateControlling,
     showLocationDeniedScreen: @escaping () -> Void
   ) {
+    self.delegate = delegate
     self.useCase = useCase
     self.locationController = locationController
     self.showLocationDeniedScreen = showLocationDeniedScreen
+  }
+
+  func didSelectEarthquake(_ earthquake: Earthquake) {
+    delegate?.showDetail(for: earthquake)
   }
 
   func fetchLocationPermission() {
