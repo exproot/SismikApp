@@ -6,25 +6,25 @@
 //
 
 import Combine
+import EarthquakeRemote
 
 final class DefaultEarthquakeRepository {
-
-  private let service: EarthquakeServiceProtocol
-
-  init(service: EarthquakeServiceProtocol) {
-    self.service = service
+  
+  private let remoteDataSource: EarthquakeRemoteDataSource
+  
+  init(remoteDataSource: EarthquakeRemoteDataSource) {
+    self.remoteDataSource = remoteDataSource
   }
 
 }
 
 // MARK: EarthquakeRepositoryProtocol
 extension DefaultEarthquakeRepository: EarthquakeRepositoryProtocol {
-
+  
   func fetchRecentEarthquakes(query: EarthquakeQuery) -> AnyPublisher<[Earthquake], Error> {
-    return service.fetchRecentEarthquakes(query: query)
-      .compactMap { features in
-        features.compactMap { $0.toDomainModel() }
-      }
+    let request = EarthquakeRequest(query: query)
+    
+    return remoteDataSource.fetchRecentEarthquakes(request: request)
       .eraseToAnyPublisher()
   }
 

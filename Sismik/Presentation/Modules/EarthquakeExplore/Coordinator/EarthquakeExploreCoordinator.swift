@@ -5,8 +5,10 @@
 //  Created by Ertan Yağmur on 26.04.2025.
 //
 
-import UIKit
 import CoreLocation
+import CoreNetworking
+import EarthquakeRemote
+import UIKit
 
 final class EarthquakeExploreCoordinator {
 
@@ -19,11 +21,18 @@ final class EarthquakeExploreCoordinator {
   }
 
   func makeViewController() -> UIViewController {
-    let earthquakeService = USGSEarthquakeService()
     let geocoder = DefaultGeocodingService()
     let enrichmentService = EarthquakeEnrichmentService(geocoder: geocoder)
     let queryStore = DefaultEarthquakeQueryStore()
-    let earthquakeRepository = DefaultEarthquakeRepository(service: earthquakeService)
+    
+    let httpClient = URLSessionHTTPClient()
+    let usgsService = USGSEarthquakeService(client: httpClient)
+    let emscService = EMSCEarthquakeService(client: httpClient)
+    
+    let usgsRemoteSource = USGSEarthquakeRemoteDataSource(service: usgsService)
+    let emscRemoteSource = EMSCEarthquakeRemoteDataSource(service: emscService)
+    let earthquakeRepository = DefaultEarthquakeRepository(remoteDataSource: usgsRemoteSource)
+    
     let fetchNearbyEarthquakesUseCase = DefaultFetchNearbyEarthquakesUseCase(repository: earthquakeRepository, enrichmentService: enrichmentService)
 
     let earthquakeExploreViewModel = EarthquakeExploreViewModel(
