@@ -1,0 +1,85 @@
+// MARK: - Location Access
+"locationAccess.title" = "Location Required";
+"locationAccess.desc" = "We need your location to show nearby earthquakes.";
+"locationAccess.button.settings" = "Open Settings";
+
+// MARK: - Onboarding
+"onboarding.title1" = "Welcome";
+"onboarding.desc1" = "Track earthquakes near you in real-time.";
+
+"onboarding.title2" = "Filters";
+"onboarding.desc2" = "Filter quakes by date, magnitude and distance.";
+
+"onboarding.title3" = "Map View";
+"onboarding.desc3" = "Visualize recent earthquakes on a map.";
+
+"onboarding.button.next" = "Next";
+
+//MARK: - TabBar
+"tabbar.dashboard" = "Dashboard";
+"tabbar.explore" = "Explore";
+
+//MARK: - Earthquake Dashboard
+"dashboard.navigation.title" = "Dashboard";
+"dashboard.error" = "Something went wrong. Please try again.";
+"dashboard.magnitude" = "Magnitude: %.1f";
+"dashboard.biggest.title" = "Biggest Earthquake Recently";
+
+"dashboard.section.summary.header" = "Overview";
+"dashboard.section.summary.total" = "Total";
+"dashboard.section.summary.average" = "Avg. Magnitude";
+"dashboard.section.summary.max.depth" = "Max. Depth";
+
+"dashboard.section.recent.header" = "Recent Earthquakes";
+"dashboard.section.recent.empty" = "No recent earthquakes in your area.";
+
+"dashboard.section.biggest.header" = "Biggest Earthquake";
+"dashboard.section.biggest.empty" = "No significant earthquakes found.";
+
+"dashboard.section.tip.header" = "Tip of the Day";
+"dashboard.tip.stay.away.windows" = "Stay away from windows during a quake.";
+"dashboard.tip.keep.emergency.kit" = "Keep an emergency kit ready.";
+"dashboard.tip.drop.cover.hold" = "Drop, Cover, and Hold On.";
+"dashboard.tip.identify.safe.spots" = "Identify safe spots in each room.";
+"dashboard.tip.have.family.plan" = "Have a family emergency communication plan.";
+
+// MARK: - Earthquake Explore
+"explore.navigation.title" = "Explore";
+"explore.search.placeholder" = "Search for a place";
+
+"explore.emptyState.title" = "No Results Yet";
+"explore.emptyState.desc" = "Search for a place and apply filters to see earthquakes around the world.";
+
+"explore.segmented.list" = "List";
+"explore.segmented.map" = "Map";
+
+"explore.loading" = "Loading...";
+"explore.error" = "Failed to load earthquakes. Please try again.";
+"explore.error.retry" = "Try Again";
+"explore.geocoding.error" = "Could not find location. Please try another place.";
+
+"explore.magnitude" = "Magnitude";
+"explore.time" = "Time";
+"explore.dateFormat" = "MMM d, yyyy HH:mm";
+
+// MARK: - Earthquake Detail
+"detail.navigation.title" = "Details";
+"detail.magnitude" = "Magnitude: %.1f";
+"detail.location" = "Location: %.3f, %.3f";
+"detail.depth" = "Depth: %.0f km";
+
+// MARK: - Earthquake Map
+"map.popup.magnitude" = "Magnitude: %.1f";
+
+// MARK: - Earthquake Filter
+"filter.minMagnitude" = "Min Magnitude";
+"filter.maxMagnitude" = "Max Magnitude";
+
+"filter.searchRadius" = "Search Radius (km)";
+
+"filter.startDate" = "Start Date";
+"filter.endDate" = "End Date";
+
+"filter.button.reset" = "Reset";
+"filter.button.cancel" = "Cancel";
+"filter.button.apply" = "Apply";
