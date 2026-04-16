@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "700CA4282DBBF6AB00C8759D"
-               BuildableName = "SismikApp.app"
-               BlueprintName = "SismikApp"
-               ReferencedContainer = "container:SismikApp.xcodeproj">
+               BuildableName = "Sismik.app"
+               BlueprintName = "Sismik"
+               ReferencedContainer = "container:Sismik.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -36,9 +36,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7022EA9A2DBD595E0099C8D1"
-               BuildableName = "SismikAppTests.xctest"
-               BlueprintName = "SismikAppTests"
-               ReferencedContainer = "container:SismikApp.xcodeproj">
+               BuildableName = "SismikTests.xctest"
+               BlueprintName = "SismikTests"
+               ReferencedContainer = "container:Sismik.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -58,9 +58,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "700CA4282DBBF6AB00C8759D"
-            BuildableName = "SismikApp.app"
-            BlueprintName = "SismikApp"
-            ReferencedContainer = "container:SismikApp.xcodeproj">
+            BuildableName = "Sismik.app"
+            BlueprintName = "Sismik"
+            ReferencedContainer = "container:Sismik.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "700CA4282DBBF6AB00C8759D"
-            BuildableName = "SismikApp.app"
-            BlueprintName = "SismikApp"
-            ReferencedContainer = "container:SismikApp.xcodeproj">
+            BuildableName = "Sismik.app"
+            BlueprintName = "Sismik"
+            ReferencedContainer = "container:Sismik.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
