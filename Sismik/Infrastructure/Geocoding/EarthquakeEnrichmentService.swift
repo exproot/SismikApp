@@ -7,7 +7,7 @@
 
 import Combine
 import CoreLocation
-import Foundation
+import LocationServices
 
 final class EarthquakeEnrichmentService: EarthquakeEnrichmentServiceProtocol {
 

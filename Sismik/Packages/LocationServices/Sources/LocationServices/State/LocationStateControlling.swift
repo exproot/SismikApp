@@ -8,7 +8,7 @@
 import CoreLocation
 import Combine
 
-protocol LocationStateControlling {
+public protocol LocationStateControlling {
   var authorizationStatusPublisher: AnyPublisher<LocationPermissionStatus, Never> { get }
   var coordinatePublisher: AnyPublisher<CLLocationCoordinate2D, Never> { get }
 

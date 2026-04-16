@@ -7,25 +7,27 @@
 
 import CoreLocation
 import Combine
-import Foundation
 
-final class DefaultGeocodingService: GeocodingServiceProtocol {
+public final class DefaultGeocodingService: GeocodingServiceProtocol {
+  
+  public init() {}
 
-  func geocode(_ placeName: String) -> AnyPublisher<CLLocationCoordinate2D, Error> {
+  public func geocode(_ placeName: String) -> AnyPublisher<CLLocationCoordinate2D, Error> {
     Future { promise in
       let locale = Locale.preferredLanguages.first.flatMap { Locale(identifier: $0) }
+      
       CLGeocoder().geocodeAddressString(placeName, in: nil, preferredLocale: locale) { placemarks, error in
         if let coordinate = placemarks?.first?.location?.coordinate {
           promise(.success(coordinate))
         } else {
-          promise(.failure(error ?? NSError()))
+          promise(.failure(error ?? NSError(domain: "GeocodingError", code: -1)))
         }
       }
     }
     .eraseToAnyPublisher()
   }
 
-  func reverseGeocode(_ coordinate: CLLocationCoordinate2D) -> AnyPublisher<String, Error> {
+  public func reverseGeocode(_ coordinate: CLLocationCoordinate2D) -> AnyPublisher<String, Error> {
     Future { promise in
       let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
       let locale = Locale.preferredLanguages.first.flatMap { Locale(identifier: $0) }
@@ -37,11 +39,11 @@ final class DefaultGeocodingService: GeocodingServiceProtocol {
           placemark.subAdministrativeArea ??
           placemark.administrativeArea ??
           placemark.country ??
-          NSLocalizedString("explore.geocoding.unknown", comment: "Unknown Location")
+          "Unknown Location"
 
           promise(.success(locationName))
         } else {
-          promise(.failure(error ?? NSError()))
+          promise(.failure(error ?? NSError(domain: "ReverseGeocodingError", code: -1)))
         }
       }
     }

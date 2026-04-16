@@ -12,6 +12,7 @@
 		7022EAC62DBD5E2E0099C8D1 /* MockLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7022EAC52DBD5E2E0099C8D1 /* MockLocationManager.swift */; };
 		709734DD2F914A88004F923A /* CoreNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 709734DC2F914A88004F923A /* CoreNetworking */; };
 		709734DF2F914A92004F923A /* EarthquakeRemote in Frameworks */ = {isa = PBXBuildFile; productRef = 709734DE2F914A92004F923A /* EarthquakeRemote */; };
+		709737D12F915D84004F923A /* LocationServices in Frameworks */ = {isa = PBXBuildFile; productRef = 709737D02F915D84004F923A /* LocationServices */; };
 		70C175FA2DEB70A500856824 /* DotLottie in Frameworks */ = {isa = PBXBuildFile; productRef = 70C175F92DEB70A500856824 /* DotLottie */; };
 		70F683D02DECF34800EC6199 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 70F683CE2DECF34800EC6199 /* Localizable.strings */; };
 /* End PBXBuildFile section */
@@ -93,6 +94,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70C175FA2DEB70A500856824 /* DotLottie in Frameworks */,
+				709737D12F915D84004F923A /* LocationServices in Frameworks */,
 				709734DD2F914A88004F923A /* CoreNetworking in Frameworks */,
 				709734DF2F914A92004F923A /* EarthquakeRemote in Frameworks */,
 			);
@@ -252,6 +254,7 @@
 				70C175F92DEB70A500856824 /* DotLottie */,
 				709734DC2F914A88004F923A /* CoreNetworking */,
 				709734DE2F914A92004F923A /* EarthquakeRemote */,
+				709737D02F915D84004F923A /* LocationServices */,
 			);
 			productName = SismikApp;
 			productReference = 700CA4292DBBF6AB00C8759D /* Sismik.app */;
@@ -673,6 +676,10 @@
 		709734DE2F914A92004F923A /* EarthquakeRemote */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = EarthquakeRemote;
+		};
+		709737D02F915D84004F923A /* LocationServices */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LocationServices;
 		};
 		70C175F92DEB70A500856824 /* DotLottie */ = {
 			isa = XCSwiftPackageProductDependency;

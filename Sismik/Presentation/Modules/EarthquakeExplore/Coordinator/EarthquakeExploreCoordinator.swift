@@ -8,6 +8,7 @@
 import CoreLocation
 import CoreNetworking
 import EarthquakeRemote
+import LocationServices
 import UIKit
 
 final class EarthquakeExploreCoordinator {

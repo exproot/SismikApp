@@ -7,7 +7,7 @@
 
 import CoreLocation
 import Combine
-import Foundation
+import LocationServices
 
 protocol EarthquakeExploreViewModelDelegate: AnyObject {
   func showDetail(for earthquake: Earthquake)

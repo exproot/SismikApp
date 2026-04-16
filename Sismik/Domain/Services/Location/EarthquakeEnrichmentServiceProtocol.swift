@@ -6,8 +6,6 @@
 //
 
 import Combine
-import CoreLocation
-import Foundation
 
 protocol EarthquakeEnrichmentServiceProtocol {
   func enrich(earthquakes: [Earthquake]) -> AnyPublisher<[EnrichedEarthquake], Never>

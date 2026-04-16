@@ -9,7 +9,7 @@
 import CoreLocation
 import Combine
 
-protocol LocationManagerProtocol {
+public protocol LocationManagerProtocol {
   var locationPublisher: AnyPublisher<CLLocationCoordinate2D, Never> { get }
   var permissionPublisher: AnyPublisher<LocationPermissionStatus, Never> { get }
 

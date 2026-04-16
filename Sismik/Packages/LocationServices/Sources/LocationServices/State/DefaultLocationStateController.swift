@@ -8,7 +8,7 @@
 import CoreLocation
 import Combine
 
-final class DefaultLocationStateController: LocationStateControlling {
+public final class DefaultLocationStateController: LocationStateControlling {
 
   private let locationManager: LocationManagerProtocol
   private var cancellables = Set<AnyCancellable>()
@@ -16,15 +16,15 @@ final class DefaultLocationStateController: LocationStateControlling {
   private let authSubject = CurrentValueSubject<LocationPermissionStatus, Never>(.notDetermined)
   private let coordinateSubject = PassthroughSubject<CLLocationCoordinate2D, Never>()
 
-  var authorizationStatusPublisher: AnyPublisher<LocationPermissionStatus, Never> {
+  public var authorizationStatusPublisher: AnyPublisher<LocationPermissionStatus, Never> {
     authSubject.eraseToAnyPublisher()
   }
 
-  var coordinatePublisher: AnyPublisher<CLLocationCoordinate2D, Never> {
+  public var coordinatePublisher: AnyPublisher<CLLocationCoordinate2D, Never> {
     coordinateSubject.eraseToAnyPublisher()
   }
 
-  init(locationManager: LocationManagerProtocol) {
+  public init(locationManager: LocationManagerProtocol) {
     self.locationManager = locationManager
     bindToLocationManager()
   }
@@ -43,7 +43,7 @@ final class DefaultLocationStateController: LocationStateControlling {
       .store(in: &cancellables)
   }
 
-  func requestLocation() {
+  public func requestLocation() {
     locationManager.requestLocation()
   }
   

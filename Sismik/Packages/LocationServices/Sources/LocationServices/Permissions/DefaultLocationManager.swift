@@ -8,19 +8,13 @@
 import CoreLocation
 import Combine
 
-enum LocationPermissionStatus {
-  case authorized
-  case denied
-  case notDetermined
-}
-
-final class DefaultLocationManager: NSObject {
+public final class DefaultLocationManager: NSObject {
 
   private let locationManager = CLLocationManager()
   private let locationSubject = PassthroughSubject<CLLocationCoordinate2D, Never>()
   private let permissionSubject = PassthroughSubject<LocationPermissionStatus, Never>()
 
-  override init() {
+  public override init() {
     super.init()
     locationManager.delegate = self
     locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
@@ -30,15 +24,15 @@ final class DefaultLocationManager: NSObject {
 
 // MARK: LocationManager
 extension DefaultLocationManager: LocationManagerProtocol {
-  var locationPublisher: AnyPublisher<CLLocationCoordinate2D, Never> {
+  public var locationPublisher: AnyPublisher<CLLocationCoordinate2D, Never> {
     return locationSubject.eraseToAnyPublisher()
   }
 
-  var permissionPublisher: AnyPublisher<LocationPermissionStatus, Never> {
+  public var permissionPublisher: AnyPublisher<LocationPermissionStatus, Never> {
     permissionSubject.eraseToAnyPublisher()
   }
 
-  func requestLocation() {
+  public func requestLocation() {
     switch locationManager.authorizationStatus {
     case .notDetermined:
       locationManager.requestWhenInUseAuthorization()
@@ -54,17 +48,17 @@ extension DefaultLocationManager: LocationManagerProtocol {
 
 // MARK: CLLocationManagerDelegate
 extension DefaultLocationManager: CLLocationManagerDelegate {
-  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+  public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     guard let coordinate = locations.first?.coordinate else { return }
 
     locationSubject.send(coordinate)
   }
 
-  func locationManager(_ manager: CLLocationManager, didFailWithError error: any Error) {
+  public func locationManager(_ manager: CLLocationManager, didFailWithError error: any Error) {
     print("LocationManager Error: \(error.localizedDescription)")
   }
 
-  func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+  public func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
     switch locationManager.authorizationStatus {
     case .notDetermined:
       permissionSubject.send(.notDetermined)
