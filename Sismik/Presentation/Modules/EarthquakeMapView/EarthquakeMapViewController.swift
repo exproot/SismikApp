@@ -6,8 +6,9 @@
 //
 
 import Combine
-import UIKit
+import EarthquakeDomain
 import MapKit
+import UIKit
 
 final class EarthquakeMapViewController: UIViewController {
 

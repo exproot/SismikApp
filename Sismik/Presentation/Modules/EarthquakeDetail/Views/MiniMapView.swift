@@ -5,6 +5,7 @@
 //  Created by Ertan Yağmur on 16.05.2025.
 //
 
+import EarthquakeDomain
 import MapKit
 
 final class MiniMapView: UIView {

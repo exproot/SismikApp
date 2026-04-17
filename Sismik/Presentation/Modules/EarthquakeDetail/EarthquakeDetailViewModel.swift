@@ -5,12 +5,14 @@
 //  Created by Ertan Yağmur on 26.04.2025.
 //
 
+import EarthquakeData
+import EarthquakeDomain
 import MapKit
 
 final class EarthquakeDetailViewModel {
 
   // MARK: Dependencies
-  private let queryStore: EarthquakeQueryStoring
+  private let queryStore: EarthquakeQueryStore
 
   // MARK: Input
   let quake: Earthquake
@@ -30,7 +32,7 @@ final class EarthquakeDetailViewModel {
   // MARK: Init
   init(
     earthquake: Earthquake,
-    queryStore: EarthquakeQueryStoring,
+    queryStore: EarthquakeQueryStore,
     showEarthquakeMap: @escaping ([Earthquake], Double, CLLocationCoordinate2D) -> Void
   ) {
     self.queryStore = queryStore
@@ -57,7 +59,7 @@ final class EarthquakeDetailViewModel {
 
     magnitudeColor = earthquake.magnitude.magnitudeColor()
 
-    timeText = earthquake.time.formatEarthquakeDate()
+    timeText = earthquake.time.formattedEarthquakeDisplayText()
     coordinate = CLLocationCoordinate2D(latitude: earthquake.latitude, longitude: earthquake.longitude)
   }
 

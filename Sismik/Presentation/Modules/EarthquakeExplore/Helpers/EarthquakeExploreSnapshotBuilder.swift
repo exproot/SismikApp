@@ -5,6 +5,7 @@
 //  Created by Ertan Yağmur on 25.06.2025.
 //
 
+import EarthquakeDomain
 import UIKit
 
 final class EarthquakeExploreSnapshotBuilder {
