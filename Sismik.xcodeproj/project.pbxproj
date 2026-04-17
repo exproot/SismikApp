@@ -65,11 +65,6 @@
 			path = Presentation;
 			sourceTree = "<group>";
 		};
-		709735AB2F914F3F004F923A /* Infrastructure */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Infrastructure;
-			sourceTree = "<group>";
-		};
 		709735E82F914F3F004F923A /* Supporting */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -128,7 +123,6 @@
 			children = (
 				709734CA2F911BCC004F923A /* Packages */,
 				709734E82F914F3A004F923A /* App */,
-				709735AB2F914F3F004F923A /* Infrastructure */,
 				709735402F914F3E004F923A /* Presentation */,
 				709735E82F914F3F004F923A /* Supporting */,
 				70F683CE2DECF34800EC6199 /* Localizable.strings */,
@@ -236,7 +230,6 @@
 				709734CA2F911BCC004F923A /* Packages */,
 				709734E82F914F3A004F923A /* App */,
 				709735402F914F3E004F923A /* Presentation */,
-				709735AB2F914F3F004F923A /* Infrastructure */,
 				709735E82F914F3F004F923A /* Supporting */,
 			);
 			name = Sismik;

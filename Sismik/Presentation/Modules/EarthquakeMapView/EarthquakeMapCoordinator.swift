@@ -27,7 +27,7 @@ final class EarthquakeMapCoordinator {
   }
 
   func makeViewController(earthquakes: [Earthquake]) -> UIViewController {
-    let mapRegionProvider = MapRegionProvider()
+    let mapRegionProvider = EarthquakeMapRegionProvider()
     let viewModel = EarthquakeMapViewModel(
       earthquakes: earthquakes,
       mapRegionProvider: mapRegionProvider,
