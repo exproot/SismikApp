@@ -28,7 +28,7 @@ final class EarthquakeDashboardCoordinator {
     let repository = DefaultEarthquakeRepository(remoteDataSource: usgsRemoteSource)
     
     let geocoder = DefaultGeocodingService()
-    let enrichmentService = EarthquakeEnrichmentService(geocoder: geocoder)
+    let enrichmentService = DefaultEarthquakeEnricher(geocoder: geocoder)
     let useCase = DefaultFetchNearbyEarthquakesUseCase(repository: repository, enrichmentService: enrichmentService)
     let locationManager = DefaultLocationManager()
     let locationController = DefaultLocationStateController(locationManager: locationManager)

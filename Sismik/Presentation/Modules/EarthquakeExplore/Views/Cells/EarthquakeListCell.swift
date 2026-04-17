@@ -48,7 +48,7 @@ final class EarthquakeListCell: UITableViewCell {
     magnitudeBadge.textColor = .white
 
     titleLabel.text = model.earthquake.title
-    timeLabel.text = model.earthquake.time.formatEarthquakeDate()
+    timeLabel.text = model.earthquake.time.formattedEarthquakeDisplayText()
     locationLabel.text = model.locationName
   }
 

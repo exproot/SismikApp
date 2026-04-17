@@ -27,7 +27,7 @@ public struct EMSCQueryItemBuilder: QueryItemBuilding {
     }
 
     if let radiusKm = request.radiusKm {
-      items.append(URLQueryItem(name: "maxradius", value: "\(convertKmToDegree(radiusKm))"))
+      items.append(URLQueryItem(name: "maxradius", value: "\(kilometersToApproxDegrees(radiusKm))"))
     }
 
     if let minMagnitude = request.minMagnitude {
@@ -49,8 +49,8 @@ public struct EMSCQueryItemBuilder: QueryItemBuilding {
     return items
   }
   
-  private func convertKmToDegree(_ value: Double) -> Double {
-    value / 111.0
+  private func kilometersToApproxDegrees(_ kilometers: Double) -> Double {
+    kilometers / 111.0
   }
   
   nonisolated(unsafe) private static let apiDateFormatter: ISO8601DateFormatter = {

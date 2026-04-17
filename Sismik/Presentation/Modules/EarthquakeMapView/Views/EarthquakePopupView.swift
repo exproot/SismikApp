@@ -32,7 +32,7 @@ final class EarthquakePopupView: UIView {
       quake.magnitude
     )
 
-    dateLabel.text = quake.time.formatEarthquakeDate()
+    dateLabel.text = quake.time.formattedEarthquakeDisplayText()
     magnitudeLabel.textColor = quake.magnitude.magnitudeColor()
   }
 

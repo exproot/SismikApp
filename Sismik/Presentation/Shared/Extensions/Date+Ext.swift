@@ -8,7 +8,7 @@
 import Foundation
 
 extension Date {
-  func formatEarthquakeDate() -> String {
+  func formattedEarthquakeDisplayText() -> String {
     let formatter = DateFormatter()
 
     formatter.dateFormat =  NSLocalizedString("explore.dateFormat", comment: "")

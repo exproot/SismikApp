@@ -8,6 +8,12 @@
 import EarthquakeDomain
 import Foundation
 
+protocol EarthquakeQueryStoring {
+  func save(_ query: EarthquakeQuery)
+  func load() -> EarthquakeQuery?
+  func clear()
+}
+
 final class DefaultEarthquakeQueryStore: EarthquakeQueryStoring {
 
   private let storageKey = "earthquake.query"

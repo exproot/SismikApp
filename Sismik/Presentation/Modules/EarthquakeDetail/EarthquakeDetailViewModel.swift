@@ -58,7 +58,7 @@ final class EarthquakeDetailViewModel {
 
     magnitudeColor = earthquake.magnitude.magnitudeColor()
 
-    timeText = earthquake.time.formatEarthquakeDate()
+    timeText = earthquake.time.formattedEarthquakeDisplayText()
     coordinate = CLLocationCoordinate2D(latitude: earthquake.latitude, longitude: earthquake.longitude)
   }
 

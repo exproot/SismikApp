@@ -7,24 +7,6 @@
 
 import UIKit
 
-final class AppFlowCoordinator {
-  
-  private weak var tabBarController: UITabBarController?
- 
-  init(tabBarController: UITabBarController) {
-    self.tabBarController = tabBarController
-  }
-  
-  func start() {
-    if !UserDefaults.standard.hasSeenOnboarding {
-      
-    } else {
-      
-    }
-  }
-  
-}
-
 final class AppCoordinator {
 
   var window: UIWindow
@@ -40,7 +22,7 @@ final class AppCoordinator {
   }
 
   func start() {
-    if !UserDefaults.standard.hasSeenOnboarding {
+    if !AppPreferences.hasSeenOnboarding {
       showOnboarding()
     } else {
       showMainApp()
@@ -52,7 +34,7 @@ final class AppCoordinator {
     self.onboardingCoordinator = onboardingCoordinator
 
     onboardingCoordinator.onFinish = { [weak self] in
-      UserDefaults.standard.hasSeenOnboarding = true
+      AppPreferences.hasSeenOnboarding = true
       self?.showMainApp()
       self?.onboardingCoordinator = nil
     }

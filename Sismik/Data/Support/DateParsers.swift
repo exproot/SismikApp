@@ -15,6 +15,6 @@ enum DateParsers {
   }()
 
   static func fromUnixMilliseconds(_ milliseconds: Int64) -> Date {
-    return Date(timeIntervalSince1970: TimeInterval(milliseconds / 1000))
+    Date(timeIntervalSince1970: TimeInterval(milliseconds) / 1000)
   }
 }

@@ -1,5 +1,5 @@
 //
-//  EarthquakeEnrichmentService.swift
+//  DefaultEarthquakeEnricher.swift
 //  SismikApp
 //
 //  Created by Ertan Yağmur on 11.07.2025.
@@ -10,7 +10,30 @@ import CoreLocation
 import EarthquakeDomain
 import LocationServices
 
-final class EarthquakeEnrichmentService: EarthquakeEnrichmentServiceProtocol {
+struct Coordinate: Hashable {
+  let latitude: Double
+  let longitude: Double
+
+  init(_ coordinate: CLLocationCoordinate2D) {
+    latitude = coordinate.latitude
+    longitude = coordinate.longitude
+  }
+
+  var clLocationCoordinate2D: CLLocationCoordinate2D {
+    CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+  }
+
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(latitude)
+    hasher.combine(longitude)
+  }
+
+  static func == (lhs: Coordinate, rhs: Coordinate) -> Bool {
+    lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
+  }
+}
+
+final class DefaultEarthquakeEnricher: EarthquakeEnriching {
 
   private let geocoder: GeocodingServiceProtocol
   private var cache: [Coordinate: String] = [:]

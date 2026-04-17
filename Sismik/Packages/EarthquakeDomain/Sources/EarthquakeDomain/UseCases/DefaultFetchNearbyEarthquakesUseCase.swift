@@ -11,11 +11,11 @@ import Foundation
 public final class DefaultFetchNearbyEarthquakesUseCase {
 
   private let repository: EarthquakeRepositoryProtocol
-  private let enrichmentService: EarthquakeEnrichmentServiceProtocol
+  private let enrichmentService: EarthquakeEnriching
 
   public init(
     repository: EarthquakeRepositoryProtocol,
-    enrichmentService: EarthquakeEnrichmentServiceProtocol
+    enrichmentService: EarthquakeEnriching
   ) {
     self.repository = repository
     self.enrichmentService = enrichmentService
