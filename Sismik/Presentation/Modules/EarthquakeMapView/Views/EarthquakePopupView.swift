@@ -5,6 +5,7 @@
 //  Created by Ertan Yağmur on 28.04.2025.
 //
 
+import EarthquakeDomain
 import UIKit
 
 final class EarthquakePopupView: UIView {
@@ -31,7 +32,7 @@ final class EarthquakePopupView: UIView {
       quake.magnitude
     )
 
-    dateLabel.text = quake.time.formatEarthquakeDate()
+    dateLabel.text = quake.time.formattedEarthquakeDisplayText()
     magnitudeLabel.textColor = quake.magnitude.magnitudeColor()
   }
 

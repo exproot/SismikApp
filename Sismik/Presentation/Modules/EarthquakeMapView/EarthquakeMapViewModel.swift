@@ -5,7 +5,7 @@
 //  Created by Ertan Yağmur on 28.04.2025.
 //
 
-
+import EarthquakeDomain
 import MapKit
 
 final class EarthquakeMapViewModel: ObservableObject {
@@ -15,11 +15,11 @@ final class EarthquakeMapViewModel: ObservableObject {
   @Published var region: MKCoordinateRegion
   @Published var boundingOverlay: MKCircle?
 
-  private let mapRegionProvider: MapRegionProviding
+  private let mapRegionProvider: EarthquakeMapRegionProvider
 
   init(
     earthquakes: [Earthquake],
-    mapRegionProvider: MapRegionProviding,
+    mapRegionProvider: EarthquakeMapRegionProvider,
     searchRadiusKm: Double,
     centerCoordinate: CLLocationCoordinate2D
   ) {

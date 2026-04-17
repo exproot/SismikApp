@@ -5,6 +5,7 @@
 //  Created by Ertan Yağmur on 28.04.2025.
 //
 
+import EarthquakeDomain
 import CoreLocation
 import UIKit
 
@@ -26,7 +27,7 @@ final class EarthquakeMapCoordinator {
   }
 
   func makeViewController(earthquakes: [Earthquake]) -> UIViewController {
-    let mapRegionProvider = MapRegionProvider()
+    let mapRegionProvider = EarthquakeMapRegionProvider()
     let viewModel = EarthquakeMapViewModel(
       earthquakes: earthquakes,
       mapRegionProvider: mapRegionProvider,

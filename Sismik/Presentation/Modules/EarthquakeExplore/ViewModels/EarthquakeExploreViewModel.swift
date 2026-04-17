@@ -5,9 +5,11 @@
 //  Created by Ertan Yağmur on 26.04.2025.
 //
 
-import CoreLocation
 import Combine
-import Foundation
+import CoreLocation
+import EarthquakeData
+import EarthquakeDomain
+import LocationServices
 
 protocol EarthquakeExploreViewModelDelegate: AnyObject {
   func showDetail(for earthquake: Earthquake)
@@ -24,7 +26,7 @@ final class EarthquakeExploreViewModel {
 
   private let fetchNearbyEarthquakesUseCase: FetchNearbyEarthquakesUseCaseProtocol
   private let geocoder: GeocodingServiceProtocol
-  private let queryStore: EarthquakeQueryStoring
+  private let queryStore: EarthquakeQueryStore
   private weak var delegate: EarthquakeExploreViewModelDelegate?
   private var cancellables = Set<AnyCancellable>()
 
@@ -33,7 +35,7 @@ final class EarthquakeExploreViewModel {
   init(
     fetchNearbyEarthquakesUseCase: FetchNearbyEarthquakesUseCaseProtocol,
     geocoder: GeocodingServiceProtocol,
-    queryStore: EarthquakeQueryStoring,
+    queryStore: EarthquakeQueryStore,
     delegate: EarthquakeExploreViewModelDelegate
   ) {
     self.fetchNearbyEarthquakesUseCase = fetchNearbyEarthquakesUseCase

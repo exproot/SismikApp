@@ -6,6 +6,8 @@
 //
 
 import Combine
+import EarthquakeDomain
+import LocationServices
 import UIKit
 
 protocol EarthquakeDashboardViewModelDelegate: AnyObject {

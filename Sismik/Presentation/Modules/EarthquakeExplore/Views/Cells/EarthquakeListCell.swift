@@ -5,6 +5,7 @@
 //  Created by Ertan Yağmur on 25.06.2025.
 //
 
+import EarthquakeDomain
 import UIKit
 
 final class EarthquakeListCell: UITableViewCell {
@@ -47,7 +48,7 @@ final class EarthquakeListCell: UITableViewCell {
     magnitudeBadge.textColor = .white
 
     titleLabel.text = model.earthquake.title
-    timeLabel.text = model.earthquake.time.formatEarthquakeDate()
+    timeLabel.text = model.earthquake.time.formattedEarthquakeDisplayText()
     locationLabel.text = model.locationName
   }
 

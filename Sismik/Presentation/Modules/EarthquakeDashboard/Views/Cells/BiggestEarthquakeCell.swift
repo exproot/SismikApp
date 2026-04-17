@@ -5,6 +5,7 @@
 //  Created by Ertan Yağmur on 26.06.2025.
 //
 
+import EarthquakeDomain
 import UIKit
 
 final class BiggestEarthquakeCell: UICollectionViewCell {

@@ -6,6 +6,7 @@
 //
 
 import Combine
+import EarthquakeDomain
 import UIKit
 
 final class EarthquakeExploreViewController: UIViewController {
