@@ -8,7 +8,7 @@
 import Foundation
 
 enum DateParsers {
-  static let emsc: ISO8601DateFormatter = {
+  nonisolated(unsafe) static let emsc: ISO8601DateFormatter = {
     let formatter = ISO8601DateFormatter()
     formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
     return formatter

@@ -6,6 +6,7 @@
 //
 
 import CoreNetworking
+import EarthquakeData
 import EarthquakeDomain
 import EarthquakeRemote
 import LocationServices

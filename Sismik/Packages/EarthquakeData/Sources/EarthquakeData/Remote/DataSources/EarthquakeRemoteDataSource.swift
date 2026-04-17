@@ -9,7 +9,7 @@ import Combine
 import EarthquakeDomain
 import EarthquakeRemote
 
-protocol EarthquakeRemoteDataSource {
+public protocol EarthquakeRemoteDataSource {
   func fetchRecentEarthquakes(request: EarthquakeRequest) -> AnyPublisher<[Earthquake], Error>
 }
 

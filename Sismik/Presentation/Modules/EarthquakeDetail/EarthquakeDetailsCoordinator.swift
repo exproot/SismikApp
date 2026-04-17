@@ -5,6 +5,7 @@
 //  Created by Ertan Yağmur on 26.04.2025.
 //
 
+import EarthquakeData
 import EarthquakeDomain
 import CoreLocation
 import UIKit
@@ -20,7 +21,7 @@ final class EarthquakeDetailCoordinator {
   }
 
   func makeViewController() -> EarthquakeDetailViewController {
-    let queryStore = DefaultEarthquakeQueryStore()
+    let queryStore = UserDefaultsEarthquakeQueryStore()
 
     let viewModel = EarthquakeDetailViewModel(
       earthquake: earthquake,

@@ -9,15 +9,15 @@ import Combine
 import EarthquakeDomain
 import EarthquakeRemote
 
-final class USGSEarthquakeRemoteDataSource: EarthquakeRemoteDataSource {
+public final class USGSEarthquakeRemoteDataSource: EarthquakeRemoteDataSource {
   
   private let service: USGSEarthquakeServiceProtocol
   
-  init(service: USGSEarthquakeServiceProtocol) {
+  public init(service: USGSEarthquakeServiceProtocol) {
     self.service = service
   }
   
-  func fetchRecentEarthquakes(request: EarthquakeRemote.EarthquakeRequest) -> AnyPublisher<[Earthquake], Error> {
+  public func fetchRecentEarthquakes(request: EarthquakeRemote.EarthquakeRequest) -> AnyPublisher<[Earthquake], Error> {
     service.fetchRecentEarthquakes(request: request)
       .map { $0.map(USGSEarthquakeMapper.map) }
       .eraseToAnyPublisher()

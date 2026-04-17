@@ -9,11 +9,11 @@ import Combine
 import EarthquakeDomain
 import EarthquakeRemote
 
-final class DefaultEarthquakeRepository {
+public final class DefaultEarthquakeRepository {
   
   private let remoteDataSource: EarthquakeRemoteDataSource
   
-  init(remoteDataSource: EarthquakeRemoteDataSource) {
+  public init(remoteDataSource: EarthquakeRemoteDataSource) {
     self.remoteDataSource = remoteDataSource
   }
 
@@ -22,7 +22,7 @@ final class DefaultEarthquakeRepository {
 // MARK: EarthquakeRepositoryProtocol
 extension DefaultEarthquakeRepository: EarthquakeRepositoryProtocol {
   
-  func fetchRecentEarthquakes(query: EarthquakeQuery) -> AnyPublisher<[Earthquake], Error> {
+  public func fetchRecentEarthquakes(query: EarthquakeQuery) -> AnyPublisher<[Earthquake], Error> {
     let request = EarthquakeRequest(query: query)
     
     return remoteDataSource.fetchRecentEarthquakes(request: request)

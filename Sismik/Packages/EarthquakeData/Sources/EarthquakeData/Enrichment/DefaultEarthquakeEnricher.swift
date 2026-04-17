@@ -33,16 +33,16 @@ struct Coordinate: Hashable {
   }
 }
 
-final class DefaultEarthquakeEnricher: EarthquakeEnriching {
+public final class DefaultEarthquakeEnricher: EarthquakeEnriching {
 
   private let geocoder: GeocodingServiceProtocol
   private var cache: [Coordinate: String] = [:]
 
-  init(geocoder: GeocodingServiceProtocol) {
+  public init(geocoder: GeocodingServiceProtocol) {
     self.geocoder = geocoder
   }
 
-  func enrich(earthquakes: [Earthquake]) -> AnyPublisher<[EnrichedEarthquake], Never> {
+  public func enrich(earthquakes: [Earthquake]) -> AnyPublisher<[EnrichedEarthquake], Never> {
     let publishers = earthquakes.map { quake in
       let coordinate = Coordinate(CLLocationCoordinate2D(latitude: quake.latitude, longitude: quake.longitude))
 

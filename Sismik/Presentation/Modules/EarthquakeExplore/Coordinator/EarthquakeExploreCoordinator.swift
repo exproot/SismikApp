@@ -7,6 +7,7 @@
 
 import CoreLocation
 import CoreNetworking
+import EarthquakeData
 import EarthquakeDomain
 import EarthquakeRemote
 import LocationServices
@@ -25,7 +26,7 @@ final class EarthquakeExploreCoordinator {
   func makeViewController() -> UIViewController {
     let geocoder = DefaultGeocodingService()
     let enrichmentService = DefaultEarthquakeEnricher(geocoder: geocoder)
-    let queryStore = DefaultEarthquakeQueryStore()
+    let queryStore = UserDefaultsEarthquakeQueryStore()
     
     let httpClient = URLSessionHTTPClient()
     let usgsService = USGSEarthquakeService(client: httpClient)
