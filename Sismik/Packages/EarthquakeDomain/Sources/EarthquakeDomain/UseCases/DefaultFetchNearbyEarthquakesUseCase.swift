@@ -8,12 +8,12 @@
 import Combine
 import Foundation
 
-final class DefaultFetchNearbyEarthquakesUseCase {
+public final class DefaultFetchNearbyEarthquakesUseCase {
 
   private let repository: EarthquakeRepositoryProtocol
   private let enrichmentService: EarthquakeEnrichmentServiceProtocol
 
-  init(
+  public init(
     repository: EarthquakeRepositoryProtocol,
     enrichmentService: EarthquakeEnrichmentServiceProtocol
   ) {
@@ -26,7 +26,7 @@ final class DefaultFetchNearbyEarthquakesUseCase {
 // MARK: FetchNearbyEarthquakesUseCase
 extension DefaultFetchNearbyEarthquakesUseCase: FetchNearbyEarthquakesUseCaseProtocol {
 
-  func execute(query: EarthquakeQuery) -> AnyPublisher<[EnrichedEarthquake], Error> {
+  public func execute(query: EarthquakeQuery) -> AnyPublisher<[EnrichedEarthquake], Error> {
     repository.fetchRecentEarthquakes(query: query)
       .flatMap { [enrichmentService] earthquakes in
         enrichmentService.enrich(earthquakes: earthquakes)

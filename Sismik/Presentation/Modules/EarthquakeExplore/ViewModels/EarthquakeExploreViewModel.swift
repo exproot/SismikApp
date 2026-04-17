@@ -5,8 +5,9 @@
 //  Created by Ertan Yağmur on 26.04.2025.
 //
 
-import CoreLocation
+import EarthquakeDomain
 import Combine
+import CoreLocation
 import LocationServices
 
 protocol EarthquakeExploreViewModelDelegate: AnyObject {

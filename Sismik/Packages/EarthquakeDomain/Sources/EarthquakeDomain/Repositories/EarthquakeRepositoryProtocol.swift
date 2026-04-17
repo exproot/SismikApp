@@ -7,6 +7,6 @@
 
 import Combine
 
-protocol EarthquakeRepositoryProtocol {
+public protocol EarthquakeRepositoryProtocol {
   func fetchRecentEarthquakes(query: EarthquakeQuery) -> AnyPublisher<[Earthquake], Error>
 }

@@ -7,6 +7,7 @@
 
 import CoreLocation
 import CoreNetworking
+import EarthquakeDomain
 import EarthquakeRemote
 import LocationServices
 import UIKit

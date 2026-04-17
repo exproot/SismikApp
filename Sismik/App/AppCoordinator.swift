@@ -7,6 +7,24 @@
 
 import UIKit
 
+final class AppFlowCoordinator {
+  
+  private weak var tabBarController: UITabBarController?
+ 
+  init(tabBarController: UITabBarController) {
+    self.tabBarController = tabBarController
+  }
+  
+  func start() {
+    if !UserDefaults.standard.hasSeenOnboarding {
+      
+    } else {
+      
+    }
+  }
+  
+}
+
 final class AppCoordinator {
 
   var window: UIWindow

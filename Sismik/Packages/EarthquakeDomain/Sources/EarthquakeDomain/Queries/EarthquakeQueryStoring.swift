@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol EarthquakeQueryStoring {
+public protocol EarthquakeQueryStoring {
   func save(_ query: EarthquakeQuery)
   func load() -> EarthquakeQuery?
   func clear()

@@ -6,6 +6,7 @@
 //
 
 import Combine
+import EarthquakeDomain
 import EarthquakeRemote
 
 final class DefaultEarthquakeRepository {

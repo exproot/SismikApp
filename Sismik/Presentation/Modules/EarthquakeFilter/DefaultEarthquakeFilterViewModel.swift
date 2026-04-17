@@ -5,6 +5,7 @@
 //  Created by Ertan Yağmur on 17.05.2025.
 //
 
+import EarthquakeDomain
 import Foundation
 
 enum FilterSection: Int, CaseIterable {

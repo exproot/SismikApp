@@ -6,6 +6,7 @@
 //
 
 import Combine
+import EarthquakeDomain
 import LocationServices
 import UIKit
 

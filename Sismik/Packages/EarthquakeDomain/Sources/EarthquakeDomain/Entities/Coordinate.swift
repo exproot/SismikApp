@@ -8,25 +8,25 @@
 import CoreLocation
 import Foundation
 
-struct Coordinate: Hashable {
-  let latitude: Double
-  let longitude: Double
+public struct Coordinate: Hashable {
+  public let latitude: Double
+  public let longitude: Double
 
-  init(_ coordinate: CLLocationCoordinate2D) {
+  public init(_ coordinate: CLLocationCoordinate2D) {
     latitude = coordinate.latitude
     longitude = coordinate.longitude
   }
 
-  var clLocationCoordinate2D: CLLocationCoordinate2D {
+  public var clLocationCoordinate2D: CLLocationCoordinate2D {
     CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
   }
 
-  func hash(into hasher: inout Hasher) {
+  public func hash(into hasher: inout Hasher) {
     hasher.combine(latitude)
     hasher.combine(longitude)
   }
 
-  static func == (lhs: Coordinate, rhs: Coordinate) -> Bool {
+  public static func == (lhs: Coordinate, rhs: Coordinate) -> Bool {
     lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
   }
 }

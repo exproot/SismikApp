@@ -7,6 +7,7 @@
 
 import Combine
 import CoreLocation
+import EarthquakeDomain
 import LocationServices
 
 final class EarthquakeEnrichmentService: EarthquakeEnrichmentServiceProtocol {

@@ -5,6 +5,7 @@
 //  Created by Ertan Yağmur on 26.04.2025.
 //
 
+import EarthquakeDomain
 import CoreLocation
 import UIKit
 
