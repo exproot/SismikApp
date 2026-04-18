@@ -36,7 +36,7 @@ final class EarthquakeExploreCoordinator {
     let emscRemoteSource = EMSCEarthquakeRemoteDataSource(service: emscService)
     let earthquakeRepository = DefaultEarthquakeRepository(remoteDataSource: usgsRemoteSource)
     
-    let fetchNearbyEarthquakesUseCase = DefaultFetchNearbyEarthquakesUseCase(repository: earthquakeRepository, enrichmentService: enrichmentService)
+    let fetchNearbyEarthquakesUseCase = DefaultFetchNearbyEarthquakesUseCase(repository: earthquakeRepository, enricher: enrichmentService)
 
     let earthquakeExploreViewModel = EarthquakeExploreViewModel(
       fetchNearbyEarthquakesUseCase: fetchNearbyEarthquakesUseCase,

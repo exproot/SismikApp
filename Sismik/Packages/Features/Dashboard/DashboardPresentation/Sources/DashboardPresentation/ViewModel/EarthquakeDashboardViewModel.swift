@@ -10,10 +10,6 @@ import EarthquakeDomain
 import LocationServices
 import UIKit
 
-protocol EarthquakeDashboardViewModelDelegate: AnyObject {
-  func showDetail(for earthquake: Earthquake)
-}
-
 enum EarthquakeDashboardState {
   case loading
   case loaded(NSDiffableDataSourceSnapshot<EarthquakeDashboardSection, EarthquakeDashboardItem>)
@@ -23,28 +19,24 @@ enum EarthquakeDashboardState {
 final class EarthquakeDashboardViewModel {
 
   @Published private(set) var state: EarthquakeDashboardState = .loading
-
-  private weak var delegate: EarthquakeDashboardViewModelDelegate?
+  
+  private let actions: DashboardViewModelActions
   private let useCase: FetchNearbyEarthquakesUseCaseProtocol
   private let locationController: LocationStateControlling
   private var cancellables = Set<AnyCancellable>()
 
-  var showLocationDeniedScreen: (() -> Void)?
-
   init(
-    delegate: EarthquakeDashboardViewModelDelegate,
+    actions: DashboardViewModelActions,
     useCase: FetchNearbyEarthquakesUseCaseProtocol,
-    locationController: LocationStateControlling,
-    showLocationDeniedScreen: @escaping () -> Void
+    locationController: LocationStateControlling
   ) {
-    self.delegate = delegate
+    self.actions = actions
     self.useCase = useCase
     self.locationController = locationController
-    self.showLocationDeniedScreen = showLocationDeniedScreen
   }
 
   func didSelectEarthquake(_ earthquake: Earthquake) {
-    delegate?.showDetail(for: earthquake)
+    actions.didSelectEarthquake(earthquake)
   }
 
   func fetchLocationPermission() {
@@ -54,7 +46,7 @@ final class EarthquakeDashboardViewModel {
         case .authorized:
           self?.loadDashboard()
         case .denied:
-          self?.showLocationDeniedScreen?()
+          self?.actions.showLocationDenied()
         case .notDetermined:
           self?.locationController.requestLocation()
         }
@@ -64,10 +56,11 @@ final class EarthquakeDashboardViewModel {
 
   func loadDashboard() {
     state = .loading
+    
     locationController.coordinatePublisher
       .prefix(1)
       .sink { [weak self] coordinate in
-        guard let self = self else { return }
+        guard let self else { return }
         let query = EarthquakeQuery.defaultAround(coordinate)
         self.fetchEarthquakes(query: query)
       }

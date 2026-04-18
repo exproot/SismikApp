@@ -5,20 +5,28 @@
 //  Created by Ertan Yağmur on 31.05.2025.
 //
 
+import DashboardPresentation
+import EarthquakeDomain
 import UIKit
 
+@MainActor
 final class AppCoordinator {
 
-  var window: UIWindow
-  private var tabBarController: UITabBarController
+  private let window: UIWindow
+  private let tabBarController: UITabBarController
+  private let diContainer: AppDIContainer
 
   private var onboardingCoordinator: OnboardingCoordinator?
-  private var dashboardCoordinator: EarthquakeDashboardCoordinator?
+  private var dashboardCoordinator: DashboardFlowCoordinator?
   private var earthquakeExploreCoordinator: EarthquakeExploreCoordinator?
 
-  init(window: UIWindow) {
+  init(
+    window: UIWindow,
+    diContainer: AppDIContainer
+  ) {
     self.window = window
     self.tabBarController = UITabBarController()
+    self.diContainer = diContainer
   }
 
   func start() {
@@ -45,15 +53,18 @@ final class AppCoordinator {
 
   private func showMainApp() {
     let dashboardNav = UINavigationController()
-    let dashboardCoordinator = EarthquakeDashboardCoordinator(navigationController: dashboardNav)
-    let dashboardVC = dashboardCoordinator.makeViewController()
-
-    dashboardNav.setViewControllers([dashboardVC], animated: false)
     dashboardNav.tabBarItem = UITabBarItem(
       title: NSLocalizedString("tabbar.dashboard", comment: ""),
       image: UIImage(systemName: "house"),
       tag: 0
     )
+    
+    let dashboardModule = diContainer.makeDashboardModule()
+    let dashboardCoordinator = dashboardModule.makeFlowCoordinator(navigationController: dashboardNav)
+    dashboardCoordinator.delegate = self
+    
+    self.dashboardCoordinator = dashboardCoordinator
+    dashboardCoordinator.start()
 
     let exploreNav = UINavigationController()
     let earthquakeExploreCoordinator = EarthquakeExploreCoordinator(navigationController: exploreNav)
@@ -65,8 +76,7 @@ final class AppCoordinator {
       image: UIImage(systemName: "globe.europe.africa"),
       tag: 1
     )
-
-    self.dashboardCoordinator = dashboardCoordinator
+    
     self.earthquakeExploreCoordinator = earthquakeExploreCoordinator
 
     tabBarController.viewControllers = [dashboardNav, exploreNav]
@@ -74,4 +84,26 @@ final class AppCoordinator {
     window.makeKeyAndVisible()
   }
 
+}
+
+// MARK: DashboardFlowCoordinatorDelegate
+extension AppCoordinator: DashboardFlowCoordinatorDelegate {
+  
+  func dashboardFlowCoordinator(
+    _ coordinator: DashboardFlowCoordinator,
+    didRequestDetailFor earthquake: Earthquake
+  ) {
+    let earthquakeDetailCoordinator = EarthquakeDetailCoordinator(navigationController: coordinator.rootNavigationController, earthquake: earthquake)
+    let earthquakeDetailVC = earthquakeDetailCoordinator.makeViewController()
+    
+    earthquakeDetailCoordinator.navigationController?.pushViewController(earthquakeDetailVC, animated: true)
+  }
+  
+  func dashboardFlowCoordinatorDidRequestLocationDenied(_ coordinator: DashboardPresentation.DashboardFlowCoordinator) {
+    let locationAccessCoordinator = LocationAccessCoordinator(navigationController: coordinator.rootNavigationController)
+    let locationAccessVC = locationAccessCoordinator.makeViewController()
+    
+    coordinator.rootNavigationController?.present(locationAccessVC, animated: true)
+  }
+  
 }
