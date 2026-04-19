@@ -5,12 +5,14 @@
 //  Created by Ertan Yağmur on 31.05.2025.
 //
 
-import CoreLocation
-import DashboardPresentation
-import EartquakeDetailPresentation
 import EarthquakeDomain
-import ExplorePresentation
+import CoreLocation
 import UIKit
+import EartquakeDetailPresentation
+import DashboardPresentation
+import ExplorePresentation
+import MapPresentation
+
 
 @MainActor
 final class AppCoordinator {
@@ -23,6 +25,7 @@ final class AppCoordinator {
   private var dashboardCoordinator: DashboardFlowCoordinator?
   private var exploreCoordinator: ExploreFlowCoordinator?
   private var earthquakeDetailCoordinator: EarthquakeDetailFlowCoordinator?
+  private var earthquakeMapCoordinator: MapFlowCoordinator?
 
   init(
     window: UIWindow,
@@ -96,7 +99,6 @@ final class AppCoordinator {
     guard let navigationController else { return }
     
     let context = EarthquakeDetailContext(earthquake: earthquake)
-    
     let detailModule = diContainer.makeEarthquakeDetailModule(with: context)
     let detailCoordinator = detailModule.makeFlowCoordinator(navigationController: navigationController)
     detailCoordinator.delegate = self
@@ -113,14 +115,17 @@ final class AppCoordinator {
   ) {
     guard let navigationController else { return }
     
-    let mapCoordinator = EarthquakeMapCoordinator(
-      navigationController: navigationController,
-      searchRadiusKm: radius,
-      centerCoordinate: location
+    let context = EarthquakeMapContext(
+      earthquakes: earthquakes,
+      radius: radius,
+      center: location
     )
-    let mapVC = mapCoordinator.makeViewController(earthquakes: earthquakes)
     
-    navigationController.pushViewController(mapVC, animated: true)
+    let mapModule = diContainer.makeMapModule(with: context)
+    let mapCoordinator = mapModule.makeFlowCoordinator(navigationController: navigationController)
+    
+    self.earthquakeMapCoordinator = mapCoordinator
+    mapCoordinator.start()
   }
 
 }

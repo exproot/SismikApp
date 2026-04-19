@@ -6,14 +6,15 @@
 //
 
 import CoreNetworking
-import DashboardPresentation
+import LocationServices
 import EarthquakeData
-import EartquakeDetailPresentation
 import EarthquakeDomain
 import EarthquakeRemote
 import EarthquakeSupport
+import EartquakeDetailPresentation
+import DashboardPresentation
 import ExplorePresentation
-import LocationServices
+import MapPresentation
 
 @MainActor
 final class AppDIContainer {
@@ -58,6 +59,12 @@ final class AppDIContainer {
     let dependencies = EarthquakeDetailModuleDependencies(context: context)
     
     return EarthquakeDetailModule(dependencies: dependencies)
+  }
+  
+  func makeMapModule(with context: EarthquakeMapContext) -> MapModule {
+    let dependencies = MapModuleDependencies(context: context)
+    
+    return MapModule(dependencies: dependencies)
   }
   
   private func makeLocationStateController() -> LocationStateControlling {

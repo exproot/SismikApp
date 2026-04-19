@@ -15,6 +15,7 @@
 		702935D02F92880400F8B325 /* EarthquakeData in Frameworks */ = {isa = PBXBuildFile; productRef = 702935CF2F92880400F8B325 /* EarthquakeData */; };
 		703D9C052F9456E400E4C4FD /* ExplorePresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 703D9C042F9456E400E4C4FD /* ExplorePresentation */; };
 		703D9CD12F95139300E4C4FD /* EarthquakeSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 703D9CD02F95139300E4C4FD /* EarthquakeSupport */; };
+		708C3EDE2F95618800D926E9 /* MapPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 708C3EDD2F95618800D926E9 /* MapPresentation */; };
 		709734DD2F914A88004F923A /* CoreNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 709734DC2F914A88004F923A /* CoreNetworking */; };
 		709734DF2F914A92004F923A /* EarthquakeRemote in Frameworks */ = {isa = PBXBuildFile; productRef = 709734DE2F914A92004F923A /* EarthquakeRemote */; };
 		709737D12F915D84004F923A /* LocationServices in Frameworks */ = {isa = PBXBuildFile; productRef = 709737D02F915D84004F923A /* LocationServices */; };
@@ -89,6 +90,7 @@
 				7020911F2F92A0AF0075F885 /* DashboardPresentation in Frameworks */,
 				70B79EBE2F951F7600218855 /* EartquakeDetailPresentation in Frameworks */,
 				70292E0C2F923B8A00F8B325 /* EarthquakeDomain in Frameworks */,
+				708C3EDE2F95618800D926E9 /* MapPresentation in Frameworks */,
 				709737D12F915D84004F923A /* LocationServices in Frameworks */,
 				703D9CD12F95139300E4C4FD /* EarthquakeSupport in Frameworks */,
 				709734DD2F914A88004F923A /* CoreNetworking in Frameworks */,
@@ -252,6 +254,7 @@
 				703D9C042F9456E400E4C4FD /* ExplorePresentation */,
 				703D9CD02F95139300E4C4FD /* EarthquakeSupport */,
 				70B79EBD2F951F7600218855 /* EartquakeDetailPresentation */,
+				708C3EDD2F95618800D926E9 /* MapPresentation */,
 			);
 			productName = SismikApp;
 			productReference = 700CA4292DBBF6AB00C8759D /* Sismik.app */;
@@ -685,6 +688,10 @@
 		703D9CD02F95139300E4C4FD /* EarthquakeSupport */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = EarthquakeSupport;
+		};
+		708C3EDD2F95618800D926E9 /* MapPresentation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MapPresentation;
 		};
 		709734DC2F914A88004F923A /* CoreNetworking */ = {
 			isa = XCSwiftPackageProductDependency;
