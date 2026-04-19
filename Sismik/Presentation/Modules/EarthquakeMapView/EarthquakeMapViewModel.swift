@@ -20,15 +20,17 @@ final class EarthquakeMapViewModel: ObservableObject {
   init(
     earthquakes: [Earthquake],
     mapRegionProvider: EarthquakeMapRegionProvider,
-    searchRadiusKm: Double,
+    searchRadiusKm: Double?,
     centerCoordinate: CLLocationCoordinate2D
   ) {
     self.earthquakes = earthquakes
     self.mapRegionProvider = mapRegionProvider
     self.region = mapRegionProvider.region(for: earthquakes)
-
-    let radiusInMeters = searchRadiusKm * 1000
-    self.boundingOverlay = MKCircle(center: centerCoordinate, radius: radiusInMeters)
+    
+    if let searchRadiusKm {
+      let radiusInMeters = searchRadiusKm * 1000
+      self.boundingOverlay = MKCircle(center: centerCoordinate, radius: radiusInMeters)
+    }
   }
 
   func earthquake(matching coordinate: CLLocationCoordinate2D) -> Earthquake? {

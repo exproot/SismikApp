@@ -13,9 +13,12 @@
 		7022EAC62DBD5E2E0099C8D1 /* MockLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7022EAC52DBD5E2E0099C8D1 /* MockLocationManager.swift */; };
 		70292E0C2F923B8A00F8B325 /* EarthquakeDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 70292E0B2F923B8A00F8B325 /* EarthquakeDomain */; };
 		702935D02F92880400F8B325 /* EarthquakeData in Frameworks */ = {isa = PBXBuildFile; productRef = 702935CF2F92880400F8B325 /* EarthquakeData */; };
+		703D9C052F9456E400E4C4FD /* ExplorePresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 703D9C042F9456E400E4C4FD /* ExplorePresentation */; };
+		703D9CD12F95139300E4C4FD /* EarthquakeSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 703D9CD02F95139300E4C4FD /* EarthquakeSupport */; };
 		709734DD2F914A88004F923A /* CoreNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 709734DC2F914A88004F923A /* CoreNetworking */; };
 		709734DF2F914A92004F923A /* EarthquakeRemote in Frameworks */ = {isa = PBXBuildFile; productRef = 709734DE2F914A92004F923A /* EarthquakeRemote */; };
 		709737D12F915D84004F923A /* LocationServices in Frameworks */ = {isa = PBXBuildFile; productRef = 709737D02F915D84004F923A /* LocationServices */; };
+		70B79EBE2F951F7600218855 /* EartquakeDetailPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 70B79EBD2F951F7600218855 /* EartquakeDetailPresentation */; };
 		70C175FA2DEB70A500856824 /* DotLottie in Frameworks */ = {isa = PBXBuildFile; productRef = 70C175F92DEB70A500856824 /* DotLottie */; };
 		70F683D02DECF34800EC6199 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 70F683CE2DECF34800EC6199 /* Localizable.strings */; };
 /* End PBXBuildFile section */
@@ -84,9 +87,12 @@
 				70C175FA2DEB70A500856824 /* DotLottie in Frameworks */,
 				702935D02F92880400F8B325 /* EarthquakeData in Frameworks */,
 				7020911F2F92A0AF0075F885 /* DashboardPresentation in Frameworks */,
+				70B79EBE2F951F7600218855 /* EartquakeDetailPresentation in Frameworks */,
 				70292E0C2F923B8A00F8B325 /* EarthquakeDomain in Frameworks */,
 				709737D12F915D84004F923A /* LocationServices in Frameworks */,
+				703D9CD12F95139300E4C4FD /* EarthquakeSupport in Frameworks */,
 				709734DD2F914A88004F923A /* CoreNetworking in Frameworks */,
+				703D9C052F9456E400E4C4FD /* ExplorePresentation in Frameworks */,
 				709734DF2F914A92004F923A /* EarthquakeRemote in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -243,6 +249,9 @@
 				70292E0B2F923B8A00F8B325 /* EarthquakeDomain */,
 				702935CF2F92880400F8B325 /* EarthquakeData */,
 				7020911E2F92A0AF0075F885 /* DashboardPresentation */,
+				703D9C042F9456E400E4C4FD /* ExplorePresentation */,
+				703D9CD02F95139300E4C4FD /* EarthquakeSupport */,
+				70B79EBD2F951F7600218855 /* EartquakeDetailPresentation */,
 			);
 			productName = SismikApp;
 			productReference = 700CA4292DBBF6AB00C8759D /* Sismik.app */;
@@ -669,6 +678,14 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = EarthquakeData;
 		};
+		703D9C042F9456E400E4C4FD /* ExplorePresentation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ExplorePresentation;
+		};
+		703D9CD02F95139300E4C4FD /* EarthquakeSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = EarthquakeSupport;
+		};
 		709734DC2F914A88004F923A /* CoreNetworking */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CoreNetworking;
@@ -680,6 +697,10 @@
 		709737D02F915D84004F923A /* LocationServices */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LocationServices;
+		};
+		70B79EBD2F951F7600218855 /* EartquakeDetailPresentation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = EartquakeDetailPresentation;
 		};
 		70C175F92DEB70A500856824 /* DotLottie */ = {
 			isa = XCSwiftPackageProductDependency;

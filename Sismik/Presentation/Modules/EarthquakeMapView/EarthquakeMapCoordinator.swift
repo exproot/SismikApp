@@ -13,12 +13,12 @@ final class EarthquakeMapCoordinator {
 
   weak var navigationController: UINavigationController?
 
-  private let searchRadiusKm: Double
+  private let searchRadiusKm: Double?
   private let centerCoordinate: CLLocationCoordinate2D
 
   init(
     navigationController: UINavigationController? = nil,
-    searchRadiusKm: Double,
+    searchRadiusKm: Double?,
     centerCoordinate: CLLocationCoordinate2D
   ) {
     self.navigationController = navigationController

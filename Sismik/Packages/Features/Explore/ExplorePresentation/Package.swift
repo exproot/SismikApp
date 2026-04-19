@@ -4,46 +4,38 @@
 import PackageDescription
 
 let package = Package(
-    name: "EarthquakeData",
+    name: "ExplorePresentation",
     platforms: [.iOS(.v16)],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "EarthquakeData",
-            targets: ["EarthquakeData"]
+            name: "ExplorePresentation",
+            targets: ["ExplorePresentation"]
         ),
     ],
     dependencies: [
       .package(
         name: "EarthquakeDomain",
-        path: "../EarthquakeDomain"
-      ),
-      .package(
-        name: "EarthquakeRemote",
-        path: "EarthquakeRemote"
+        path: "../../../EarthquakeDomain"
       ),
       .package(
         name: "EarthquakeSupport",
-        path: "EarthquakeSupport"
+        path: "../../../EarthquakeSupport"
       ),
       .package(
         name: "LocationServices",
-        path: "../LocationServices"
-      )
+        path: "../../../LocationServices"
+      ),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "EarthquakeData",
+            name: "ExplorePresentation",
             dependencies: [
               .product(
                 name: "EarthquakeDomain",
                 package: "EarthquakeDomain"
-              ),
-              .product(
-                name: "EarthquakeRemote",
-                package: "EarthquakeRemote"
               ),
               .product(
                 name: "EarthquakeSupport",

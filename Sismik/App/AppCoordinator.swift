@@ -5,8 +5,11 @@
 //  Created by Ertan Yağmur on 31.05.2025.
 //
 
+import CoreLocation
 import DashboardPresentation
+import EartquakeDetailPresentation
 import EarthquakeDomain
+import ExplorePresentation
 import UIKit
 
 @MainActor
@@ -18,7 +21,8 @@ final class AppCoordinator {
 
   private var onboardingCoordinator: OnboardingCoordinator?
   private var dashboardCoordinator: DashboardFlowCoordinator?
-  private var earthquakeExploreCoordinator: EarthquakeExploreCoordinator?
+  private var exploreCoordinator: ExploreFlowCoordinator?
+  private var earthquakeDetailCoordinator: EarthquakeDetailFlowCoordinator?
 
   init(
     window: UIWindow,
@@ -67,23 +71,89 @@ final class AppCoordinator {
     dashboardCoordinator.start()
 
     let exploreNav = UINavigationController()
-    let earthquakeExploreCoordinator = EarthquakeExploreCoordinator(navigationController: exploreNav)
-    let exploreVC = earthquakeExploreCoordinator.makeViewController()
-
-    exploreNav.setViewControllers([exploreVC], animated: false)
     exploreNav.tabBarItem = UITabBarItem(
       title: NSLocalizedString("tabbar.explore", comment: ""),
       image: UIImage(systemName: "globe.europe.africa"),
       tag: 1
     )
     
-    self.earthquakeExploreCoordinator = earthquakeExploreCoordinator
+    let exploreModule = diContainer.makeExploreModule()
+    let exploreCoordinator = exploreModule.makeFlowCoordinator(navigationController: exploreNav)
+    exploreCoordinator.delegate = self
+  
+    self.exploreCoordinator = exploreCoordinator
+    exploreCoordinator.start()
 
     tabBarController.viewControllers = [dashboardNav, exploreNav]
     window.rootViewController = tabBarController
     window.makeKeyAndVisible()
   }
+  
+  private func showDetail(
+    for earthquake: Earthquake,
+    navigationController: UINavigationController?
+  ) {
+    guard let navigationController else { return }
+    
+    let context = EarthquakeDetailContext(earthquake: earthquake)
+    
+    let detailModule = diContainer.makeEarthquakeDetailModule(with: context)
+    let detailCoordinator = detailModule.makeFlowCoordinator(navigationController: navigationController)
+    detailCoordinator.delegate = self
+    
+    self.earthquakeDetailCoordinator = detailCoordinator
+    detailCoordinator.start()
+  }
+  
+  private func showMap(
+    for earthquakes: [Earthquake],
+    with radius: Double? = nil,
+    in location: CLLocationCoordinate2D,
+    navigationController: UINavigationController?
+  ) {
+    guard let navigationController else { return }
+    
+    let mapCoordinator = EarthquakeMapCoordinator(
+      navigationController: navigationController,
+      searchRadiusKm: radius,
+      centerCoordinate: location
+    )
+    let mapVC = mapCoordinator.makeViewController(earthquakes: earthquakes)
+    
+    navigationController.pushViewController(mapVC, animated: true)
+  }
 
+}
+
+// MARK: EarthquakeDetailFlowCoordinatorDelegate
+extension AppCoordinator: EarthquakeDetailFlowCoordinatorDelegate {
+  func earthquakeDetailFlowCoordinator(
+    _ coordinator: EarthquakeDetailFlowCoordinator,
+    didRequestMapFor earthquake: Earthquake
+  ) {
+    showMap(for: [earthquake], in: CLLocationCoordinate2D(latitude: earthquake.latitude, longitude: earthquake.longitude), navigationController: coordinator.rootNavigationController)
+  }
+}
+
+// MARK: ExploreFlowCoordinatorDelegate
+extension AppCoordinator: ExploreFlowCoordinatorDelegate {
+
+  func exploreFlowCoordinator(
+    _ coordinator: ExploreFlowCoordinator,
+    didRequestDetailFor earthquake: Earthquake
+  ) {
+    showDetail(for: earthquake, navigationController: coordinator.rootNavigationController)
+  }
+  
+  func exploreFlowCoordinator(
+    _ coordinator: ExploreFlowCoordinator,
+    didRequestMapFor earthquakes: [Earthquake],
+    radius: Double,
+    center: CLLocationCoordinate2D
+  ) {
+    showMap(for: earthquakes, with: radius, in: center, navigationController: coordinator.rootNavigationController)
+  }
+  
 }
 
 // MARK: DashboardFlowCoordinatorDelegate
@@ -93,10 +163,7 @@ extension AppCoordinator: DashboardFlowCoordinatorDelegate {
     _ coordinator: DashboardFlowCoordinator,
     didRequestDetailFor earthquake: Earthquake
   ) {
-    let earthquakeDetailCoordinator = EarthquakeDetailCoordinator(navigationController: coordinator.rootNavigationController, earthquake: earthquake)
-    let earthquakeDetailVC = earthquakeDetailCoordinator.makeViewController()
-    
-    earthquakeDetailCoordinator.navigationController?.pushViewController(earthquakeDetailVC, animated: true)
+    showDetail(for: earthquake, navigationController: coordinator.rootNavigationController)
   }
   
   func dashboardFlowCoordinatorDidRequestLocationDenied(_ coordinator: DashboardPresentation.DashboardFlowCoordinator) {

@@ -6,6 +6,7 @@
 //
 
 import Combine
+import CoreLocation
 import EarthquakeDomain
 import LocationServices
 import UIKit
@@ -24,6 +25,8 @@ final class EarthquakeDashboardViewModel {
   private let useCase: FetchNearbyEarthquakesUseCaseProtocol
   private let locationController: LocationStateControlling
   private var cancellables = Set<AnyCancellable>()
+  
+  private var userLocation: CLLocationCoordinate2D?
 
   init(
     actions: DashboardViewModelActions,

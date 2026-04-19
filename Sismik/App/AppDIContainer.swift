@@ -8,8 +8,11 @@
 import CoreNetworking
 import DashboardPresentation
 import EarthquakeData
+import EartquakeDetailPresentation
 import EarthquakeDomain
 import EarthquakeRemote
+import EarthquakeSupport
+import ExplorePresentation
 import LocationServices
 
 @MainActor
@@ -22,10 +25,7 @@ final class AppDIContainer {
   lazy var geocodingService: GeocodingServiceProtocol = DefaultGeocodingService()
   lazy var earthquakeEnricher: EarthquakeEnriching = DefaultEarthquakeEnricher(geocoder: geocodingService)
   lazy var locationManager: LocationManagerProtocol = DefaultLocationManager()
-  
-  func makeLocationStateController() -> LocationStateControlling {
-    DefaultLocationStateController(locationManager: locationManager)
-  }
+  lazy var queryStore: EarthquakeQueryStore = UserDefaultsEarthquakeQueryStore()
   
   func makeDashboardModule() -> DashboardModule {
     let dependencies =  DashboardModuleDependencies(
@@ -41,6 +41,27 @@ final class AppDIContainer {
     )
     
     return DashboardModule(dependencies: dependencies)
+  }
+  
+  func makeExploreModule() -> ExploreModule {
+    let dependencies = ExploreModuleDependencies(
+      earthquakeRepository: earthquakeRepository,
+      enricher: earthquakeEnricher,
+      geocoder: geocodingService,
+      queryStore: queryStore
+    )
+    
+    return ExploreModule(dependencies: dependencies)
+  }
+  
+  func makeEarthquakeDetailModule(with context: EarthquakeDetailContext) -> EarthquakeDetailModule {
+    let dependencies = EarthquakeDetailModuleDependencies(context: context)
+    
+    return EarthquakeDetailModule(dependencies: dependencies)
+  }
+  
+  private func makeLocationStateController() -> LocationStateControlling {
+    DefaultLocationStateController(locationManager: locationManager)
   }
   
 }
