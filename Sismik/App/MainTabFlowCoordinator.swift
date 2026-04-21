@@ -15,16 +15,20 @@ import ExplorePresentation
 import MapPresentation
 
 @MainActor
-final class MainTabFlowCoordinator {
+final class MainTabFlowCoordinator: NSObject {
   
   private let window: UIWindow
   private let diContainer: AppDIContainer
   private let tabBarController = UITabBarController()
   
+  private var dashboardNavigationController: UINavigationController?
+  private var exploreNavigationController: UINavigationController?
+  
+  private var earthquakeDetailCoordinators = [EarthquakeDetailFlowCoordinator]()
+  private var earthquakeMapCoordinators = [MapFlowCoordinator]()
+  
   private var dashboardCoordinator: DashboardFlowCoordinator?
   private var exploreCoordinator: ExploreFlowCoordinator?
-  private var earthquakeDetailCoordinator: EarthquakeDetailFlowCoordinator?
-  private var earthquakeMapCoordinator: MapFlowCoordinator?
   private var locationAccessCoordinator: LocationAccessFlowCoordinator?
   
   init(window: UIWindow, diContainer: AppDIContainer) {
@@ -34,6 +38,9 @@ final class MainTabFlowCoordinator {
   
   func start() {
     let dashboardNav = UINavigationController()
+    dashboardNav.delegate = self
+    self.dashboardNavigationController = dashboardNav
+
     dashboardNav.tabBarItem = UITabBarItem(
       title: NSLocalizedString("tabbar.dashboard", comment: ""),
       image: UIImage(systemName: "house"),
@@ -48,6 +55,9 @@ final class MainTabFlowCoordinator {
     dashboardCoordinator.start()
 
     let exploreNav = UINavigationController()
+    exploreNav.delegate = self
+    self.exploreNavigationController = exploreNav
+    
     exploreNav.tabBarItem = UITabBarItem(
       title: NSLocalizedString("tabbar.explore", comment: ""),
       image: UIImage(systemName: "globe.europe.africa"),
@@ -71,12 +81,13 @@ final class MainTabFlowCoordinator {
     navigationController: UINavigationController?
   ) {
     guard let navigationController else { return }
+    
     let context = EarthquakeDetailContext(earthquake: earthquake)
     let detailModule = diContainer.makeEarthquakeDetailModule(with: context)
     let detailCoordinator = detailModule.makeFlowCoordinator(navigationController: navigationController)
     detailCoordinator.delegate = self
     
-    self.earthquakeDetailCoordinator = detailCoordinator
+    earthquakeDetailCoordinators.append(detailCoordinator)
     detailCoordinator.start()
   }
   
@@ -87,6 +98,7 @@ final class MainTabFlowCoordinator {
     navigationController: UINavigationController?
   ) {
     guard let navigationController else { return }
+    
     let context = EarthquakeMapContext(
       earthquakes: earthquakes,
       radius: radius,
@@ -96,7 +108,7 @@ final class MainTabFlowCoordinator {
     let mapModule = diContainer.makeMapModule(with: context)
     let mapCoordinator = mapModule.makeFlowCoordinator(navigationController: navigationController)
     
-    self.earthquakeMapCoordinator = mapCoordinator
+    earthquakeMapCoordinators.append(mapCoordinator)
     mapCoordinator.start()
   }
   
@@ -112,6 +124,42 @@ final class MainTabFlowCoordinator {
   
 }
 
+// MARK: UINavigationControllerDelegate
+extension MainTabFlowCoordinator: UINavigationControllerDelegate {
+  func navigationController(
+    _ navigationController: UINavigationController,
+    didShow viewController: UIViewController,
+    animated: Bool
+  ) {
+    cleanupDetailFlowsIfNeeded(in: navigationController)
+    cleanupMapFlowsIfNeeded(in: navigationController)
+  }
+  
+  private func cleanupDetailFlowsIfNeeded(in navigationController: UINavigationController) {
+    earthquakeDetailCoordinators.removeAll { coordinator in
+      guard coordinator.rootNavigationController === navigationController,
+            let rootViewController = coordinator.trackedRootViewController
+      else {
+        return false
+      }
+      
+      return !navigationController.viewControllers.contains { $0 === rootViewController }
+    }
+  }
+  
+  private func cleanupMapFlowsIfNeeded(in navigationController: UINavigationController) {
+    earthquakeMapCoordinators.removeAll { coordinator in
+      guard coordinator.rootNavigationController === navigationController,
+            let rootViewController = coordinator.trackedRootViewController
+      else {
+        return false
+      }
+      
+      return !navigationController.viewControllers.contains { $0 === rootViewController }
+    }
+  }
+}
+
 // MARK: EarthquakeDetailFlowCoordinatorDelegate
 extension MainTabFlowCoordinator: EarthquakeDetailFlowCoordinatorDelegate {
   func earthquakeDetailFlowCoordinator(
@@ -124,12 +172,23 @@ extension MainTabFlowCoordinator: EarthquakeDetailFlowCoordinatorDelegate {
 
 // MARK: LocationAccessFlowCoordinatorDelegate
 extension MainTabFlowCoordinator: LocationAccessFlowCoordinatorDelegate {
-  func didRequestOpenAppSettings(_ coordinator: LocationAccessFlowCoordinator) {
+  func locationAccessFlowCoordinatorDidRequestOpenAppSettings(_ coordinator: LocationAccessFlowCoordinator) {
     if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
       if UIApplication.shared.canOpenURL(settingsURL) {
         UIApplication.shared.open(settingsURL)
       }
     }
+    
+    finishLocationAccessFlow()
+  }
+  
+  func locationAccessFlowCoordinatorDidFinish(_ coordinator: LocationAccessFlowCoordinator) {
+    finishLocationAccessFlow()
+  }
+  
+  private func finishLocationAccessFlow() {
+    tabBarController.presentedViewController?.dismiss(animated: true)
+    locationAccessCoordinator = nil
   }
 }
 

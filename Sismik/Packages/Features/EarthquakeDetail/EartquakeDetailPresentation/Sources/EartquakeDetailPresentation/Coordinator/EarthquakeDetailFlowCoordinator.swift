@@ -24,8 +24,10 @@ public protocol EarthquakeDetailFlowCoordinatorDelegate: AnyObject {
 @MainActor
 public final class EarthquakeDetailFlowCoordinator {
   
-  private weak var navigationController: UINavigationController?
   private let dependencies: EarthquakeDetailFlowCoordinatorDependencies
+  
+  private weak var navigationController: UINavigationController?
+  private weak var rootViewController: UIViewController?
   
   public weak var delegate: EarthquakeDetailFlowCoordinatorDelegate?
   
@@ -41,6 +43,10 @@ public final class EarthquakeDetailFlowCoordinator {
     navigationController
   }
   
+  public var trackedRootViewController: UIViewController? {
+    rootViewController
+  }
+  
   public func start() {
     let actions = EarthquakeDetailViewModelActions(
       didRequestMap: { [weak self] earthquake in
@@ -51,6 +57,7 @@ public final class EarthquakeDetailFlowCoordinator {
     )
     
     let viewController = dependencies.makeEarthquakeDetailViewController(actions: actions)
+    rootViewController = viewController
     
     navigationController?.pushViewController(viewController, animated: true)
   }

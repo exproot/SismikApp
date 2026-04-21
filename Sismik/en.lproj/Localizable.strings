@@ -1,3 +1,6 @@
+// MARK: - Common
+"common.close" = "Dismiss";
+
 // MARK: - Location Access
 "locationAccess.title" = "Location Required";
 "locationAccess.desc" = "We need your location to show nearby earthquakes.";
