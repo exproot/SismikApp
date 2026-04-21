@@ -1,8 +1,8 @@
 //
-//  AppCoordinator.swift
-//  SismikApp
+//  MainTabFlowCoordinator.swift
+//  Sismik
 //
-//  Created by Ertan Yağmur on 31.05.2025.
+//  Created by Ertan Yağmur on 21.04.2026.
 //
 
 import EarthquakeDomain
@@ -10,57 +10,29 @@ import CoreLocation
 import UIKit
 import EartquakeDetailPresentation
 import LocationAccessPresentation
-import OnboardingPresentation
 import DashboardPresentation
 import ExplorePresentation
 import MapPresentation
 
-
 @MainActor
-final class AppCoordinator {
-
+final class MainTabFlowCoordinator {
+  
   private let window: UIWindow
-  private let tabBarController: UITabBarController
   private let diContainer: AppDIContainer
-
-  private var earthquakeDetailCoordinator: EarthquakeDetailFlowCoordinator?
-  private var locationAccessCoordinator: LocationAccessFlowCoordinator?
-  private var onboardingCoordinator: OnboardingFlowCoordinator?
+  private let tabBarController = UITabBarController()
+  
   private var dashboardCoordinator: DashboardFlowCoordinator?
-  private var earthquakeMapCoordinator: MapFlowCoordinator?
   private var exploreCoordinator: ExploreFlowCoordinator?
-
-  init(
-    window: UIWindow,
-    diContainer: AppDIContainer
-  ) {
+  private var earthquakeDetailCoordinator: EarthquakeDetailFlowCoordinator?
+  private var earthquakeMapCoordinator: MapFlowCoordinator?
+  private var locationAccessCoordinator: LocationAccessFlowCoordinator?
+  
+  init(window: UIWindow, diContainer: AppDIContainer) {
     self.window = window
-    self.tabBarController = UITabBarController()
     self.diContainer = diContainer
   }
-
+  
   func start() {
-    if !AppPreferences.hasSeenOnboarding {
-      showOnboarding()
-    } else {
-      showMainApp()
-    }
-  }
-
-  private func showOnboarding() {
-    let onboardingNav = UINavigationController()
-    let onboardingModule = diContainer.makeOnboardingModule()
-    let onboardingCoordinator = onboardingModule.makeFlowCoordinator(navigationController: onboardingNav)
-    onboardingCoordinator.delegate = self
-    
-    self.onboardingCoordinator = onboardingCoordinator
-    onboardingCoordinator.start()
-
-    window.rootViewController = onboardingNav
-    window.makeKeyAndVisible()
-  }
-
-  private func showMainApp() {
     let dashboardNav = UINavigationController()
     dashboardNav.tabBarItem = UITabBarItem(
       title: NSLocalizedString("tabbar.dashboard", comment: ""),
@@ -70,8 +42,8 @@ final class AppCoordinator {
     
     let dashboardModule = diContainer.makeDashboardModule()
     let dashboardCoordinator = dashboardModule.makeFlowCoordinator(navigationController: dashboardNav)
-    dashboardCoordinator.delegate = self
     
+    dashboardCoordinator.delegate = self
     self.dashboardCoordinator = dashboardCoordinator
     dashboardCoordinator.start()
 
@@ -84,8 +56,8 @@ final class AppCoordinator {
     
     let exploreModule = diContainer.makeExploreModule()
     let exploreCoordinator = exploreModule.makeFlowCoordinator(navigationController: exploreNav)
+    
     exploreCoordinator.delegate = self
-  
     self.exploreCoordinator = exploreCoordinator
     exploreCoordinator.start()
 
@@ -137,20 +109,21 @@ final class AppCoordinator {
     self.locationAccessCoordinator = locationAccessCoordinator
     locationAccessCoordinator.start()
   }
-
+  
 }
 
-// MARK: OnboardingFlowCoordinatorDelegate
-extension AppCoordinator: OnboardingFlowCoordinatorDelegate {
-  func didFinish(_ coordinator: OnboardingFlowCoordinator) {
-    AppPreferences.hasSeenOnboarding = true
-    showMainApp()
-    onboardingCoordinator = nil
+// MARK: EarthquakeDetailFlowCoordinatorDelegate
+extension MainTabFlowCoordinator: EarthquakeDetailFlowCoordinatorDelegate {
+  func earthquakeDetailFlowCoordinator(
+    _ coordinator: EarthquakeDetailFlowCoordinator,
+    didRequestMapFor earthquake: Earthquake
+  ) {
+    showMap(for: [earthquake], in: CLLocationCoordinate2D(latitude: earthquake.latitude, longitude: earthquake.longitude), navigationController: coordinator.rootNavigationController)
   }
 }
 
 // MARK: LocationAccessFlowCoordinatorDelegate
-extension AppCoordinator: LocationAccessFlowCoordinatorDelegate {
+extension MainTabFlowCoordinator: LocationAccessFlowCoordinatorDelegate {
   func didRequestOpenAppSettings(_ coordinator: LocationAccessFlowCoordinator) {
     if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
       if UIApplication.shared.canOpenURL(settingsURL) {
@@ -160,18 +133,22 @@ extension AppCoordinator: LocationAccessFlowCoordinatorDelegate {
   }
 }
 
-// MARK: EarthquakeDetailFlowCoordinatorDelegate
-extension AppCoordinator: EarthquakeDetailFlowCoordinatorDelegate {
-  func earthquakeDetailFlowCoordinator(
-    _ coordinator: EarthquakeDetailFlowCoordinator,
-    didRequestMapFor earthquake: Earthquake
+// MARK: DashboardFlowCoordinatorDelegate
+extension MainTabFlowCoordinator: DashboardFlowCoordinatorDelegate {
+  func dashboardFlowCoordinator(
+    _ coordinator: DashboardFlowCoordinator,
+    didRequestDetailFor earthquake: Earthquake
   ) {
-    showMap(for: [earthquake], in: CLLocationCoordinate2D(latitude: earthquake.latitude, longitude: earthquake.longitude), navigationController: coordinator.rootNavigationController)
+    showDetail(for: earthquake, navigationController: coordinator.rootNavigationController)
+  }
+  
+  func dashboardFlowCoordinatorDidRequestLocationDenied(_ coordinator: DashboardFlowCoordinator) {
+    showLocationAccess(navigationController: coordinator.rootNavigationController)
   }
 }
 
 // MARK: ExploreFlowCoordinatorDelegate
-extension AppCoordinator: ExploreFlowCoordinatorDelegate {
+extension MainTabFlowCoordinator: ExploreFlowCoordinatorDelegate {
   func exploreFlowCoordinator(
     _ coordinator: ExploreFlowCoordinator,
     didRequestDetailFor earthquake: Earthquake
@@ -185,20 +162,11 @@ extension AppCoordinator: ExploreFlowCoordinatorDelegate {
     radius: Double,
     center: CLLocationCoordinate2D
   ) {
-    showMap(for: earthquakes, with: radius, in: center, navigationController: coordinator.rootNavigationController)
-  }
-}
-
-// MARK: DashboardFlowCoordinatorDelegate
-extension AppCoordinator: DashboardFlowCoordinatorDelegate {
-  func dashboardFlowCoordinator(
-    _ coordinator: DashboardFlowCoordinator,
-    didRequestDetailFor earthquake: Earthquake
-  ) {
-    showDetail(for: earthquake, navigationController: coordinator.rootNavigationController)
-  }
-  
-  func dashboardFlowCoordinatorDidRequestLocationDenied(_ coordinator: DashboardFlowCoordinator) {
-    showLocationAccess(navigationController: coordinator.rootNavigationController)
+    showMap(
+      for: earthquakes,
+      with: radius,
+      in: center,
+      navigationController: coordinator.rootNavigationController
+    )
   }
 }
