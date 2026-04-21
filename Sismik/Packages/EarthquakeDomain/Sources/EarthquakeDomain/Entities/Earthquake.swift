@@ -5,7 +5,6 @@
 //  Created by Ertan Yağmur on 25.04.2025.
 //
 
-
 import Foundation
 
 public struct Earthquake: Identifiable, Equatable, Hashable, Sendable {

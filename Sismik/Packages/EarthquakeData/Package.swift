@@ -23,6 +23,10 @@ let package = Package(
         path: "EarthquakeRemote"
       ),
       .package(
+        name: "EarthquakeSupport",
+        path: "EarthquakeSupport"
+      ),
+      .package(
         name: "LocationServices",
         path: "../LocationServices"
       )
@@ -40,6 +44,10 @@ let package = Package(
               .product(
                 name: "EarthquakeRemote",
                 package: "EarthquakeRemote"
+              ),
+              .product(
+                name: "EarthquakeSupport",
+                package: "EarthquakeSupport"
               ),
               .product(
                 name: "LocationServices",
