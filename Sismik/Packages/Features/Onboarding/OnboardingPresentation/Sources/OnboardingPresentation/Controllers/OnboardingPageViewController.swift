@@ -41,6 +41,7 @@ final class OnboardingPageViewController: UIViewController {
   private func setupLottieAnimation() {
     let anim = DotLottieAnimation(
       fileName: page.resourceName,
+      bundle: .module,
       config: AnimationConfig(autoplay: true, loop: true)
     )
 

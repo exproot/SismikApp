@@ -13,11 +13,26 @@ let package = Package(
             targets: ["OnboardingPresentation"]
         ),
     ],
+    dependencies: [
+      .package(
+        url: "https://github.com/LottieFiles/dotlottie-ios.git",
+        from: "0.13.0"
+      )
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "OnboardingPresentation"
+            name: "OnboardingPresentation",
+            dependencies: [
+              .product(
+                name: "DotLottie",
+                package: "dotlottie-ios"
+              )
+            ],
+            resources: [
+              .process("Resources")
+            ]
         ),
 
     ]
