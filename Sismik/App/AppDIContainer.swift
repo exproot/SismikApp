@@ -12,6 +12,7 @@ import EarthquakeDomain
 import EarthquakeRemote
 import EarthquakeSupport
 import EartquakeDetailPresentation
+import LocationAccessPresentation
 import DashboardPresentation
 import ExplorePresentation
 import MapPresentation
@@ -65,6 +66,10 @@ final class AppDIContainer {
     let dependencies = MapModuleDependencies(context: context)
     
     return MapModule(dependencies: dependencies)
+  }
+  
+  func makeLocationAccessModule() -> LocationAccessModule {
+    LocationAccessModule()
   }
   
   private func makeLocationStateController() -> LocationStateControlling {

@@ -9,6 +9,7 @@ import EarthquakeDomain
 import CoreLocation
 import UIKit
 import EartquakeDetailPresentation
+import LocationAccessPresentation
 import DashboardPresentation
 import ExplorePresentation
 import MapPresentation
@@ -21,11 +22,12 @@ final class AppCoordinator {
   private let tabBarController: UITabBarController
   private let diContainer: AppDIContainer
 
-  private var onboardingCoordinator: OnboardingCoordinator?
-  private var dashboardCoordinator: DashboardFlowCoordinator?
-  private var exploreCoordinator: ExploreFlowCoordinator?
   private var earthquakeDetailCoordinator: EarthquakeDetailFlowCoordinator?
+  private var locationAccessCoordinator: LocationAccessFlowCoordinator?
+  private var dashboardCoordinator: DashboardFlowCoordinator?
+  private var onboardingCoordinator: OnboardingCoordinator?
   private var earthquakeMapCoordinator: MapFlowCoordinator?
+  private var exploreCoordinator: ExploreFlowCoordinator?
 
   init(
     window: UIWindow,
@@ -97,7 +99,6 @@ final class AppCoordinator {
     navigationController: UINavigationController?
   ) {
     guard let navigationController else { return }
-    
     let context = EarthquakeDetailContext(earthquake: earthquake)
     let detailModule = diContainer.makeEarthquakeDetailModule(with: context)
     let detailCoordinator = detailModule.makeFlowCoordinator(navigationController: navigationController)
@@ -114,7 +115,6 @@ final class AppCoordinator {
     navigationController: UINavigationController?
   ) {
     guard let navigationController else { return }
-    
     let context = EarthquakeMapContext(
       earthquakes: earthquakes,
       radius: radius,
@@ -127,7 +127,28 @@ final class AppCoordinator {
     self.earthquakeMapCoordinator = mapCoordinator
     mapCoordinator.start()
   }
+  
+  private func showLocationAccess(navigationController: UINavigationController?) {
+    guard let navigationController else { return }
+    let locationAccessModule = diContainer.makeLocationAccessModule()
+    let locationAccessCoordinator = locationAccessModule.makeFlowCoordinator(navigationController: navigationController)
+    locationAccessCoordinator.delegate = self
+    
+    self.locationAccessCoordinator = locationAccessCoordinator
+    locationAccessCoordinator.start()
+  }
 
+}
+
+// MARK: LocationAccessFlowCoordinatorDelegate
+extension AppCoordinator: LocationAccessFlowCoordinatorDelegate {
+  func didRequestOpenAppSettings(_ coordinator: LocationAccessFlowCoordinator) {
+    if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+      if UIApplication.shared.canOpenURL(settingsURL) {
+        UIApplication.shared.open(settingsURL)
+      }
+    }
+  }
 }
 
 // MARK: EarthquakeDetailFlowCoordinatorDelegate
@@ -171,11 +192,8 @@ extension AppCoordinator: DashboardFlowCoordinatorDelegate {
     showDetail(for: earthquake, navigationController: coordinator.rootNavigationController)
   }
   
-  func dashboardFlowCoordinatorDidRequestLocationDenied(_ coordinator: DashboardPresentation.DashboardFlowCoordinator) {
-    let locationAccessCoordinator = LocationAccessCoordinator(navigationController: coordinator.rootNavigationController)
-    let locationAccessVC = locationAccessCoordinator.makeViewController()
-    
-    coordinator.rootNavigationController?.present(locationAccessVC, animated: true)
+  func dashboardFlowCoordinatorDidRequestLocationDenied(_ coordinator: DashboardFlowCoordinator) {
+    showLocationAccess(navigationController: coordinator.rootNavigationController)
   }
   
 }

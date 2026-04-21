@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct LocationAccessView: View {
+  
+  let viewModel: LocationAccessViewModel
+  
   var body: some View {
     VStack(spacing: 16) {
       Image(systemName: "location.circle.fill")
@@ -26,11 +29,7 @@ struct LocationAccessView: View {
         .multilineTextAlignment(.center)
 
       Button {
-        if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
-          if UIApplication.shared.canOpenURL(settingsURL) {
-            UIApplication.shared.open(settingsURL)
-          }
-        }
+        viewModel.didSelectOpenSettings()
       } label: {
         Text(NSLocalizedString("locationAccess.button.settings", comment: ""))
           .foregroundStyle(Color.blue)
@@ -41,5 +40,9 @@ struct LocationAccessView: View {
 }
 
 #Preview {
-  LocationAccessView()
+  LocationAccessView(
+    viewModel: LocationAccessViewModel(
+      actions: LocationAccessViewModelActions(didRequestOpenSettings: { })
+    )
+  )
 }
