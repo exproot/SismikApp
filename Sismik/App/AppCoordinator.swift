@@ -10,6 +10,7 @@ import CoreLocation
 import UIKit
 import EartquakeDetailPresentation
 import LocationAccessPresentation
+import OnboardingPresentation
 import DashboardPresentation
 import ExplorePresentation
 import MapPresentation
@@ -24,8 +25,8 @@ final class AppCoordinator {
 
   private var earthquakeDetailCoordinator: EarthquakeDetailFlowCoordinator?
   private var locationAccessCoordinator: LocationAccessFlowCoordinator?
+  private var onboardingCoordinator: OnboardingFlowCoordinator?
   private var dashboardCoordinator: DashboardFlowCoordinator?
-  private var onboardingCoordinator: OnboardingCoordinator?
   private var earthquakeMapCoordinator: MapFlowCoordinator?
   private var exploreCoordinator: ExploreFlowCoordinator?
 
@@ -47,16 +48,15 @@ final class AppCoordinator {
   }
 
   private func showOnboarding() {
-    let onboardingCoordinator = OnboardingCoordinator(navigationController: UINavigationController())
+    let onboardingNav = UINavigationController()
+    let onboardingModule = diContainer.makeOnboardingModule()
+    let onboardingCoordinator = onboardingModule.makeFlowCoordinator(navigationController: onboardingNav)
+    onboardingCoordinator.delegate = self
+    
     self.onboardingCoordinator = onboardingCoordinator
+    onboardingCoordinator.start()
 
-    onboardingCoordinator.onFinish = { [weak self] in
-      AppPreferences.hasSeenOnboarding = true
-      self?.showMainApp()
-      self?.onboardingCoordinator = nil
-    }
-
-    window.rootViewController = onboardingCoordinator.makeViewController()
+    window.rootViewController = onboardingNav
     window.makeKeyAndVisible()
   }
 
@@ -140,6 +140,15 @@ final class AppCoordinator {
 
 }
 
+// MARK: OnboardingFlowCoordinatorDelegate
+extension AppCoordinator: OnboardingFlowCoordinatorDelegate {
+  func didFinish(_ coordinator: OnboardingFlowCoordinator) {
+    AppPreferences.hasSeenOnboarding = true
+    showMainApp()
+    onboardingCoordinator = nil
+  }
+}
+
 // MARK: LocationAccessFlowCoordinatorDelegate
 extension AppCoordinator: LocationAccessFlowCoordinatorDelegate {
   func didRequestOpenAppSettings(_ coordinator: LocationAccessFlowCoordinator) {
@@ -163,7 +172,6 @@ extension AppCoordinator: EarthquakeDetailFlowCoordinatorDelegate {
 
 // MARK: ExploreFlowCoordinatorDelegate
 extension AppCoordinator: ExploreFlowCoordinatorDelegate {
-
   func exploreFlowCoordinator(
     _ coordinator: ExploreFlowCoordinator,
     didRequestDetailFor earthquake: Earthquake
@@ -179,12 +187,10 @@ extension AppCoordinator: ExploreFlowCoordinatorDelegate {
   ) {
     showMap(for: earthquakes, with: radius, in: center, navigationController: coordinator.rootNavigationController)
   }
-  
 }
 
 // MARK: DashboardFlowCoordinatorDelegate
 extension AppCoordinator: DashboardFlowCoordinatorDelegate {
-  
   func dashboardFlowCoordinator(
     _ coordinator: DashboardFlowCoordinator,
     didRequestDetailFor earthquake: Earthquake
@@ -195,5 +201,4 @@ extension AppCoordinator: DashboardFlowCoordinatorDelegate {
   func dashboardFlowCoordinatorDidRequestLocationDenied(_ coordinator: DashboardFlowCoordinator) {
     showLocationAccess(navigationController: coordinator.rootNavigationController)
   }
-  
 }

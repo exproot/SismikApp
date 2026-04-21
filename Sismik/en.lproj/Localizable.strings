@@ -14,6 +14,7 @@
 "onboarding.desc3" = "Visualize recent earthquakes on a map.";
 
 "onboarding.button.next" = "Next";
+"onboarding.button.finish" = "Done";
 
 //MARK: - TabBar
 "tabbar.dashboard" = "Dashboard";

@@ -13,6 +13,7 @@ import EarthquakeRemote
 import EarthquakeSupport
 import EartquakeDetailPresentation
 import LocationAccessPresentation
+import OnboardingPresentation
 import DashboardPresentation
 import ExplorePresentation
 import MapPresentation
@@ -70,6 +71,10 @@ final class AppDIContainer {
   
   func makeLocationAccessModule() -> LocationAccessModule {
     LocationAccessModule()
+  }
+  
+  func makeOnboardingModule() -> OnboardingModule {
+    OnboardingModule()
   }
   
   private func makeLocationStateController() -> LocationStateControlling {

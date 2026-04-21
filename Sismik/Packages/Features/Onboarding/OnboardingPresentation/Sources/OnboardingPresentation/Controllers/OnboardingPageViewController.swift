@@ -8,20 +8,22 @@
 import DotLottie
 import UIKit
 
+struct OnboardingPage {
+  let title: String
+  let description: String
+  let resourceName: String
+}
+
 final class OnboardingPageViewController: UIViewController {
 
-  private let titleText: String
-  private let descriptionText: String
-  private let animationName: String
+  private let page: OnboardingPage
 
   private let titleLabel = UILabel()
   private let descriptionLabel = UILabel()
   private var animationView: DotLottieAnimationView?
 
-  init(titleText: String, descriptionText: String, animationName: String) {
-    self.titleText = titleText
-    self.descriptionText = descriptionText
-    self.animationName = animationName
+  init(page: OnboardingPage) {
+    self.page = page
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -37,7 +39,10 @@ final class OnboardingPageViewController: UIViewController {
   }
 
   private func setupLottieAnimation() {
-    let anim = DotLottieAnimation(fileName: animationName, config: AnimationConfig(autoplay: true, loop: true))
+    let anim = DotLottieAnimation(
+      fileName: page.resourceName,
+      config: AnimationConfig(autoplay: true, loop: true)
+    )
 
     animationView = anim.view()
   }
@@ -45,12 +50,12 @@ final class OnboardingPageViewController: UIViewController {
   private func setupUI() {
     view.backgroundColor = .systemBackground
 
-    titleLabel.text = titleText
+    titleLabel.text = page.title
     titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
     titleLabel.textAlignment = .center
     titleLabel.numberOfLines = 0
 
-    descriptionLabel.text = descriptionText
+    descriptionLabel.text = page.description
     descriptionLabel.font = .systemFont(ofSize: 16)
     descriptionLabel.textAlignment = .center
     descriptionLabel.numberOfLines = 0

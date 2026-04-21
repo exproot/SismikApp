@@ -14,6 +14,7 @@
 "onboarding.desc3" = "Son depremleri harita üzerinde görüntüleyin.";
 
 "onboarding.button.next" = "Devam";
+"onboarding.button.finish" = "Bitti";
 
 //MARK: - TabBar
 "tabbar.dashboard" = "Panel";
