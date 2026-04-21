@@ -6,6 +6,7 @@
 //
 
 import EarthquakeDomain
+import EarthquakeSupport
 import Foundation
 
 public final class UserDefaultsEarthquakeQueryStore: EarthquakeQueryStore {
