@@ -50,8 +50,11 @@ final class ExploreDIContainer {
 // MARK: ExploreFlowCoordinatorDependencies
 extension ExploreDIContainer: ExploreFlowCoordinatorDependencies {
   
-  func makeExploreViewController(actions: ExploreViewModelActions) -> UIViewController {
-    EarthquakeExploreViewController(viewModel: makeExploreViewModel(actions: actions))
+  func makeExploreScene(actions: ExploreViewModelActions) -> ExploreScene {
+    let viewModel = makeExploreViewModel(actions: actions)
+    let viewController = EarthquakeExploreViewController(viewModel: viewModel)
+    
+    return ExploreScene(viewController: viewController, filterApplying: viewModel)
   }
   
 }
