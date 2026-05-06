@@ -124,3 +124,17 @@ final class EarthquakeExploreViewModel {
   }
 
 }
+
+// MARK: ExploreFilterApplying
+extension EarthquakeExploreViewModel: ExploreFilterApplying {
+  
+  func applyFilter(_ options: EarthquakeFilterOptions) {
+    currentFilterOptions = options
+    
+    guard let coordinate = lastCoordinate else { return }
+    
+    let query = buildQuery(with: coordinate)
+    fetchFilteredEarthquakes(with: query)
+  }
+  
+}

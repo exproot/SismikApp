@@ -34,15 +34,23 @@ struct LocationAccessView: View {
         Text(NSLocalizedString("locationAccess.button.settings", comment: ""))
           .foregroundStyle(Color.blue)
       }
+      
+      Button(action: viewModel.didSelectClose) {
+        Text(NSLocalizedString("common.close", comment: ""))
+          .foregroundStyle(Color.red)
+      }
     }
     .padding()
   }
 }
 
 #Preview {
+  let actions = LocationAccessViewModelActions(
+    didRequestOpenSettings: { },
+    didRequestClose: { }
+  )
+  
   LocationAccessView(
-    viewModel: LocationAccessViewModel(
-      actions: LocationAccessViewModelActions(didRequestOpenSettings: { })
-    )
+    viewModel: LocationAccessViewModel(actions: actions)
   )
 }

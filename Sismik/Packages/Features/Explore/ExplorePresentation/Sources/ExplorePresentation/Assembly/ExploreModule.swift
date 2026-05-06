@@ -7,6 +7,11 @@
 
 import UIKit
 
+struct ExploreScene {
+  let viewController: UIViewController
+  let filterApplying: ExploreFilterApplying
+}
+
 @MainActor
 public struct ExploreModule {
   

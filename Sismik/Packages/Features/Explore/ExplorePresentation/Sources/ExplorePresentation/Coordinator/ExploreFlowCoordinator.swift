@@ -11,7 +11,7 @@ import UIKit
 
 @MainActor
 protocol ExploreFlowCoordinatorDependencies {
-  func makeExploreViewController(actions: ExploreViewModelActions) -> UIViewController
+  func makeExploreScene(actions: ExploreViewModelActions) -> ExploreScene
 }
 
 public protocol ExploreFlowCoordinatorDelegate: AnyObject {
@@ -33,6 +33,7 @@ public final class ExploreFlowCoordinator {
   
   private weak var navigationController: UINavigationController?
   private let dependencies: ExploreFlowCoordinatorDependencies
+  private var exploreScene: ExploreScene?
   
   public weak var delegate: ExploreFlowCoordinatorDelegate?
   
@@ -67,14 +68,19 @@ public final class ExploreFlowCoordinator {
       }
     )
     
-    let viewController = dependencies.makeExploreViewController(actions: actions)
-    navigationController?.setViewControllers([viewController], animated: true)
+    let scene =  dependencies.makeExploreScene(actions: actions)
+    self.exploreScene = scene
+    
+    navigationController?.setViewControllers([scene.viewController], animated: true)
   }
   
   private func showFilter(options: EarthquakeFilterOptions) {
     let actions = EarthquakeFilterViewModelActions(
-      didSelectApply: { [weak self] _ in
-        self?.navigationController?.dismiss(animated: true)
+      didSelectApply: { [weak self] options in
+        guard let self else { return }
+        
+        self.exploreScene?.filterApplying.applyFilter(options)
+        self.navigationController?.dismiss(animated: true)
       },
       didSelectCancel: { [weak self] in
         self?.navigationController?.dismiss(animated: true)

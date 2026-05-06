@@ -10,18 +10,19 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
   var window: UIWindow?
-  var appCoordinator: AppCoordinator?
-  var diContainer: AppDIContainer?
+  var appCoordinator: AppFlowCoordinator?
 
-  func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+  func scene(
+    _ scene: UIScene,
+    willConnectTo session: UISceneSession,
+    options connectionOptions: UIScene.ConnectionOptions
+  ) {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     let window = UIWindow(windowScene: windowScene)
-    let diContainer = AppDIContainer()
-
+    
     self.window = window
-    self.diContainer = diContainer
 
-    let appCoordinator = AppCoordinator(window: window, diContainer: diContainer)
+    let appCoordinator = AppFlowCoordinator(window: window, diContainer: AppDIContainer())
     self.appCoordinator = appCoordinator
     appCoordinator.start()
   }

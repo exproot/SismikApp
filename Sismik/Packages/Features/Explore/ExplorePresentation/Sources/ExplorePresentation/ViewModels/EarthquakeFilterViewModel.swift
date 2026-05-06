@@ -8,6 +8,10 @@
 import EarthquakeDomain
 import Foundation
 
+protocol ExploreFilterApplying: AnyObject {
+  func applyFilter(_ options: EarthquakeFilterOptions)
+}
+
 struct EarthquakeFilterViewModelActions {
   let didSelectApply: (EarthquakeFilterOptions) -> Void
   let didSelectCancel: () -> Void
@@ -99,7 +103,6 @@ final class EarthquakeFilterViewModel {
 
   func applyFilter() {
     actions.didSelectApply(initialOptions)
-    onUIUpdate?()
   }
   
   func cancelFilter() {

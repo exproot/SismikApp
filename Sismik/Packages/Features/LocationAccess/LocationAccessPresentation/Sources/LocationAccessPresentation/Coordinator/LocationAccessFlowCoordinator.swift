@@ -15,11 +15,12 @@ protocol LocationAccessFlowCoordinatorDependencies {
 }
 
 public protocol LocationAccessFlowCoordinatorDelegate: AnyObject {
-  func didRequestOpenAppSettings(_ coordinator: LocationAccessFlowCoordinator)
+  func locationAccessFlowCoordinatorDidRequestOpenAppSettings(_ coordinator: LocationAccessFlowCoordinator)
+  func locationAccessFlowCoordinatorDidFinish(_ coordinator: LocationAccessFlowCoordinator)
 }
 
 @MainActor
-public final class LocationAccessFlowCoordinator {
+public final class LocationAccessFlowCoordinator: NSObject {
   
   private weak var navigationController: UINavigationController?
   private let dependencies: LocationAccessFlowCoordinatorDependencies
@@ -35,15 +36,30 @@ public final class LocationAccessFlowCoordinator {
   }
   
   public func start() {
-    let actions = LocationAccessViewModelActions { [weak self] in
-      guard let self else { return }
-      
-      self.delegate?.didRequestOpenAppSettings(self)
-    }
+    let actions = LocationAccessViewModelActions(
+      didRequestOpenSettings: { [weak self] in
+        guard let self else { return }
+        
+        self.delegate?.locationAccessFlowCoordinatorDidRequestOpenAppSettings(self)
+      },
+      didRequestClose: { [weak self] in
+        guard let self else { return }
+        
+        self.delegate?.locationAccessFlowCoordinatorDidFinish(self)
+      }
+    )
     
     let viewController = dependencies.makeLocationAccessHostingController(actions: actions)
+    viewController.presentationController?.delegate = self
     
     navigationController?.present(viewController, animated: true)
   }
   
+}
+
+// MARK: UIAdaptivePresentationControllerDelegate
+extension LocationAccessFlowCoordinator: UIAdaptivePresentationControllerDelegate {
+  public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+    delegate?.locationAccessFlowCoordinatorDidFinish(self)
+  }
 }
