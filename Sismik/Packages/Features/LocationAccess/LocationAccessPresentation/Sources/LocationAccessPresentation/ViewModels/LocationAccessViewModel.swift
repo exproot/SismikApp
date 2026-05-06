@@ -9,6 +9,7 @@ import Foundation
 
 struct LocationAccessViewModelActions {
   let didRequestOpenSettings: () -> Void
+  let didRequestClose: () -> Void
 }
 
 struct LocationAccessViewModel {
@@ -21,6 +22,10 @@ struct LocationAccessViewModel {
   
   func didSelectOpenSettings() {
     actions.didRequestOpenSettings()
+  }
+  
+  func didSelectClose() {
+    actions.didRequestClose()
   }
   
 }

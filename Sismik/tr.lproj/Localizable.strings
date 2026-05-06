@@ -1,3 +1,6 @@
+// MARK: - Common
+"common.close" = "Kapat";
+
 // MARK: - Location Access
 "locationAccess.title" = "Konum İzni Gerekli";
 "locationAccess.desc" = "Yakınınızdaki depremleri gösterebilmemiz için konum iznine ihtiyacımız var.";

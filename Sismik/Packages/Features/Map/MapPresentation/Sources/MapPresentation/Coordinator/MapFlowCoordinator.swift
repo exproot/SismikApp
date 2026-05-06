@@ -12,10 +12,17 @@ protocol MapFlowCoordinatorDependencies {
   func makeMapViewController() -> UIViewController
 }
 
+public protocol MapFlowCoordinatorDelegate: AnyObject {
+  func mapFlowCoordinatorDidFinish(_ coordinator: MapFlowCoordinator)
+}
+
 @MainActor
 public final class MapFlowCoordinator {
   
+  public weak var delegate: MapFlowCoordinatorDelegate?
+  
   private weak var navigationController: UINavigationController?
+  private weak var rootViewController: UIViewController?
   private let dependencies: MapFlowCoordinatorDependencies
   
   init(
@@ -26,8 +33,17 @@ public final class MapFlowCoordinator {
     self.dependencies = dependencies
   }
   
+  public var rootNavigationController: UINavigationController? {
+    navigationController
+  }
+  
+  public var trackedRootViewController: UIViewController? {
+    rootViewController
+  }
+  
   public func start() {
     let viewController = dependencies.makeMapViewController()
+    rootViewController = viewController
     
     navigationController?.pushViewController(viewController, animated: true)
   }
