@@ -1,106 +1,154 @@
-# 🌎 SismikApp
+<p align="center">
+  <img src=".github/assets/sismik-icon.png" width="120" alt="Sismik Icon">
+</p>
 
-SismikApp is a Clean Architecture iOS application that displays recent earthquake data based on the user's current location, using the [USGS Earthquake API](https://earthquake.usgs.gov/).
+# Sismik
 
-Built with Swift 5.9, SwiftUI, UIKit, Combine, and Clean Architecture principles.
+Sismik is a modular earthquake tracking application built with **UIKit**, **Clean Architecture**, **MVVM-C**, and **Swift Package Manager**.
+
+Designed as a production-grade iOS architecture showcase, Sismik emphasizes scalable feature modularization, reusable business capabilities, and robust navigation orchestration while delivering real-time earthquake discovery, filtering, and visualization experiences.
+
+# Overview
+SismikApp enables users to:
+- Explore nearby earthquakes
+- Search earthquakes by custom locations
+- Filter earthquakes dynamically by:
+  - Magnitude
+  - Radius
+  - Date range
+- Visualize earthquake activity on an interactive map
+- Inspect detailed earthquake insights
+- Switch between multiple earthquake providers
+- Experience modern, modular iOS engineering practices
+
+# Preview
+
+| Dashboard | Explore | Detail |
+|---|---|---|
+| <img src=".github/assets/sismik-dashboard.png" width="250"> | <img src=".github/assets/sismik-explore.png" width="250"> | <img src=".github/assets/sismik-details.png" width="250"> |
+
+| Filter | List | Map |
+|---|---|---|
+| <img src=".github/assets/sismik-filter.png" width="250"> | <img src=".github/assets/sismik-list.png" width="250"> | <img src=".github/assets/sismik-map.png" width="250"> |
+
+# Key Architectural Highlights
+
+If you are primarily exploring this project for engineering practices, architecture, and scalability, the following areas are particularly notable:
+
+- Clean Architecture
+- MVVM-C
+- Feature-based modularization with SPM
+- Coordinator Pattern
+- Dependency Injection
+
+### Feature-Based Modularization via Swift Package Manager
+
+Each feature is isolated into independently maintainable modules.
+
+Example:
+
+- DashboardPresentation
+  - Assembly
+  - Coordinator
+  - Controllers
+  - ViewModels
+  - Views
+  - Helpers
+
+This structure enables:
+
+- Independent feature ownership
+- Reduced module coupling
+- Faster incremental builds
+- Safer refactoring
+- Better long-term maintainability
+
+### Shared Business Capability Modules
+
+Core business capabilities are separated into reusable modules:
+- **EarthquakeDomain**: Entities, repository contracts, use cases
+- **EarthquakeData**: Repository implementations and persistence
+- **EarthquakeRemote**: DTOs, API services, request builders
+- **CoreNetworking**: Generic networking infrastructure
+- **LocationServices**: Location and geocoding abstractions
+- **EarthquakeSupport**: Shared formatting and utility components
+
+### Navigation Architecture
+
+Navigation is managed through hierarchical coordinators:
+- AppFlowCoordinator
+- OnboardingFlowCoordinator
+- MainTabFlowCoordinator
+- DashboardFlowCoordinator
+- ExploreFlowCoordinator
+- EarthquakeDetailFlowCoordinator
+- MapFlowCoordinator
+- LocationAccessFlowCoordinator
+
+Includes:
+- Cross-feature routing
+- Child coordinator lifecycle cleanup
+- Navigation stack tracking
+- Modal dismissal tracking
+- Concurrent transient flow management
+
+### UIKit + Combine Modernization
+
+SismikApp demonstrates:
+- UIKit-first architecture
+- Combine-driven state management
+- Diffable data sources
+- Compositional layouts
+- Clean migration from legacy structures toward scalable production patterns
 
 ---
 
-## 🚀 Features
-
-- Fetch and display nearby earthquakes based on user location
-- View detailed earthquake information (magnitude, depth, coordinates)
-- SwiftUI for UI components
-- UIKit for navigation (Coordinator pattern)
-- Clean Architecture and MVVM separation
-- Fully Combine-based reactive data flow
-- Dark Mode and Light Mode support
-- Supports iOS 16+
+# Technologies
+- UIKit
+- Combine
+- Swift Package Manager
+- MapKit
+- CoreLocation
+- Diffable Data Source
+- Compositional Layout
 
 ---
 
-## 🛠️ Tech Stack
+# Earthquake Providers
 
-| Layer | Technology |
+The application currently supports:
+- USGS Earthquake API
+- EMSC Earthquake API
+
+The provider layer is designed to support future integrations with minimal impact on upper architectural layers.
+
+---
+
+# Localization
+Supported languages:
+- English
+- Turkish
+
+---
+
+# Requirements
+- iOS 17.0+
+- Xcode 16+
+- Swift 6
+
+---
+
+# Branching Strategy
+
+| Branch | Description |
 |---|---|
-| Language | Swift 5.9 |
-| UI | SwiftUI + UIKit (Coordinator Pattern) |
-| Networking | URLSession + Combine |
-| Location Services | CoreLocation |
-| Architecture | Clean Architecture + MVVM |
-| Dependency Management | Native (no third-party libraries) |
-| Deployment Target | iOS 16.0+ |
+| main | Production-ready releases |
+| develop | Active development |
+| feature/* | New features |
+| fix/* | Refinements and bug fixes |
+| docs/* | Documentation improvements |
 
 ---
 
-## 🏗️ Project Architecture
-
-```
-Presentation (SwiftUI Views, UIKit Coordinators)
-  ↓
-Domain (Entities, UseCases, Repository Protocols)
-  ↓
-Data (DTOs, Mappers, Repositories, Services)
-  ↓
-Core (Location Manager, Endpoint, Network Layer)
-```
-
-✅ Each layer depends only on the layer below it (Dependency Rule)  
-✅ No UI code inside Domain or Data layers  
-✅ High testability, scalability, and modularity
-
----
-
-## 📸 Screenshots (Placeholders)
-
-| Earthquake List | Earthquake Details |
-|:---:|:---:|
-| ![List Screen](docs/screenshots/list.png) | ![Details Screen](docs/screenshots/details.png) |
-
-*(Screenshots will be added after first release.)*
-
----
-
-## 🧩 Setup Instructions
-
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/SismikApp.git
-   ```
-2. Open `SismikApp.xcodeproj` in Xcode 15+
-3. Make sure the Deployment Target is iOS 16.0+
-4. Run on Simulator or Device
-
-✅ No third-party dependencies  
-✅ No CocoaPods, Carthage, or SwiftPM setup needed
-
----
-
-## 🎯 Branching Strategy
-
-- `main` — Stable, production-ready branch
-- `develop` — Active development branch
-- `feature/*` — New features are developed here
-- `bugfix/*` — Bug fixes
-- `hotfix/*` — Critical production fixes
-
-✅ Protected branches (no direct push)  
-✅ Pull Request workflow required
-
----
-
-## 📄 License
-
-MIT License — Feel free to fork and use it for educational or personal projects!
-
----
-
-## 🙏 Credits
-
-- USGS Earthquake API ([earthquake.usgs.gov](https://earthquake.usgs.gov/))
-- Inspired by Clean Swift, MVVM-C, and Clean Architecture practices
-
----
-
-# 🌟 Made with passion by [Ertan Yağmur](https://github.com/YOUR_USERNAME)
-
+# License
+MIT License
