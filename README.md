@@ -2,11 +2,19 @@
   <img src=".github/assets/sismik-icon.png" width="120" alt="Sismik Icon">
 </p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/iOS-17%2B-blue">
+  <img src="https://img.shields.io/badge/Swift-6-orange">
+  <img src="https://img.shields.io/badge/License-MIT-green">
+</p>
+
 # Sismik
 
 Sismik is a modular earthquake tracking application built with **UIKit**, **Clean Architecture**, **MVVM-C**, and **Swift Package Manager**.
 
 Designed as a production-grade iOS architecture showcase, Sismik emphasizes scalable feature modularization, reusable business capabilities, and robust navigation orchestration while delivering real-time earthquake discovery, filtering, and visualization experiences.
+
+[![App Store](.github/assets/app-store-badge.svg)](https://apps.apple.com/us/app/sismik/id6748555194)
 
 # Overview
 SismikApp enables users to:
